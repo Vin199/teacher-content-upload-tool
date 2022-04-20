@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Assessment</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/dashboard.css">
+</head>
+<body>
+    <div class="center"><h2>Create Assessment</h2></div>
+    <div class="center">
+        <form action="/assessment" method="post">
+            <label for="question">Enter Your Question:</label>
+            <input type="text" id="question" name="Question"><br><br>
+            
+            <h4>Enter Choices:</h4>
+            <label for="option1">Option 1:</label>
+            <input type="text" id="option1" name="option1"><br><br>
+            <label for="option2">Option 2:</label>
+            <input type="text" id="option2" name="option2"><br><br>
+            <label for="option3">Option 3:</label>
+            <input type="text" id="option3" name="option3"><br><br>
+            <label for="option4">Option 4:</label>
+            <input type="text" id="option4" name="option4"><br><br>
+            <p>Correct Answer:</p>
+            <label for="option1">a.</label>
+            <input type="radio" id="option1" name="option1">
+            <label for="option1">b.</label>
+            <input type="radio" id="option2" name="option1">
+            <label for="option1">c.</label>
+            <input type="radio" id="option3" name="option1">
+            <label for="option1">d.</label>
+            <input type="radio" id="option4" name="option1">
+            <br><br>
+            <input type="submit" value="Submit Question">
+        </form>
+    </div>
+</body>
+</html>

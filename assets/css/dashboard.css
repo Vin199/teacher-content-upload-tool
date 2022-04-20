@@ -1,0 +1,16 @@
+html{
+    min-height: 100vh;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
