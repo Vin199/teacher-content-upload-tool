@@ -25,6 +25,7 @@ app.post('/assessment', async function(req, res){
     res.render("Assessment");
  });
 
-app.listen(3000, function(){
-    console.log("App successfully running on port 3000.");
-})
+app.set("port", (process.env.PORT || 3000));
+app.listen(app.get("port"), () => {
+    console.log("Server Running on port " + app.get("port"));
+});
