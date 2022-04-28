@@ -1,13 +1,22 @@
-{ "main": "server.js",
-  "type": "module",
+{
+  "name": "node-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "heroku-postbuild": "npm run build"
+    "dev": "nodemon --inspect server.js"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.0",
-    "ejs": "^3.1.6",
-    "express": "^4.17.3",
+    "ejs": "^3.1.7",
+    "express": "^4.18.0",
+    "firebase-admin": "^10.1.0"
+  },
+  "devDependencies": {
     "nodemon": "^2.0.15"
   }
 }

@@ -11,8 +11,12 @@
     <div class="center"><h2>Create Assessment</h2></div>
     <div class="center">
         <form action="/assessment" method="post">
-            <label for="question">Enter Your Question:</label>
-            <input type="text" id="question" name="Question"><br><br>
+            <label for="type">Type: </label>
+            <select name="ques-type" id="type">
+                <option value="Text">Text</option>
+                <option value="Image">Image</option>
+                <option value="Text/Image">Text/Image</option>
+            </select><br>
             
             <h4>Enter Choices:</h4>
             <label for="option1">Option 1:</label>
@@ -32,7 +36,7 @@
             <input type="radio" id="option3" name="option1">
             <label for="option1">d.</label>
             <input type="radio" id="option4" name="option1">
-            <br><br>
+            <br>
             <input type="submit" value="Submit Question">
         </form>
     </div>

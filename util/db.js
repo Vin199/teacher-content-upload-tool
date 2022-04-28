@@ -1,16 +1,19 @@
-import {initializeApp} from 'firebase/app'
+let admin
+let databaseRef
 
-const firebaseConfig = {
-    apiKey: "AIzaSyC4eT_bNvgz_EmEcAy5a_yVXQpHITCv5XA",
-    authDomain: "node-project-fa6c2.firebaseapp.com",
-    projectId: "node-project-fa6c2",
-    storageBucket: "node-project-fa6c2.appspot.com",
-    messagingSenderId: "312214735298",
-    appId: "1:312214735298:web:5f7f100b65b59183142e5b",
-    measurementId: "G-VBFYW6S2YL",
-    databaseURL: "https://node-project-fa6c2-default-rtdb.firebaseio.com"
-  };
+const init = (fbAdmin) => {
+    admin = fbAdmin
+    databaseRef = admin.database().ref()
+}
 
-const app = initializeApp(firebaseConfig)
+const getAdmin = () => {
+    return admin
+}
 
-export default app;
+const getDatabaseRef = () => {
+    return databaseRef
+}
+
+module.exports = {
+    init, getAdmin, getDatabaseRef
+}
