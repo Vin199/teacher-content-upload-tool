@@ -106,7 +106,9 @@
             function googleLogOut() {
                 signOut(auth).then(() => {
                     console.log('Signed Out');
-                }).then(() => {
+                    
+                })
+                .then(() => {
                     location.href = '/'
                 })
                 .catch((error) => {
