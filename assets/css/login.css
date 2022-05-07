@@ -1,36 +1,94 @@
-.container {
-    width: 302px;
-    height: 175px;
-    position: absolute;
-    left: 0px;
-    right: 0px;
-    top: 0px;
-    bottom: 0px;
-    margin: 200px 500px;
+body{
+    margin: 0;
+    padding: 0;
 }
 
-#number,
-#verificationcode {
-    width: calc(100% - 24px);
-    padding: 10px;
-    font-size: 20px;
-    margin-bottom: 5px;
-    outline: none;
+.login__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: "Inter";
+    min-height: 100vh;
 }
 
-#recaptcha-container {
-    margin-bottom: 5px;
+.login__img {
+    margin-bottom: 40px;
 }
 
-#send,
-#verify {
-    width: 100%;
-    height: 40px;
-    outline: none;
+.login_text {
+    font-weight: 600;
+    font-size: 22px;
+    font-family: sans-serif;
+    font-style: normal;
+    line-height: 27px;
+    color: #1E293B;
+    text-align: center;
+    margin-bottom: 11px;
+}
+
+.span_text{
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #475569;
+    margin-bottom: 38px;
+}
+
+#number {
+    width: 390px;
+    height: 64px;
+    font-size: medium;
+    text-align: center;
+    border: 2px solid #E2E8F0;
+    box-sizing: border-box;
+    border-radius: 12px;
+    margin-bottom: 56px;
+}
+
+.or {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #475569;
+    margin-bottom: 18px;
 }
 
 #LoginScreen{
-    width: 100%;
-    height: 40px;
-    outline: none;
+    width: 390px;
+    height: 64px;
+    font-size: medium;
+    color: #64748B;
+    border: 2px solid #E2E8F0;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background: white;
+    margin-left: 6px;
+    margin-bottom: 18px;
+}
+
+#continue {
+    width: 390px;
+    height: 64px;
+    font-size: medium;
+    color: #FFFFFF;
+    border: 2px solid #E2E8F0;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background: #0077FF;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#continue img{
+    width: 18px;
+    filter: invert(1);
 }

@@ -4,65 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Number verification with OTP</title>
-    <style>
-        .container {
-            width: 302px;
-            height: 175px;
-            position: absolute;
-            left: 0px;
-            right: 0px;
-            top: 0px;
-            bottom: 0px;
-            margin: 200px 500px;
-        }
-
-        #number,
-        #verificationcode {
-            width: calc(100% - 24px);
-            padding: 10px;
-            font-size: 20px;
-            margin-bottom: 5px;
-            outline: none;
-        }
-
-        #recaptcha-container {
-            margin-bottom: 5px;
-        }
-
-        #send,
-        #verify {
-            width: 100%;
-            height: 40px;
-            outline: none;
-        }
-
-        #LoginScreen{
-            width: 100%;
-            height: 40px;
-            outline: none;
-        }
-    </style>
+    <link rel="stylesheet" href="/assets/css/login.css" type="text/css">
 </head>
 
 <body>
     <!-- The surrounding HTML is left untouched by FirebaseUI.
          Your app may use that space for branding, controls and other customizations.-->
 
-    <div class="container">
-        <div id="sender">
-            <h3>Enter Your Phone Number: </h3>
-            <input type="text" id="number" placeholder="+91...">
-            <div id="recaptcha-container"></div>
-            <button type="button" id="send">Login</button><br><br>
-            <input type="submit" value="Login With Google" id="LoginScreen">
-        </div>
-
-        <!-- <div id="verifier">
-            <h3>Enter The OTP: </h3>
-            <input type="text" id="verificationcode" placeholder="OTP Code">
-            <br>
-            <input type="button" id="verify" value="Verify" onClick="codeverify()">
-        </div> -->
+    <div class="login__container">
+        <img class="login__img" src="/assets/images/login_screen_logo.svg" alt="iPrep Logo">
+        <span class="login_text">Log in</span>
+        <span class="span_text">Please Choose a Method Below To Login To Your Account</span>
+        <button type="submit" id="LoginScreen"> <img src="/assets/images/logos_google-gmail.svg" alt="Gmail Logo"> Gmail</button>
+        <span class="or">or</span>
+        <input type="text" id="number" placeholder="Enter Your Phone Number">
+        <button type="button" id="continue"><div>Continue</div> <img src="/assets/images/chevron-forward-outline.svg" alt=""></button>
+        <!-- <input type="text" id="number" placeholder="+91...">
+        <div id="recaptcha-container"></div>
+        <button type="button" id="send">Login With Phone Number</button><br>
+        <p>or</p>
+        <input type="submit" value="Login With Google" id="LoginScreen"> -->
     </div>
 
     <script type="module">
@@ -169,8 +130,9 @@
                     'lastLoginAt': result.user.metadata.lastLoginAt
                 }
                 abc(user)
-                location.href = 'dashboard'
-            }).catch((error) => {
+                location.href = '/dashboard'
+            })
+            .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 const email = error.email;

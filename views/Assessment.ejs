@@ -1,44 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Assessment</title>
-    <link rel="stylesheet" type="text/css" href="/assets/css/dashboard.css">
+    <title>Assessments</title>
+    <link rel="stylesheet" href="/assets/css/assessment.css">
 </head>
+
 <body>
-    <div class="center"><h2>Create Assessment</h2></div>
-    <div class="center">
-        <form action="/assessment" method="post">
-            <label for="type">Type: </label>
-            <select name="ques-type" id="type">
-                <option value="Text">Text</option>
-                <option value="Image">Image</option>
-                <option value="Text/Image">Text/Image</option>
-            </select><br>
-            
-            <h4>Enter Choices:</h4>
-            <label for="option1">Option 1:</label>
-            <input type="text" id="option1" name="option1"><br><br>
-            <label for="option2">Option 2:</label>
-            <input type="text" id="option2" name="option2"><br><br>
-            <label for="option3">Option 3:</label>
-            <input type="text" id="option3" name="option3"><br><br>
-            <label for="option4">Option 4:</label>
-            <input type="text" id="option4" name="option4"><br><br>
-            <p>Correct Answer:</p>
-            <label for="option1">a.</label>
-            <input type="radio" id="option1" name="option1">
-            <label for="option1">b.</label>
-            <input type="radio" id="option2" name="option1">
-            <label for="option1">c.</label>
-            <input type="radio" id="option3" name="option1">
-            <label for="option1">d.</label>
-            <input type="radio" id="option4" name="option1">
-            <br>
-            <input type="submit" value="Submit Question">
-        </form>
+    <div class=".top__container">
+        <img class="iPrep__img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo">
+        <a class="active" href="dashboard"> <img src="/assets/images/arrow_back.svg" alt="arrow-back"></a>
+        <span class="span__text">Upload Assessments</span>
+        <hr>
     </div>
+    <div class="middle__container">
+        <div id="single__upload">
+            <img class="single__assessment__logo" src="/assets/images/single_assessment_logo.svg"
+                alt="single_assessment_logo">
+            <span class="single__assessment__text">Single Assessment</span>
+        </div>
+        <div id="bulk__upload">
+            <img class="bulk__assessment__logo" src="/assets/images/bulk_assessment_logo.svg"
+                alt="bulk_assessment_logo">
+            <span class="bulk__assessment__text">Bulk Upload</span>
+        </div>
+        <hr class="middle__hr">
+    </div>
+    <div class="bottom__container">
+        <span class="bottom__text">History</span>
+        <div class="history__box"></div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="close-div">
+                <span class="close">&times;</span>
+            </div>
+
+            <div class="form-div">
+                <form action="#modal__2" class="form-container">
+                    <span class="form-text">Please Fill the details below</span>
+                    <div class="select-div">
+                        <!-- <label class="Class" for="class">Class</label> -->
+                        <select name="class" id="class">
+                            <option value="class">Class</option>
+                            <option value="class-1">Class-1</option>
+                            <option value="class-2">Class-2</option>
+                            <option value="class-3">Class-3</option>
+                            <option value="class-4">Class-4</option>
+                        </select>
+
+                        <select name="subject" id="common">
+                            <option id="common-opt" value="subject">Subject</option>
+                            <option id="common-opt" value="Hindi">Hindi</option>
+                            <option id="common-opt" value="English">English</option>
+                            <option id="common-opt" value="Maths">Maths</option>
+                            <option id="common-opt" value="Science">Science</option>
+                        </select>
+
+                        <select name="topic" id="common">
+                            <option value="topic">Topic</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="English">English</option>
+                            <option value="Maths">Maths</option>
+                            <option value="Science">Science</option>
+                        </select>
+
+                        <select name="language" id="common">
+                            <option value="language">Language</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="English">English</option>
+                        </select>
+                    </div>
+                    <button id="btn-1" type="submit" class="btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="Modal__2" class="modal-2">
+        <!-- Modal content -->
+        <div class="modal-content-2">
+            <div class="close-div-2">
+                <span class="close-2">&times;</span>
+            </div>
+
+            <div class="form-div-2">
+                <form action="/teachers" method="post" class="form-container-2">
+                    <span class="form-text-2">Questions</span>
+                    <div class="custom-div">
+                        <div id = "custom-q-div"> 
+                            <input type="text" id="common-1" placeholder="Type Your Question Here" name="question">
+                            <button id="Q_btn"><img src="/assets/images/Group 11112.svg" alt=""></button>
+                        </div>
+
+                       <div id="custom-q-div">
+                           <input type="text" id="common-2" placeholder="Type Option A Here" name="option_a">
+                           <button id="opt_btn"><img src="/assets/images/Group 11112.svg" alt=""></button>
+                       </div>
+
+                       <div id="custom-q-div">
+                        <input type="text" id="common-3" placeholder="Type Option B Here" name="option_b">
+                        <button id="opt_btn"><img src="/assets/images/Group 11112.svg" alt=""></button>
+                       </div>
+
+                       <div id="custom-q-div">
+                        <input type="text" id="common-4" placeholder="Type Option C Here" name="option_c">
+                        <button id="opt_btn"><img src="/assets/images/Group 11112.svg" alt=""></button>
+                       </div>
+                        
+                       <div id="custom-q-div">
+                        <input type="text" id="common-5" placeholder="Type Option D Here" name="option_d">
+                        <button id="opt_btn"><img src="/assets/images/Group 11112.svg" alt=""></button>
+                       </div>
+                    </div>
+                    <button type="submit" class="btn-2">Next</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var btn = document.getElementById("single__upload");
+
+        var modal = document.getElementById("myModal");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        /* span.onclick = function () {
+            modal.style.display = "none";
+        } */
+        span.addEventListener('click', () => {
+            closeModal();
+        });
+
+        function closeModal(){
+            return new Promise((resolve, reject) => {
+                modal.style.display = "none";
+                resolve();
+            })
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+
+
+        /* For the Second Modal */
+
+        var bttn = document.getElementById("btn-1");
+        var modal__2 = document.getElementById("Modal__2");
+
+        // Get the <span> element that closes the modal-2
+        var span__2 = document.getElementsByClassName("close-2")[0];
+
+        // When the user clicks the button, open the modal-2 
+        bttn.addEventListener('click', () => {
+            openModal()
+            .then(() => closeModal())
+        });
+
+        function openModal(){
+            return new Promise((resolve, reject) => {
+                modal__2.style.display = "block";
+                resolve();
+            })
+        }        
+
+        // When the user clicks on <span> (x), close the modal-2
+        span__2.addEventListener('click', () => {
+            closeModal_2();
+        });
+
+        function closeModal_2(){
+            return new Promise((resolve, reject) => {
+                modal__2.style.display = "none";
+                resolve();
+            })
+        }
+
+        // When the user clicks anywhere outside of the modal-2, close it
+        window.onclick = function (event) {
+            if (event.target == modal__2) {
+                modal__2.style.display = "none";
+            }
+        }
+    </script>
 </body>
+
 </html>

@@ -6,67 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <style>
-        .container {
-            width: 302px;
-            height: 175px;
-            position: absolute;
-            left: 0px;
-            right: 0px;
-            top: 0px;
-            bottom: 0px;
-            margin: 200px 500px;
-        }
-
-        #number,
-        #verificationcode {
-            width: calc(100% - 24px);
-            padding: 10px;
-            font-size: 20px;
-            margin-bottom: 5px;
-            outline: none;
-        }
-
-        #recaptcha-container {
-            margin-bottom: 5px;
-        }
-
-        #send,
-        #verify {
-            width: 100%;
-            height: 40px;
-            outline: none;
-        }
-
-        #LogoutScreen{
-            width: 100%;
-            height: 40px;
-            outline: none;
-        }
-    </style>
+    <link rel="stylesheet" href="/assets/css/dashboard.css">
 </head>
 
 <body>
-    <div class="container">
+    <div class="dashboard__container">
+        <img class="dashboard__img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo">
+        <span id="dashboard__text">Please Select Your Activity</span>
 
-        <div id="sender">
-            <form action="/assessment" method="post">
-                <h3>Create Assessment</h3>
-                <input type="submit" value="Submit">
-            </form><br><br>
-
-            <form action="/assessment" method="post">
-                <h3>Upload Video</h3>
-                <input type="submit" value="Submit">
-            </form><br><br>
-
-            <form action="/assessment" method="post">
-                <h3>Upload Books/Notes</h3>
-                <input type="submit" value="Submit">
-            </form><br><br>
-
-            <input type="submit" value="Log Out With Google" id="LogoutScreen">
+        <div id="text__assessment">
+            <img id="text__img" src="/assets/images/Group 11092.svg" alt="">
+            <span id="text__span"> Upload Assessments </span>
         </div>
+
+        <div id="video__assessment">
+            <img id="play__button" src="/assets/images/play_button.svg" alt="">
+            <span id="video__span"> Video Upload (Link) </span>
+        </div>
+
+        <div id="books__assessment">
+            <img id="vector" src="/assets/images/Vector.svg" alt="">
+            <span id="books__span"> Upload Books/Notes </span>
+        </div>
+
+
+        <!-- <input type="submit"  value="Log Out With Google" id="LogoutScreen"> -->
 
         <!-- <div id="sender">
             <form action="/create" method="post">
@@ -80,57 +44,71 @@
             <br>
             <input type="button" id="verify" value="Verify" onClick="codeverify()">
         </div> -->
-
-        <script type="module">
-            // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
-            import { getAuth, /* RecaptchaVerifier, signInWithPhoneNumber, */  signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
-            const firebaseConfig = {
-                apiKey: "AIzaSyDNFbXQo3Fd7PYfWBwGJd6XdihZ3w-yEvk",
-                authDomain: "node-project-c4942.firebaseapp.com",
-                databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com",
-                projectId: "node-project-c4942",
-                storageBucket: "node-project-c4942.appspot.com",
-                messagingSenderId: "581470710657",
-                appId: "1:581470710657:web:a4792037ef1d415c375680",
-                measurementId: "G-HQZDXNGMJ3"
-            };
-
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth()
-            const provider = new GoogleAuthProvider();
-            document.getElementById("LogoutScreen").addEventListener('click', googleLogOut);
-
-            function googleLogOut() {
-                signOut(auth).then(() => {
-                    console.log('Signed Out');
-                    
-                })
-                .then(() => {
-                    location.href = '/'
-                })
-                .catch((error) => {
-                    console.error('Sign Out Error', error);
-                });
-            }
-
-            onAuthStateChanged(auth, (user) => {
-                if (user){
-                    // User is signed in, see docs for a list of available properties
-                    // https://firebase.google.com/docs/reference/js/firebase.User
-                    const email = user.email;
-                    console.log(email);
-                    // ...
-                } else {
-                    console.log("Signed Out Successfully");
-                    // User is signed out
-                    // ...
-                }
-            });
-        </script>
     </div>
+    <script>
+
+        const bttn1 = document.getElementById("books__assessment");
+        bttn1.addEventListener("click", function(){
+            location.href = "/Assessment";
+        })
+
+        const bttn2 = document.getElementById("video__assessment");
+        bttn2.addEventListener("click", function(){
+            location.href = "/Assessment";
+        })
+
+        const bttn3 = document.getElementById("text__assessment");
+        bttn3.addEventListener("click", function(){
+            location.href = "/Assessment";
+        })
+
+        // Import the functions you need from the SDKs you need
+        // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+        // import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
+        // import { getAuth, /* RecaptchaVerifier, signInWithPhoneNumber, */  signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
+        // const firebaseConfig = {
+        //     apiKey: "AIzaSyDNFbXQo3Fd7PYfWBwGJd6XdihZ3w-yEvk",
+        //     authDomain: "node-project-c4942.firebaseapp.com",
+        //     databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com",
+        //     projectId: "node-project-c4942",
+        //     storageBucket: "node-project-c4942.appspot.com",
+        //     messagingSenderId: "581470710657",
+        //     appId: "1:581470710657:web:a4792037ef1d415c375680",
+        //     measurementId: "G-HQZDXNGMJ3"
+        // };
+
+        // Initialize Firebase
+        // const app = initializeApp(firebaseConfig);
+        // const auth = getAuth()
+        // const provider = new GoogleAuthProvider();
+        // document.getElementById("LogoutScreen").addEventListener('click', googleLogOut);
+
+        // function googleLogOut() {
+        //     signOut(auth).then(() => {
+        //         /* console.log('Signed Out'); */
+        //     })
+        //     .then(() => {
+        //         location.href = '/'
+        //     })
+        //     .catch((error) => {
+        //         console.error('Sign Out Error', error);
+        //     });
+        // }
+
+        // onAuthStateChanged(auth, (user) => {
+        //     if (user){
+        //         // User is signed in, see docs for a list of available properties
+        //         // https://firebase.google.com/docs/reference/js/firebase.User
+        //         const email = user.email;
+        //         console.log(email);
+        //         // ...
+        //     } else {
+        //         console.log("Signed Out Successfully");
+        //         // User is signed out
+        //         // ...
+        //     }
+        // });
+    </script>
 </body>
 
 </html>

@@ -13,6 +13,10 @@ class Controller {
         res.render("dashboard");
     }
 
+    Assessment = (req, res) => {
+        res.render("Assessment");
+    }
+
     // loginData = (req, res) => {
     //     const uid = req.body.uid;
     //     const email = req.body.email;
@@ -36,13 +40,14 @@ class Controller {
     }
 
     updateUser = async (req, res) => {
-        const uid = req.body.uid
-        const path = "users/teachers/" + uid
+        const uid = req.body.question;
+        const path = "users/teachers/" + uid;
+        //const arr = [req.body.option_a, req.body.option_b, req.body.option_c, req.body.option_d,];
 
         // console.log('>>> ', req.body)
 
         await model.update(path, req.body)
-        res.send();
+        res.send("<h1>Content Uploaded Successfully!!</h1>");
     }
 }
 
