@@ -1,4 +1,5 @@
-const { getDatabaseRef, getAdmin } = require('../util/db');
+import Utilities from '../util/db.js'
+const { getDatabaseRef, getAdmin } = Utilities
 
 class appSectionModel {
     constructor() {
@@ -38,4 +39,4 @@ class appSectionModel {
     }
 }
 
-module.exports = appSectionModel;
+export default appSectionModel;

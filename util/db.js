@@ -3,7 +3,7 @@ let databaseRef
 
 const init = (fbAdmin) => {
     admin = fbAdmin
-    databaseRef = admin.database().ref()
+    // databaseRef = admin.database().ref()
 }
 
 const getAdmin = () => {
@@ -14,6 +14,6 @@ const getDatabaseRef = () => {
     return databaseRef
 }
 
-module.exports = {
+export default {
     init, getAdmin, getDatabaseRef
 }

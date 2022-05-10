@@ -1,5 +1,5 @@
-const { create } = require("domain");
-const appSectionModel = require("../model/User");
+import { create } from "domain";
+import appSectionModel from "../model/User.js";
 const model = new appSectionModel();
 
 class Controller {
@@ -40,7 +40,7 @@ class Controller {
     }
 
     updateUser = async (req, res) => {
-        const uid = req.body.question;
+        const uid = req.body;
         const path = "users/teachers/" + uid;
         //const arr = [req.body.option_a, req.body.option_b, req.body.option_c, req.body.option_d,];
 
@@ -52,4 +52,4 @@ class Controller {
 }
 
 
-module.exports = Controller
+export default Controller
