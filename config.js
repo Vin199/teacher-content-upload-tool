@@ -11,6 +11,7 @@ const {
   AUTH_DOMAIN,
   PROJECT_ID,
   STORAGE_BUCKET,
+  DATABASE_URL,
   MESSAGING_SENDER_ID,
   APP_ID,
   MEASUREMENT_ID
@@ -32,5 +33,6 @@ export const firebaseConfig = {
     storageBucket: STORAGE_BUCKET,
     messagingSenderId: MESSAGING_SENDER_ID,
     appId: APP_ID,
-    measurementId: MEASUREMENT_ID
-};
+    measurementId: MEASUREMENT_ID,
+    databaseURL: DATABASE_URL
+}

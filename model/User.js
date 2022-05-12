@@ -1,14 +1,20 @@
-const { getDatabaseRef, getAdmin } = require('../util/db');
+import { getDatabaseReference } from '../util/db.js';
+
+// import { getDatabaseRef, getAdmin
+//     // , getChild, getGetFunction, getSetFunction, getUpdateFunction 
+// } from '../util/db.js'
 
 class appSectionModel {
     constructor() {
-        this.databaseRef = getDatabaseRef()
-        this.admin = getAdmin()
+        // this.databaseRef = new Database().getDatabaseReference()
+        // console.log('<<< model constructor >>> ', this.databaseRef)
+        // this.admin = getAdmin()
     }
 
     getter = (path) => {
         return new Promise((resolve, reject) => {
-            this.databaseRef.child(path).once('value').then(snapshot => {
+            // const databaseRef = getDatabaseReference()
+            getDatabaseReference().child(path).once('value').then(snapshot => {
                 // console.log(snapshot.val());
                 resolve(snapshot.val())
             }).catch(error => {
@@ -27,7 +33,7 @@ class appSectionModel {
         })
     }
 
-    update = (path, data) => {
+    _update = (path, data) => {
         return new Promise((resolve, reject) => {
             this.databaseRef.child(path).update(data).then(() => {
                 resolve()
@@ -38,4 +44,4 @@ class appSectionModel {
     }
 }
 
-module.exports = appSectionModel;
+export default appSectionModel

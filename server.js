@@ -1,42 +1,71 @@
-var admin = require("firebase-admin");
-const bodyParser = require("body-parser");
-const express = require("express");
-const { init } = require('./util/db')
+import express, { static as Static } from "express"
+import path from 'path'
+import { initializeFirebaseApp, getStorageBucket } from './util/db.js'
+initializeFirebaseApp()
 
-const app = express();
+import compression from 'compression'
+import multer from 'multer'
 
-var serviceAccount = require("/Users/vinay/Desktop/node project/node-project-c4942-firebase-adminsdk-eu7v1-4d1e939534.json");
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+        fileSize: 1000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png|)$/))
+            return cb(new Error('Please upload an image with a correct format (jpg, jpeg, png)'))
 
-const ADMIN_CONFIG = {
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com"
-}
+        cb(undefined, true)
+    }
+})
 
-const fbAdmin = admin.initializeApp(ADMIN_CONFIG)
-init(fbAdmin)
+import router from './routes/userRoutes.js'
 
-app.set("view engine", "ejs");
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("public"));
+const app = express()
 
+app.set("view engine", "ejs")
+app.use(express.json())
+app.use(Static("public"))
 
-const router = require('./routes/userRoutes')
+app.use(compression())
+
 app.use("", router)
 
-// app.get("/", function(req, res){
-//     res.render("login");
-// });
+app.set("port", (process.env.PORT || 3000))
 
-// app.post("/dashboard", function(req, res){
-//     res.render("dashboard");
-// });
+app.locals.bucket = getStorageBucket()
 
-// app.post("/Assessment", function(req, res){
-//     res.render("Assessment");
-// })
+app.post('/upload', upload.single('file'), async (req, res, next) => {
+    try {
+        const name = req.file.originalname // saltedMd5(req.file.originalname, 'SUPER-S@LT!')
+        const fileName = 'folder1/' + name // + path.extname(req.file.originalname)
 
-app.set("port", (process.env.PORT || 3000));
+        const blob = app.locals.bucket.file(fileName)
+        const blobWriter = await blob.createWriteStream({
+            metadata: {
+                contentType: req.file.mimetype,
+            }
+        })
+
+        blobWriter.on('error', (err) => {
+            console.log('Error:: ', err);
+            next(err)
+        });
+        blobWriter.on('finish', () => {
+            // Assembling public URL for accessing the file via HTTP
+            const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${app.locals.bucket.name}/o/${encodeURI(blob.name)}?alt=media`;
+            // Return the file name and its public URL
+            res.status(200).send({ fileName: req.file.originalname, fileLocation: publicUrl});
+        })
+
+        // When there is no more data to be consumed from the stream
+        await blobWriter.end(req.file.buffer)
+    } catch (error) {
+        console.log(error)
+        res.status(400).send(error)
+    }
+})
+
 app.listen(app.get("port"), () => {
-    console.log("Server Running on port " + app.get("port"));
-});
+    console.log("Server Running on port " + app.get("port"))
+})

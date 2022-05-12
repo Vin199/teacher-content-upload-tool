@@ -1,5 +1,4 @@
-const { create } = require("domain");
-const appSectionModel = require("../model/User");
+import appSectionModel from "../model/User.js"
 const model = new appSectionModel();
 
 class Controller {
@@ -38,13 +37,10 @@ class Controller {
     updateUser = async (req, res) => {
         const uid = req.body.uid
         const path = "users/teachers/" + uid
-
-        // console.log('>>> ', req.body)
-
         await model.update(path, req.body)
         res.send();
     }
 }
 
 
-module.exports = Controller
+export default Controller
