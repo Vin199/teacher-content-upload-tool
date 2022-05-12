@@ -39,6 +39,23 @@ window.addEventListener('click', (event) => {
 var bttn = document.getElementById("btn-1");
 var modal__2 = document.getElementById("Modal__2");
 
+
+var back_btn = document.querySelector(".back-2");
+
+back_btn.addEventListener('click', () => {
+    close_modal_2().then(() => {
+        modal.style.display = "block";
+    })
+})
+
+function close_modal_2() {
+    return new Promise((resolve, reject) => {
+        modal__2.style.display = "none";
+        resolve();
+    })
+}
+
+
 // Get the <span> element that closes the modal-2
 var span__2 = document.getElementsByClassName("close-2")[0];
 
@@ -61,10 +78,11 @@ span__2.addEventListener('click', () => {
 });
 
 function closeModal_2(){
-    return new Promise((resolve, reject) => {
-        modal__2.style.display = "none";
-        resolve();
-    })
+    modal__2.style.display = "none";
+    // return new Promise((resolve, reject) => {
+    //     modal__2.style.display = "none";
+    //     resolve();
+    // })
 }
 
 // When the user clicks anywhere outside of the modal-2, close it

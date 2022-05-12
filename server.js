@@ -1,4 +1,3 @@
-import {initializeApp, cert} from "firebase-admin/app";
 import { getStorage } from 'firebase-admin/storage';
 import express, { static as Static, json, urlencoded } from "express";
 import { join } from "path";
@@ -13,15 +12,15 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-import ServiceAccount from "./node-project-c4942-firebase-adminsdk-eu7v1-4d1e939534.json" assert {type:"json"};
+// import ServiceAccount from "./node-project-c4942-firebase-adminsdk-eu7v1-4d1e939534.json" assert {type:"json"};
 
-const ADMIN_CONFIG = {
-    credential: cert(ServiceAccount),
-    databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com",
-}
+// const ADMIN_CONFIG = {
+//     credential: admin.credential.cert(ServiceAccount),
+//     databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com",
+// }
 
-const fbAdmin = initializeApp(ADMIN_CONFIG);
-init(fbAdmin);
+// const fbAdmin = ADMIN_CONFIG.initializeApp();
+// init(fbAdmin);
 
 app.set("view engine", "ejs");
 app.use("/assets",Static(join(__dirname, '/assets')))
@@ -30,18 +29,6 @@ app.use(urlencoded({extended: true}));
 
 
 app.use("", router)
-
-// app.get("/", function(req, res){
-//     res.render("login");
-// });
-
-// app.post("/dashboard", function(req, res){
-//     res.render("dashboard");
-// });
-
-// app.post("/Assessment", function(req, res){
-//     res.render("Assessment");
-// })
 
 app.set("port", (process.env.PORT || 3000));
 app.listen(app.get("port"), () => {

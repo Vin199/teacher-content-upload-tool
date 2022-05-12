@@ -1,19 +1,33 @@
-let admin
-let databaseRef
+import admin from "firebase-admin";
 
-const init = (fbAdmin) => {
-    admin = fbAdmin
-    // databaseRef = admin.database().ref()
-}
+import ServiceAccount from "../node-project-c4942-firebase-adminsdk-eu7v1-4d1e939534.json" assert {type:"json"};
 
-const getAdmin = () => {
-    return admin
-}
+admin.initializeApp({
+    credential: admin.credential.cert(ServiceAccount),
+    databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com"
+  });
 
-const getDatabaseRef = () => {
-    return databaseRef
-}
+
+var db = admin.database();
+
+var ref = db.ref("users/teachers");
 
 export default {
-    init, getAdmin, getDatabaseRef
+    ref
 }
+
+// let admin
+// let databaseRef
+
+// const init = (fbAdmin) => {
+//     admin = fbAdmin
+//     databaseRef = admin.database()
+// }
+
+// const getAdmin = () => {
+//     return admin
+// }
+
+// const getDatabaseRef = () => {
+//     return databaseRef
+// }

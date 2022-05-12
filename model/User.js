@@ -1,10 +1,9 @@
 import Utilities from '../util/db.js'
-const { getDatabaseRef, getAdmin } = Utilities
+const { ref } = Utilities
 
 class appSectionModel {
     constructor() {
-        this.databaseRef = getDatabaseRef()
-        this.admin = getAdmin()
+        this.databaseRef = ref;
     }
 
     getter = (path) => {
@@ -30,7 +29,8 @@ class appSectionModel {
 
     update = (path, data) => {
         return new Promise((resolve, reject) => {
-            this.databaseRef.child(path).update(data).then(() => {
+            const usersRef = this.databaseRef.child(path);
+            usersRef.update(data).then(() => {
                 resolve()
             }).catch((error) => {
                 reject(error)

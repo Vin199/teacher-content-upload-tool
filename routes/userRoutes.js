@@ -9,6 +9,6 @@ router.get('/', controller.login);
 router.get('/dashboard', controller.dashboard);
 router.get('/users', controller.getUsers);
 router.get('/Assessment', controller.Assessment);
-//router.post('/teachers', controller.updateUser);
+router.post('/teachers', controller.updateUser);
 
 export default router

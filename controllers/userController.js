@@ -1,4 +1,3 @@
-import { create } from "domain";
 import appSectionModel from "../model/User.js";
 const model = new appSectionModel();
 
@@ -40,14 +39,14 @@ class Controller {
     }
 
     updateUser = async (req, res) => {
-        const uid = req.body;
-        const path = "users/teachers/" + uid;
+        const uid = req.body.uid;
+        const path = uid;
         //const arr = [req.body.option_a, req.body.option_b, req.body.option_c, req.body.option_d,];
 
         // console.log('>>> ', req.body)
 
         await model.update(path, req.body)
-        res.send("<h1>Content Uploaded Successfully!!</h1>");
+        res.send();
     }
 }
 

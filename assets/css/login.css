@@ -73,6 +73,10 @@ body{
     margin-bottom: 18px;
 }
 
+#LoginScreen:hover{
+    border-color: #0077FF;
+}
+
 #continue {
     width: 390px;
     height: 64px;
@@ -86,6 +90,10 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#continue:hover{
+    border-color: #64748B;
 }
 
 #continue img{
