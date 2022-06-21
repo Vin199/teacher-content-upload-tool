@@ -156,6 +156,7 @@ class Controller {
     const { board, classId, language, subject, topic } = req.body.metadata;
     const teacher_uid = req.body.teacher_data.uid;
     const upload_path = `teacher_upload/history/${teacher_uid}/assessments/${+new Date()}/`;
+    console.log('hi')
     await model.update(upload_path);
     res.send();
     // if (history_value) res.status(200).send(history_value);
