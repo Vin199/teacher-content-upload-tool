@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Upload</title>
+    <link rel="stylesheet" href="/assets/css/videos.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class=".top__container">
+        <img class="iPrep__img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo">
+        <a class="active" href="dashboard"> <img src="/assets/images/arrow_back.svg" alt="arrow-back"></a>
+        <span class="span__text">Upload Videos</span>
+        <hr>
+    </div>
+    <div class="middle__container">
+        <div id="video__single__upload">
+            <img class="single__assessment__logo" src="/assets/images/single_assessment_logo.svg"
+                alt="single_assessment_logo">
+            <span class="single__assessment__text">Video Links</span>
+        </div>
+        <div id="video_bulk_upload">
+            <img class="bulk__assessment__logo" src="/assets/images/bulk_assessment_logo.svg"
+                alt="bulk_assessment_logo">
+            <span class="bulk__assessment__text">Bulk Upload</span>
+        </div>
+        <hr class="middle__hr">
+    </div>
+    <div class="bottom__container">
+        <span class="instruction__text">Instructions</span>
+        <div class="instruction__box"></div>
+        <span class="history__text">History</span>
+        <div class="history__box"></div>
+    </div>
+
+    <div id="video_modal" class="video_modal">
+        <!-- Modal content -->
+        <div class="video_modal_content">
+            <div class="video_close_div">
+                <span class="video_close">&times;</span>
+            </div>
+
+            <div class="video_form_div">
+                <form id="video_form_data" class="video_form_container">
+                    <span class="video_form_text">Please Fill the details below</span>
+                    <div class="video_select_div">
+                        <select name="board" id="board" required>
+                            <option selected disabled value="">Select Board</option>
+                        </select>
+
+                        <select name="language" id="language" class="video_common" required>
+                            <option selected disabled value="">Select Language</option>
+                        </select>
+
+                        <select name="classId" id="class" class="video_common" required>
+                            <option selected disabled value="">Select Class</option>
+                        </select>
+
+                        <select name="subject" id="subject" class="video_common" required>
+                            <option selected disabled value="">Select Subject</option>
+                        </select>
+
+                        <select name="topic" id="topic" class="video_common" required>
+                            <option selected disabled value="">Select Topic</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="next_btn" class="video_btn">Next</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="videoBulkModal" class="video-bulk-modal">
+        <!-- Modal content -->
+        <div class="video-bulk-modal-content">
+            <div class="video-bulk-modal-close-div">
+                <span class="video-bulk-modal-close">&times;</span>
+            </div>
+
+            <div class="video-bulk-modal-form-div">
+                <form id="videoBulkData" class="video-bulk-modal-form-container">
+                    <span class="video-bulk-modal-form-text">Please Fill the details below</span>
+                    <div class="video-bulk-modal-select-div">
+                        <select name="board" id="videoBulkModalBoard" required>
+                            <option selected disabled value="">Select Board</option>
+                        </select>
+                        <select name="language" id="videoBulkModalLanguage" class="video-bulk-modal-common" required>
+                            <option selected disabled value="">Select Language</option>
+                        </select>
+
+                        <select name="classId" id="videoBulkModalClass" class="video-bulk-modal-common" required>
+                            <option selected disabled value="">Select Class</option>
+                        </select>
+
+                        <select name="subject" id="videoBulkModalSubject" class="video-bulk-modal-common" required>
+                            <option selected disabled value="">Select Subject</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="bulkModalNextBtn" class="video-bulk-modal-btn">Next</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/assets/scripts/videos.js"></script>
+</body>
+
+</html>

@@ -3,82 +3,52 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Number verification with OTP</title>
-    <link href="assets/css/login.css" rel="stylesheet" type="text/html">
-    <!-- <style>
-        .container {
-            width: 302px;
-            height: 175px;
-            position: absolute;
-            left: 0px;
-            right: 0px;
-            top: 0px;
-            bottom: 0px;
-            margin: 200px 500px;
-        }
-
-        #number,
-        #verificationcode {
-            width: calc(100% - 24px);
-            padding: 10px;
-            font-size: 20px;
-            margin-bottom: 5px;
-            outline: none;
-        }
-
-        #recaptcha-container {
-            margin-bottom: 5px;
-        }
-
-        #send,
-        #verify {
-            width: 100%;
-            height: 40px;
-            outline: none;
-        }
-
-        #LoginScreen{
-            width: 100%;
-            height: 40px;
-            outline: none;
-        }
-    </style> -->
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/assets/css/login.css" type="text/css">
 </head>
 
 <body>
     <!-- The surrounding HTML is left untouched by FirebaseUI.
          Your app may use that space for branding, controls and other customizations.-->
 
-    <div class="container">
-        <div id="sender">
-            <h3>Enter Your Phone Number: </h3>
-            <input type="text" id="number" placeholder="+91...">
-            <div id="recaptcha-container"></div>
-            <button type="button" id="send">Login</button><br><br>
-            <input type="submit" value="Login With Google" id="LoginScreen">
+    <div class="login__container">
+        <img class="login__img" src="/assets/images/login_screen_logo.svg" alt="iPrep Logo">
+        <span class="login_text">Log in</span>
+        <span class="span_text">Please Choose a Method Below To Login To Your Account</span>
+        <button type="submit" id="loginScreen"> <img src="/assets/images/logos_google-gmail.svg" alt="Gmail Logo">
+            Gmail</button>
+        <span class="or">or</span>
+        <input type="text" id="number" placeholder="Enter Your Phone Number">
+        <div id="continue" class="cont-3">
+            <span>Continue</span>
+            <img src="/assets/images/chevron-forward-outline.svg" alt="">
         </div>
 
-        <!-- <div id="sender">
-            <form action="/create" method="post">
-                <input type="submit" value="Login With Google" id="LoginScreen"><br><br>
-                <input type="submit" value="Log Out With Google" id="LogoutScreen">
-            </form>
-        </div> -->
-        <!-- <div id="verifier">
-            <h3>Enter The OTP: </h3>
-            <input type="text" id="verificationcode" placeholder="OTP Code">
-            <br>
-            <input type="button" id="verify" value="Verify" onClick="codeverify()">
-        </div> -->
-    </div>
+        <!-- The Modal -->
+        <div id="Modal__3" class="modal-3">
+            <!-- Modal content -->
+            <div class="modal-content-3">
+                <div class="close-div-3">
+                    <span class="close-3">&times;</span>
+                </div>
+                <div class="form-div-3">
+                    <span class="otp_text">Enter OTP</span>
+                    <span class="verify">Verification OTP sent to 0000000000</span>
+                    <input id="otp" type="text">
+                    <span class="resend">Resend OTP in <span id="otpTimer">00:30</span> Seconds</span>
+                </div>
+                <div id="cont_div">
+                    <button id="modal_btn" class="btn-3" type="submit">Login</button>
+                </div>
+            </div>
+        </div>
 
+    </div>
     <script type="module">
         // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
-        import { getAuth, /* RecaptchaVerifier, signInWithPhoneNumber, */  signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js";
+        import { getAuth, getAdditionalUserInfo, RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js";
 
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -97,67 +67,78 @@
         const app = initializeApp(firebaseConfig);
 
 
-        const auth = getAuth()
-        /* function getPhoneNumberFromUserInput() {
-            const bttn = document.getElementById("send");
-            bttn.addEventListener('click', function () {
-                return document.getElementById("number").value;
-            })
-        }
+        const phoneNumberField = document.getElementById('number');
+        const codeField = document.getElementById('otp');
+        const getCodeButton = document.getElementById('continue');
+        const signInWithPhoneButton = document.getElementById('modal_btn');
 
-        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-            'size': 'normal',
+
+        const auth = getAuth(app);
+
+        window.recaptchaVerifier = new RecaptchaVerifier('modal_btn', {
+            'size': 'invisible',
             'callback': (response) => {
                 // reCAPTCHA solved, allow signInWithPhoneNumber.
-                // ...
-            },
-            'expired-callback': () => {
-                // Response expired. Ask user to solve reCAPTCHA again.
-                // ...
+                onSignInSubmit();
             }
         }, auth);
 
-        const phoneNumber = '8630128769' // getPhoneNumberFromUserInput();
-        const appVerifier = window.recaptchaVerifier;
+        const sendVerificationCode = () => {
+            const phoneNumber = phoneNumberField.value;
+            const appVerifier = window.recaptchaVerifier;
 
-      
+            // Sends the 6 digit code to the user's phone
+            signInWithPhoneNumber(auth, `+91${phoneNumber}`, appVerifier)
+                .then(confirmationResult => {
 
-        signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-        .then((confirmationResult) => {
-            // SMS sent. Prompt user to type the code from the message, then sign the
-            // user in with confirmationResult.confirm(code).
-            window.confirmationResult = confirmationResult;
-            // ...
-        }).catch((error) => {
-            // Error; SMS not sent
-            // ...
-            console.log(error);
-        }); */
+                    let time = 30
+                    const otpInterval = setInterval(() => {
+                        const t = --time
+
+                        if (t == 0) {
+                            clearInterval(otpInterval)
+                        }
+
+                        document.getElementById('otpTimer').innerHTML = '00:' + (t < 10 ? '0' + t : t)
+                    }, 1000)
+
+                    //const sentCodeId = confirmationResult.verificationId;
+                    window.confirmationResult = confirmationResult;
+                    // Sign in if the verification code is set correctly
+                    signInWithPhoneButton.addEventListener('click', () => signInWithPhone());
+                })
+                .catch((error) => {
+                    // Error; SMS not sent
+                    // ...
+                    window.alert("SMS Not Sent");
+                    console.log(error);
+                });
+        }
+
+        const signInWithPhone = () => {
+            const code = codeField.value;
+            confirmationResult.confirm(code).then((result) => {
+                // User signed in successfully.
+                const user = result.user;
+                //window.alert("User signed in successfully!!");
+
+                console.log(user);
+                // location.href = "/dashboard";
+                // ...
+            }).catch((error) => {
+                // User couldn't sign in (bad verification code?)
+                // ...
+                console.log(error);
+                window.alert("User couldn't sign in (bad verification code?)");
+            });
+        }
+
+        getCodeButton.addEventListener('click', sendVerificationCode);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        /* ----------------------- Google Authentication ------------------------*/
 
         const provider = new GoogleAuthProvider();
-
-        document.getElementById("LoginScreen").addEventListener('click', googleLogin);
         // document.getElementById("LogoutScreen").addEventListener('click', googleLogOut);
 
         function googleLogin() {
@@ -166,7 +147,29 @@
                 // console.log('>>> ', result.user);
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
-                // const user = result.user
+                //const additionalUserInfo = getAdditionalUserInfo(credential);
+
+                // let isNewUser = result.additionalUserInfo.isNewUser;
+                //console.log(credential, additionalUserInfo);
+                // if (isNewUser) {
+                //     //delete the created user
+                //     console.log("isNewUser");
+                //     result.user.delete();
+                // } else {
+                //     // your sign in flow
+                //     const user = {
+                //         'email': result.user.email,
+                //         'uid': result.user.uid,
+                //         'emailVerified': result.user.emailVerified,
+                //         'displayName': result.user.displayName,
+                //         'createdAt': result.user.metadata.createdAt,
+                //         'lastLoginAt': result.user.metadata.lastLoginAt
+                //     }
+                //     //abc(user)
+                //     console.log(user);
+
+                //     location.href = '/dashboard'
+                // }
                 const user = {
                     'email': result.user.email,
                     'uid': result.user.uid,
@@ -175,27 +178,35 @@
                     'createdAt': result.user.metadata.createdAt,
                     'lastLoginAt': result.user.metadata.lastLoginAt
                 }
-                abc(user)
-                location.href = 'dashboard'
-            }).catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                const email = error.email;
-                const credential = GoogleAuthProvider.credentialFromError(error);
+
+                // window.localStorage.setItem("teacher_info", JSON.stringify(user));
+                localStorage.setItem('user', JSON.stringify(user))
+                //abc(user)
+                //console.log(user);
+
+                location.href = '/dashboard'
             })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    const email = error.email;
+                    const credential = GoogleAuthProvider.credentialFromError(error);
+                })
         }
 
         const abc = (user) => {
             const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            }
+
+            fetch('/teachers', options);
         }
 
-        fetch('/teachers', options);
-        }
+        document.getElementById("loginScreen").addEventListener('click', googleLogin);
 
         // function googleLogOut() {
         //     signOut(auth).then(() => {
@@ -214,6 +225,7 @@
         //     `
         // }
     </script>
+    <script type="module" src="/assets/scripts/login.js"></script>
 </body>
 
 </html>

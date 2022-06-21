@@ -1,0 +1,316 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.assessment_top_container{
+    justify-content: center;
+    align-items: center;
+}
+
+.iPrep__img {
+    margin-left: 610px;
+}
+
+.div_2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.active {
+    width: 35px;
+    height: 35px;
+    margin-left: 144px;
+    margin-top: 39px;
+}
+
+.create_assessment_text {
+    width: 222px;
+    height: 27px;
+    font-family: sans-serif;
+    font-size: 22px;
+    line-height: 27px;
+    text-align: center;
+    color: #64748B;
+    margin-left: 430px;
+    margin-top: 39px;
+}
+
+.hrule_1{
+    width: 100vw;
+    border: 0.5px solid rgba(0, 0, 0, 0.05);
+}
+
+.hr {
+    border: 1px solid #e1e1e1;
+    flex: 1;
+    height: 0px;
+    overflow: hidden;
+    margin: 2.5rem 9rem 0 9rem;
+}
+
+.set_questions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 46px;
+}
+
+.question_text {
+    width: 96px;
+    height: 24px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #334155;
+}
+
+.question_area {
+    width: 1050px;
+    height: 107px;
+    background: #FAFAFA;
+    border-radius: 20px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    margin-top: 2rem;
+}
+
+.option_area{
+    width: 1050px;
+    height: 300px;
+    background: #FAFAFA;
+    border-radius: 20px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.question_num {
+    border-radius: 100%;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #334155;
+    margin-left: 40px;
+}
+
+.question {
+    border-style: none;
+    width: 640px;
+    height: 40px;
+    margin-left: 30px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #475569;
+    background-color: #FAFAFA;
+}
+
+.option {
+    border-style: none;
+    width: 640px;
+    height: 40px;
+    margin-left: 30px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #475569;
+    background-color: #FAFAFA;
+}
+
+.btn_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+#uploadAssessment {
+    width: 368px;
+    height: 60px;
+    background: #0077FF;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 25px;
+    border-style: none;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+    margin-bottom: 3rem;
+}
+
+#uploadAssessment:active {
+    transform: translateY(4px);
+}
+
+.quesImage {
+    margin-left: 32px;
+}
+
+.optImage {
+    margin-left: 32px;
+}
+
+.next_ques{
+    padding: 15px 25px;
+    font-size: 24px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: black;
+    border: 2px solid #475569;
+    border-radius: 100%;
+    background-color: #F5F5F4;
+}
+
+.next_ques:hover{
+    border-color: #0077FF;
+}
+
+.next_ques:active {
+    transform: translateY(4px);
+}
+
+.btn_div_text{
+    width: 115px;
+    height: 15px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #475569;
+    margin-top: 10px;
+}
+
+/* The Modal */
+.submitModal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.create-assessment-modal-content {
+    background-color: #fefefe;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 564px;
+    border-radius: 20px;
+}
+
+/* The Close Button */
+.create-assessment-close-div {
+    display: flex;
+    flex-flow: column wrap;
+    align-content: flex-end;
+}
+
+.create-assessment-close{
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.create-assessment-close:hover,
+.create-assessment-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.create-assessment-modal-body{
+    display: flex;
+    height: 150px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.create-assessment-bottom-div{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.reUpload{
+    width: 183px;
+    height: 40px;
+    background: #D3D3D3;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 25px;
+    border-style: none;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    color: black;
+}
+
+.finalSubmit{
+    width: 183px;
+    height: 40px;
+    background: #0077FF;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 25px;
+    border-style: none;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+}
+
+.finalSubmit:active {
+    transform: translateY(4px);
+}
+
+#ImgProgress, #textSpan, #err{
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 150%;
+    font-style: normal;
+    text-align: center;
+    font-family: sans-serif;
+    color: #334155;
+}
+
+#successMsg{
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 150%;
+    font-style: normal;
+    text-align: center;
+    font-family: sans-serif;
+    color: #334155;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Single Assessment</title>
+  <link rel="stylesheet" href="/assets/css/create-assessment.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div class="assessment_top_container">
+    <img class="iPrep__img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo" />
+    <hr class="hrule_1">
+    <div class="div_2">
+      <a class="active" href="assessment">
+        <img src="/assets/images/arrow_back.svg" alt="arrow-back" /></a>
+      <span class="create_assessment_text">Create Assessments</span>
+    </div>
+    <div class="hr"></div>
+  </div>
+  <div class="set_questions">
+    <span class="question_text">Questions</span>
+    <div id="assessment_form">
+      <div class="question_forms" id="question_form_1">
+        <div class="question_area">
+          <span class="question_num">Q.1</span>
+          <input type="text" name="question" class="question" placeholder="Type Your Question Here">
+          <input id="quesImgFile" type="file" class="quesImage" name="questionImage">
+        </div>
+        <div class="option_area">
+          <div class="opt_a">
+            <span class="question_num">A.</span>
+            <input type="text" name="opt_A" class="option" placeholder="Type Option A Here (Right Answer)">
+            <input id="optAFile" type="file" class="optImage" name="option_A_Image">
+          </div>
+          <div class=" opt_b">
+            <span class="question_num">B.</span>
+            <input type="text" name="opt_B" class="option" placeholder="Type Option B Here">
+            <input id="optBFile" type="file" class="optImage" name="option_B_Image">
+          </div>
+          <div class="opt_c">
+            <span class="question_num">C.</span>
+            <input type="text" name="opt_C" class="option" placeholder="Type Option C Here">
+            <input id="optCFile" type="file" class="optImage" name="option_C_Image">
+          </div>
+          <div class="opt_d">
+            <span class="question_num">D.</span>
+            <input type="text" name="opt_D" class="option" placeholder="Type Option D Here">
+            <input id="optDFile" type="file" class="optImage" name="option_D_Image">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btn_div">
+    <button id="nextQues" onclick="vinay()" class="next_ques">
+      +
+    </button>
+    <span class="btn_div_text">Add More Questions</span>
+    <input type="button" id="uploadAssessment" value="Submit">
+  </div>
+
+  <!--The Modal-->
+  <div id="submitModal" class="submitModal">
+    <!-- Modal content -->
+    <div class="create-assessment-modal-content">
+      <div class="create-assessment-close-div">
+        <span class="create-assessment-close">&times;</span>
+      </div>
+      <div class="create-assessment-modal-body">
+        <span id="ImgProgress"></span>
+        <!-- <span id="textSpan"></span> -->
+        <!-- <span id="successMsg"></span> -->
+        <!-- <span id="err"></span> -->
+      </div>
+      <div class="create-assessment-bottom-div">
+        <button id="reUploadBtn" class="reUpload">Re-Upload</button>
+        <button id="finalSubmit" class="finalSubmit">Submit</button>
+        <!--  onclick="onSubmit()" -->
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/assets/scripts/backupscript.js"></script>
+</body>
+
+</html>

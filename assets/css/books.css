@@ -1,0 +1,440 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.notes__top__container {
+    justify-content: center;
+    align-items: center;
+}
+
+.iPrep__img {
+    margin-top: 40px;
+    margin-left: 610px;
+}
+
+.notes_back {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 144px;
+}
+
+.notes__upload__text {
+    width: 222px;
+    height: 27px;
+    margin-left: 619px;
+    margin-top: 168px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 27px;
+    text-align: center;
+    color: #64748B;
+}
+
+hr {
+    width: 1152px;
+    height: 0px;
+    margin-left: 144px;
+    margin-top: 33px;
+    border: 1px solid #DEDEDE;
+}
+
+.notes__middle__container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#notes_single_upload {
+    width: 270px;
+    height: 56px;
+    cursor: pointer;
+    margin-top: 50px;
+    margin-left: 144px;
+    background: rgba(0, 119, 255, 0.05);
+    border: 2px solid #64748B;
+    box-sizing: border-box;
+    border-radius: 8px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#notes_single_upload:hover {
+    border-color: #0077FF;
+}
+
+.single__assessment__logo {
+    width: 27.7px;
+    height: 34px;
+    margin-left: 25px;
+    margin-top: 11px;
+    margin-bottom: 11px;
+}
+
+.single__assessment__text {
+    height: 22px;
+    margin-left: 20px;
+    margin-top: 17px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #64748B;
+}
+
+#notes_bulk_upload {
+    width: 270px;
+    height: 56px;
+    cursor: pointer;
+    margin-top: 50px;
+    margin-left: 24px;
+    background: rgba(0, 119, 255, 0.05);
+    border: 2px solid #64748B;
+    box-sizing: border-box;
+    border-radius: 8px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#notes_bulk_upload:hover {
+    border-color: #0077FF;
+}
+
+.bulk_notes_assessment_logo {
+    width: 42.7px;
+    height: 34px;
+    margin-left: 24px;
+    margin-top: 11px;
+    margin-bottom: 11px;
+}
+
+.bulk_notes_assessment_text {
+    height: 22px;
+    margin-left: 20px;
+    margin-top: 17px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #64748B;
+}
+
+.middle_notes_hr {
+    width: 1152px;
+    height: 0px;
+    margin-left: 144px;
+    margin-top: 50px;
+    border: 1px solid #DEDEDE;
+}
+
+.notes_bottom_container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.notes_instruction_text, .notes_history_text {
+    width: 75px;
+    height: 27px;
+    margin-left: 144px;
+    margin-top: 23px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 27px;
+    color: #94A3B8;
+    justify-content: flex-start;
+}
+
+.notes_instruction_box {
+    width: 1152px;
+    height: 154px;
+    margin-left: 144px;
+    margin-top: 18px;
+    background: #F8F8F8;
+    border-radius: 10px;
+}
+
+.notes_history_box{
+    width: 1152px;
+    height: 101px;
+    margin-left: 144px;
+    margin-top: 18px;
+    background: #F8F8F8;
+    border-radius: 10px;
+    margin-bottom: 70px;
+}
+
+
+/* The Modal (background) */
+.notes_modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+  
+/* Modal Content */
+.notes_modal_content {
+    background-color: #fefefe;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 564px;
+    border-radius: 20px;
+}
+  
+/* The Close Button */
+.notes_close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.notes_close:hover,
+.notes_close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.notes_close_div {
+	display: flex;
+    flex-flow: column wrap;
+    align-content: flex-end;
+}
+
+.notes_form_text {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	width: 262px;
+    height: 24px;
+    margin-left: 141px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #64748B;
+}
+
+.notes_form_div {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.notes_form_container {
+	width: 564px;   
+    left: 438px;
+    top: 225px;
+    background: #FFFFFF;
+}
+
+.notes_select_div {
+	display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    margin-top: 30px;
+}
+
+#board {
+    margin-top: 10px;
+    width: 368px;
+    height: 56px;
+    border: 1px solid #CBD5E1;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #94A3B8;
+}
+
+.notes_common {
+    margin-top: 40px;
+    width: 368px;
+    height: 56px;
+    border: 1px solid #CBD5E1;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #94A3B8;
+}
+
+.notes_btn {
+    margin-top: 40px;
+    margin-bottom: 30px;
+    margin-left: 98px;
+    width: 368px;
+    height: 56px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: white;
+    background: #0077FF;
+    border-radius: 8px;
+    border: 2px solid #0077FF;
+}
+
+.notes_btn:hover{
+    border-color: #64748B;
+}
+
+/* The Bulk Modal (Background)*/
+.notes-bulk-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+  
+/* Modal Content */
+.notes-bulk-modal-content {
+    background-color: #fefefe;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 500px;
+    border-radius: 20px;
+}
+  
+/* The Close Button */
+.notes-bulk-modal-close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.notes-bulk-modal-close:hover,
+.notes-bulk-modal-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.notes-bulk-modal-close-div {
+	display: flex;
+    flex-flow: column wrap;
+    align-content: flex-end;
+}
+
+.notes-bulk-modal-form-text {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+	width: 262px;
+    height: 24px;
+    margin-left: 119px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    color: #64748B;
+}
+
+.notes-bulk-modal-form-div {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.notes-bulk-modal-form-container {
+	width: 500px;   
+    left: 438px;
+    top: 225px;
+    background: #FFFFFF;
+}
+
+.notes-bulk-modal-select-div {
+	display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    margin-top: 30px;
+}
+
+#notesBulkModalBoard {
+    margin-top: 10px;
+    width: 368px;
+    height: 56px;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    font-size: 18px;
+    text-align: center;
+    color: #94A3B8;
+}
+
+.notes-bulk-modal-common {
+    margin-top: 40px;
+    width: 368px;
+    height: 56px;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    font-size: 18px;
+    text-align: center;
+    color: #94A3B8;
+}
+
+.notes-bulk-modal-btn {
+    width: 368px;
+    height: 56px;
+    cursor: pointer;
+    margin-top: 40px;
+    margin-left: 66px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: white;
+    background: #0077FF;
+    border-radius: 8px;
+    border: 2px solid #0077FF;
+}
+
+.notes-bulk-modal-btn:hover{
+    border-color: #64748B;
+}

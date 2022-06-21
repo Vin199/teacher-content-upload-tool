@@ -1,41 +1,57 @@
-const { getDatabaseRef, getAdmin } = require('../util/db');
+import { getDatabaseReference } from "../util/db.js";
 
-class appSectionModel {
-    constructor() {
-        this.databaseRef = getDatabaseRef()
-        this.admin = getAdmin()
-    }
+class AppSectionModel {
+  constructor() {}
 
-    getter = (path) => {
-        return new Promise((resolve, reject) => {
-            this.databaseRef.child(path).once('value').then(snapshot => {
-                // console.log(snapshot.val());
-                resolve(snapshot.val())
-            }).catch(error => {
-                reject(error)
-            })
+  getter = (path) => {
+    return new Promise((resolve, reject) => {
+      getDatabaseReference()
+        .child(path)
+        .once("value")
+        .then((snapshot) => {
+          resolve(snapshot.val());
         })
-    }
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
 
-    setter = (path, data) => {
-        return new Promise((resolve, reject) => {
-            this.databaseRef.child(path).set(data).then(() => {
-                resolve()
-            }).catch((error) => {
-                reject(error)
-            });
+  setter = (path, data) => {
+    return new Promise((resolve, reject) => {
+      getDatabaseReference()
+        .child(path)
+        .set(data)
+        .then(() => {
+          resolve();
         })
-    }
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
 
-    update = (path, data) => {
-        return new Promise((resolve, reject) => {
-            this.databaseRef.child(path).update(data).then(() => {
-                resolve()
-            }).catch((error) => {
-                reject(error)
-            });
+  update = (path, data) => {
+    return new Promise((resolve, reject) => {
+      const usersRef = getDatabaseReference().child(path);
+      usersRef
+        .update(data)
+        .then(() => {
+          resolve(data);
         })
-    }
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+
+  setHistory = (path, data) => {
+    return new Promise((resolve, reject) => {
+      console.log(path);
+      resolve();
+      // getDatabaseReference().child(path).update();
+    });
+  };
 }
 
-module.exports = appSectionModel;
+export default AppSectionModel;

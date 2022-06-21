@@ -1,42 +1,26 @@
-var admin = require("firebase-admin");
-const bodyParser = require("body-parser");
-const express = require("express");
-const { init } = require('./util/db')
+import express, { static as Static, json, urlencoded } from "express";
+import { join } from "path";
+import router from "./routes/userRoutes.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import Middleware from "./Middleware/middleware.js";
+import { initializeFirebaseApp } from "./util/db.js";
+
+initializeFirebaseApp();
 
 const app = express();
-
-var serviceAccount = require("/Users/vinay/Desktop/node project/node-project-c4942-firebase-adminsdk-eu7v1-4d1e939534.json");
-
-const ADMIN_CONFIG = {
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com"
-}
-
-const fbAdmin = admin.initializeApp(ADMIN_CONFIG)
-init(fbAdmin)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 app.set("view engine", "ejs");
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("public"));
+app.use("/assets", Static(join(__dirname, "/assets")));
+app.use(json());
+app.use(urlencoded({ extended: true }));
+app.use(Middleware);
 
+app.use("", router);
 
-const router = require('./routes/userRoutes')
-app.use("", router)
-
-// app.get("/", function(req, res){
-//     res.render("login");
-// });
-
-// app.post("/dashboard", function(req, res){
-//     res.render("dashboard");
-// });
-
-// app.post("/Assessment", function(req, res){
-//     res.render("Assessment");
-// })
-
-app.set("port", (process.env.PORT || 3000));
+app.set("port", process.env.PORT || 3000);
 app.listen(app.get("port"), () => {
-    console.log("Server Running on port " + app.get("port"));
+  console.log("Server Running on port " + app.get("port"));
 });
