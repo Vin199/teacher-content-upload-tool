@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Number verification with OTP</title>
+    <title>Login Page</title>
     <link rel="stylesheet" href="/assets/css/login.css" type="text/css">
 </head>
 
@@ -15,41 +15,40 @@
         <img class="login__img" src="/assets/images/login_screen_logo.svg" alt="iPrep Logo">
         <span class="login_text">Log in</span>
         <span class="span_text">Please Choose a Method Below To Login To Your Account</span>
-        <button type="submit" id="LoginScreen"> <img src="/assets/images/logos_google-gmail.svg" alt="Gmail Logo">
+        <button type="submit" id="loginScreen"> <img src="/assets/images/logos_google-gmail.svg" alt="Gmail Logo">
             Gmail</button>
         <span class="or">or</span>
         <input type="text" id="number" placeholder="Enter Your Phone Number">
-        <button type="button" id="continue">
-            <div>Continue</div> <img src="/assets/images/chevron-forward-outline.svg" alt="">
-        </button>
-
-
-        <!-- <div>
-            <label for="phoneNumber">Phone Number</label> <br>
-            <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9]" placeholder="Enter Your Number" /> <br>
+        <div id="continue" class="cont-3">
+            <span>Continue</span>
+            <img src="/assets/images/chevron-forward-outline.svg" alt="">
         </div>
-        <br>
-        <button id="getCode">Get Code</button>
-        <br>
-        <div>
-            <label for="code">Code</label> <br>
-            <input type="text" id="code" name="code" placeholder="Enter The OTP" /> <br>
-        </div>
-        <br>
-        <button id="signInWithPhone">Login</button> -->
 
-        <!-- <input type="text" id="number" placeholder="+91...">
-        <div id="recaptcha-container"></div>
-        <button type="button" id="send">Login With Phone Number</button><br>
-        <p>or</p>
-        <input type="submit" value="Login With Google" id="LoginScreen"> -->
+        <!-- The Modal -->
+        <div id="Modal__3" class="modal-3">
+            <!-- Modal content -->
+            <div class="modal-content-3">
+                <div class="close-div-3">
+                    <span class="close-3">&times;</span>
+                </div>
+                <div class="form-div-3">
+                    <span class="otp_text">Enter OTP</span>
+                    <span class="verify">Verification OTP sent to 0000000000</span>
+                    <input id="otp" type="text">
+                    <span class="resend">Resend OTP in <span id="otpTimer">00:30</span> Seconds</span>
+                </div>
+                <div id="cont_div">
+                    <button id="modal_btn" class="btn-3" type="submit">Login</button>
+                </div>
+            </div>
+        </div>
+
     </div>
-
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js";
-        import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js";
+        import { getAuth, getAdditionalUserInfo, RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js";
 
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -68,16 +67,15 @@
         const app = initializeApp(firebaseConfig);
 
 
+        const phoneNumberField = document.getElementById('number');
+        const codeField = document.getElementById('otp');
+        const getCodeButton = document.getElementById('continue');
+        const signInWithPhoneButton = document.getElementById('modal_btn');
 
-        const phoneNumberField = document.getElementById('phoneNumber');
-        const codeField = document.getElementById('code');
-        const getCodeButton = document.getElementById('getCode');
-        const signInWithPhoneButton = document.getElementById('signInWithPhone');
 
+        const auth = getAuth(app);
 
-        const auth = getAuth()
-
-        window.recaptchaVerifier = new RecaptchaVerifier('signInWithPhone', {
+        window.recaptchaVerifier = new RecaptchaVerifier('modal_btn', {
             'size': 'invisible',
             'callback': (response) => {
                 // reCAPTCHA solved, allow signInWithPhoneNumber.
@@ -92,9 +90,20 @@
             // Sends the 6 digit code to the user's phone
             signInWithPhoneNumber(auth, `+91${phoneNumber}`, appVerifier)
                 .then(confirmationResult => {
+
+                    let time = 30
+                    const otpInterval = setInterval(() => {
+                        const t = --time
+
+                        if (t == 0) {
+                            clearInterval(otpInterval)
+                        }
+
+                        document.getElementById('otpTimer').innerHTML = '00:' + (t < 10 ? '0' + t : t)
+                    }, 1000)
+
                     //const sentCodeId = confirmationResult.verificationId;
                     window.confirmationResult = confirmationResult;
-
                     // Sign in if the verification code is set correctly
                     signInWithPhoneButton.addEventListener('click', () => signInWithPhone());
                 })
@@ -111,8 +120,10 @@
             confirmationResult.confirm(code).then((result) => {
                 // User signed in successfully.
                 const user = result.user;
-                window.alert("User signed in successfully!!");
+                //window.alert("User signed in successfully!!");
+
                 console.log(user);
+                // location.href = "/dashboard";
                 // ...
             }).catch((error) => {
                 // User couldn't sign in (bad verification code?)
@@ -125,23 +136,9 @@
         getCodeButton.addEventListener('click', sendVerificationCode);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        /* ----------------------- Google Authentication ------------------------*/
 
         const provider = new GoogleAuthProvider();
-
-        document.getElementById("LoginScreen").addEventListener('click', googleLogin);
         // document.getElementById("LogoutScreen").addEventListener('click', googleLogOut);
 
         function googleLogin() {
@@ -150,7 +147,29 @@
                 // console.log('>>> ', result.user);
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential.accessToken;
-                // const user = result.user
+                //const additionalUserInfo = getAdditionalUserInfo(credential);
+
+                // let isNewUser = result.additionalUserInfo.isNewUser;
+                //console.log(credential, additionalUserInfo);
+                // if (isNewUser) {
+                //     //delete the created user
+                //     console.log("isNewUser");
+                //     result.user.delete();
+                // } else {
+                //     // your sign in flow
+                //     const user = {
+                //         'email': result.user.email,
+                //         'uid': result.user.uid,
+                //         'emailVerified': result.user.emailVerified,
+                //         'displayName': result.user.displayName,
+                //         'createdAt': result.user.metadata.createdAt,
+                //         'lastLoginAt': result.user.metadata.lastLoginAt
+                //     }
+                //     //abc(user)
+                //     console.log(user);
+
+                //     location.href = '/dashboard'
+                // }
                 const user = {
                     'email': result.user.email,
                     'uid': result.user.uid,
@@ -159,7 +178,12 @@
                     'createdAt': result.user.metadata.createdAt,
                     'lastLoginAt': result.user.metadata.lastLoginAt
                 }
-                abc(user)
+
+                // window.localStorage.setItem("teacher_info", JSON.stringify(user));
+                localStorage.setItem('user', JSON.stringify(user))
+                //abc(user)
+                //console.log(user);
+
                 location.href = '/dashboard'
             })
                 .catch((error) => {
@@ -182,6 +206,8 @@
             fetch('/teachers', options);
         }
 
+        document.getElementById("loginScreen").addEventListener('click', googleLogin);
+
         // function googleLogOut() {
         //     signOut(auth).then(() => {
         //         console.log('Signed Out');
@@ -199,6 +225,7 @@
         //     `
         // }
     </script>
+    <script type="module" src="/assets/scripts/login.js"></script>
 </body>
 
 </html>

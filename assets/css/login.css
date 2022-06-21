@@ -1,4 +1,4 @@
-body{
+body {
     margin: 0;
     padding: 0;
 }
@@ -27,7 +27,7 @@ body{
     margin-bottom: 11px;
 }
 
-.span_text{
+.span_text {
     font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -46,7 +46,7 @@ body{
     border: 2px solid #E2E8F0;
     box-sizing: border-box;
     border-radius: 12px;
-    margin-bottom: 56px;
+    margin-bottom: 36px;
 }
 
 .or {
@@ -60,7 +60,7 @@ body{
     margin-bottom: 18px;
 }
 
-#LoginScreen{
+#loginScreen {
     width: 390px;
     height: 64px;
     font-size: medium;
@@ -73,7 +73,7 @@ body{
     margin-bottom: 18px;
 }
 
-#LoginScreen:hover{
+#loginScreen:hover {
     border-color: #0077FF;
 }
 
@@ -92,11 +92,141 @@ body{
     align-items: center;
 }
 
-#continue:hover{
+#continue:hover {
     border-color: #64748B;
 }
 
-#continue img{
+#continue img {
     width: 18px;
     filter: invert(1);
+}
+
+
+
+/* The Modal (background) */
+.modal-3 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content-3 {
+    background-color: #fefefe;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 564px;
+    border-radius: 20px;
+}
+
+/* The Close Button */
+.close-3 {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-3:hover,
+.close-3:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.close-div-3 {
+	display: flex;
+    flex-flow: column wrap;
+    align-content: flex-end;
+}
+
+.form-div-3 {
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#cont_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.btn-3 {
+    width: 368px;
+    height: 56px;
+    background: #0077FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: white;
+    border: 2px solid #0077FF;
+}
+
+.btn-3:hover {
+    border-color: #64748B;
+}
+
+.otp_text{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 27px;
+    line-height: 27px;
+    color: #212121;
+    margin-bottom: 13px;
+}
+
+.verify{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #666666;
+}
+
+#otp {
+    margin-top: 21px;
+    width: 368px;
+    height: 56px;
+    background: white;
+    border-radius: 8px;
+    text-align: center;
+    font-family: "Inter";
+    font-style: normal;
+    font-size: 25px;
+    
+}
+
+.resend {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 12px;
+    color: #0077FF;
+    margin-top: 10px;
 }

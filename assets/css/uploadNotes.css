@@ -1,0 +1,164 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.notes-top-container{
+    justify-content: center;
+    align-items: center;
+}
+
+.iPrep-img {
+    margin-left: 610px;
+}
+
+.notes-div-2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.notes-back-btn {
+    width: 35px;
+    height: 35px;
+    margin-left: 144px;
+    margin-top: 39px;
+}
+
+.create-assessment-text {
+    height: 27px;
+    font-family: sans-serif;
+    font-size: 22px;
+    line-height: 27px;
+    text-align: center;
+    color: #64748B;
+    margin-left: 430px;
+    margin-top: 39px;
+}
+
+.notes-hrule-1{
+    width: 100vw;
+    border: 0.5px solid rgba(0, 0, 0, 0.05);
+}
+
+.notes-hr {
+    border: 1px solid #e1e1e1;
+    flex: 1;
+    height: 0px;
+    overflow: hidden;
+    margin: 2.5rem 9rem 0 9rem;
+}
+
+.notes-set-ques {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 46px;
+}
+
+.notes-ques-forms{
+    margin-top: 20px;
+}
+
+.notes-ques-area {
+    width: 760px;
+    height: 146px;
+    background: #FAFAFA;
+    border-radius: 20px;
+    margin-top: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.notes-question-num {
+    border-radius: 100%;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #334155;
+    margin-left: 40px;
+}
+
+.notes-name {
+    border-style: none;
+    width: 640px;
+    height: 40px;
+    margin-left: 30px;
+    margin-top: 20px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #475569;
+    background-color: #FAFAFA;
+}
+
+.notes-link {
+    border-style: none;
+    width: 640px;
+    height: 40px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #475569;
+    background-color: #FAFAFA;
+    margin-left: 85px;
+    margin-top: 20px;
+}
+
+.notes-btn-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.next-link{
+    padding: 15px 25px;
+    font-size: 24px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: black;
+    border: 2px solid #475569;
+    border-radius: 100%;
+    background-color: #F5F5F4;
+}
+
+.notes-btn-text{
+    width: 115px;
+    height: 15px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #475569;
+    margin-top: 10px;
+}
+
+#noteSubmit {
+    width: 368px;
+    height: 60px;
+    background: #0077FF;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 25px;
+    border-style: none;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+    margin-bottom: 3rem;
+}
+
+#noteSubmit:active {
+    transform: translateY(4px);
+}

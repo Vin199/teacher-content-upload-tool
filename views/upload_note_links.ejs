@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Note Links</title>
+    <link rel="stylesheet" href="/assets/css/uploadNotes.css">
+</head>
+
+<body>
+    <div class="notes-top-container">
+        <img class="iPrep-img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo" />
+        <hr class="notes-hrule-1">
+        <div class="notes-div-2">
+            <a class="notes-back-btn" href="books">
+                <img src="/assets/images/arrow_back.svg" alt="arrow-back" /></a>
+            <span class="create-assessment-text">Upload Notes/Books Links</span>
+        </div>
+        <div class="notes-hr"></div>
+    </div>
+    <div class="notes-set-ques">
+        <!-- <span class="question_text">Video Links</span> -->
+        <div id="notes_form">
+            <div class="notes-ques-forms" id="question_form_1">
+                <div class="notes-ques-area">
+                    <span class="notes-question-num">1.</span>
+                    <input type="text" name="notesName" class="notes-name" placeholder="Notes/Books Name">
+                    <input type="text" class="notes-link" name="notesLink" placeholder="Notes/Books Link">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="notes-btn-div">
+        <button id="nextQues" onclick="add_more_notes_field()" class="next-link">
+            +
+        </button>
+        <span class="notes-btn-text">Add More Notes/Books</span>
+        <input type="submit" id="noteSubmit">
+    </div>
+    <script src="/assets/scripts/upload_note_links.js"></script>
+</body>
+
+</html>

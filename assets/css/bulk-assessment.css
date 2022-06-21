@@ -1,0 +1,484 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.bulk-top-container{
+    justify-content: center;
+    align-items: center;
+}
+
+.bulk-iPrep-img {
+    margin-left: 610px;
+}
+
+.bulk-hrule-1 {
+    width: 100vw;
+    border: 0.5px solid rgba(0, 0, 0, 0.05);
+}
+
+.bulk-div-2 {
+    display: flex;
+    flex-direction: row;
+}
+
+.bulk-active {
+    width: 35px;
+    height: 35px;
+    margin-left: 144px;
+    margin-top: 39px;
+}
+
+.bulk-assessment-text {
+    width: 222px;
+    height: 27px;
+    font-family: sans-serif;
+    font-size: 22px;
+    line-height: 27px;
+    text-align: center;
+    color: #64748B;
+    margin-left: 430px;
+    margin-top: 39px;
+}
+
+.bulk-hr {
+    border: 1px solid #e1e1e1;
+    flex: 1;
+    height: 0px;
+    overflow: hidden;
+    margin: 2.5rem 9rem 2rem 9rem;
+}
+
+.instruction-text-heading {
+    width: 125px;
+    height: 27px;
+    margin-left: 243px;
+    font-family: sans-serif;
+    font-size: 22px;
+    line-height: 27px;
+    color: #64748B;
+}
+
+.instructions-div {
+    width: 956px;
+    height: 350px;
+    display: flex;
+    margin-left: 243px;
+    margin-top: 16px;
+    background: #FAFAFA;
+    border-radius: 30px;
+}
+
+.instruction-area{
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.instruction-text-1{
+    font-size: 20px;
+    line-height: 22px;
+    color: #64748B;
+    font-family: sans-serif;
+    font-weight: 500;
+}
+
+.instruction-text-2{
+    font-size: 20px;
+    line-height: 22px;
+    color: #64748B;
+    font-family: sans-serif;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.bulk-bottom-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.download-template {
+    display: flex;
+    justify-content: center;
+    width: 220px;
+    height: 46px;
+    cursor: pointer;
+    border: 2px solid #64748B;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.download-template:hover{
+    border-color: #0077FF;
+}
+
+.download-text{
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 17px;
+    color: #64748B;
+    margin-right: 10px;
+}
+
+.dwnld-img {
+    width: 30px;
+}
+
+.upload-assessment{
+    width: 270px;
+    height: 56px;
+    cursor: pointer;
+    margin-left: 243px;
+    margin-top: 34px;
+    margin-right: 243px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #64748B;
+    border-radius: 10px;
+}
+
+.upload-assessment:hover{
+    border-color: #0077FF;
+}
+
+.upload-text{
+    width: 180px;
+    height: 17px;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 17px;
+    color: #64748B;
+    border: none;
+    background: white;
+}
+
+.download-template-2{
+    width: 270px;
+    height: 56px;
+    margin-left: 243px;
+    margin-top: 34px;
+    margin-right: 243px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #64748B;
+    border-radius: 10px;
+}
+
+.download-template-2:hover{
+    border-color: #0077FF;
+}
+
+.download-text-2{
+    width: 170px;
+    height: 17px;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 17px;
+    color: #64748B;
+    cursor: pointer;
+}
+
+/* The Modal */
+.getExcelSheetModal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.excelModalDiv {
+    background-color: #fefefe;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 564px;
+    border-radius: 20px;
+}
+
+/* The Close Button */
+.excel-modal-close-div {
+    display: flex;
+    flex-flow: column wrap;
+    align-content: flex-end;
+}
+
+.excel-modal-close{
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.excel-modal-close:hover,
+.excel-modal-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.excel-file-msg-div{
+    display: flex;
+    height: 150px;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.excel-msg-text{
+    width: 500px;
+    text-align: center;
+    font-size: 25px;
+    font-family: sans-serif;
+    font-size: 25px;
+    line-height: 40px;
+    color: #64748B;
+}
+
+.download-template-div{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+.bulk-preview-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.select-text{
+    width: 137px;
+    height: 24px;
+    font-family: sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color: #64748B;
+}
+
+.select-topics{
+    width: 368px;
+    height: 56px;
+    border: 1px solid #64748B;
+    border-radius: 6px;
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #64748B;
+}
+
+#set_questions{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.question_area {
+    width: 1050px;
+    height: 107px;
+    background: #FAFAFA;
+    border-radius: 20px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    margin-top: 2rem;
+}
+
+.option_area{
+    width: 1050px;
+    height: 300px;
+    background: #FAFAFA;
+    border-radius: 20px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.question_num {
+    border-radius: 100%;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: #334155;
+    margin-left: 40px;
+}
+
+.question {
+    border-style: none;
+    width: 640px;
+    height: 40px;
+    margin-left: 30px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #475569;
+    background-color: #FAFAFA;
+}
+
+.option {
+    border-style: none;
+    width: 640px;
+    height: 40px;
+    margin-left: 30px;
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: #475569;
+    background-color: #FAFAFA;
+}
+
+.quesImage {
+    margin-left: 32px;
+}
+
+.optImage {
+    margin-left: 32px;
+}
+
+#submit{
+    display: flex;
+    width: 368px;
+    height: 60px;
+    cursor: pointer;
+    margin-top: 40px;
+    border-radius: 8px;
+    border-style: none;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+    margin-bottom: 3rem;
+    font-family: sans-serif;
+    background: #0077FF;
+    justify-content: center;
+    align-items: center;
+}
+
+/* The Modal */
+.submitModal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.create-assessment-modal-content {
+    background-color: #fefefe;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 564px;
+    border-radius: 20px;
+}
+
+/* The Close Button */
+.create-assessment-close-div {
+    display: flex;
+    flex-flow: column wrap;
+    align-content: flex-end;
+}
+
+.create-assessment-close{
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.create-assessment-close:hover,
+.create-assessment-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.create-assessment-modal-body{
+    display: flex;
+    height: 150px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.create-assessment-bottom-div{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.reUpload{
+    width: 183px;
+    height: 40px;
+    background: #D3D3D3;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 25px;
+    border-style: none;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    color: black;
+}
+
+.finalSubmit{
+    width: 183px;
+    height: 40px;
+    background: #0077FF;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 25px;
+    border-style: none;
+    font-family: sans-serif;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+}
+
+.finalSubmit:active {
+    transform: translateY(4px);
+}
+
+#ImgProgress, #successMsg, #textSpan, #err{
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 150%;
+    font-style: normal;
+    text-align: center;
+    font-family: sans-serif;
+    color: #334155;
+}

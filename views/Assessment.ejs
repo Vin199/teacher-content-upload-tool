@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assessments</title>
     <link rel="stylesheet" href="/assets/css/assessment.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -20,7 +22,7 @@
         <div id="single__upload">
             <img class="single__assessment__logo" src="/assets/images/single_assessment_logo.svg"
                 alt="single_assessment_logo">
-            <span class="single__assessment__text">Single Assessment</span>
+            <span class="single__assessment__text">Create Assessment</span>
         </div>
         <div id="bulk__upload">
             <img class="bulk__assessment__logo" src="/assets/images/bulk_assessment_logo.svg"
@@ -30,11 +32,30 @@
         <hr class="middle__hr">
     </div>
     <div class="bottom__container">
-        <!-- <input type="file" id="photo">
-        <button id="uploadimage">Upload Image</button> -->
         <span class="bottom__text">History</span>
-        <div class="history__box"></div>
+        <!-- <span class="assessment_time_stamp">Time Stamp</span>
+        <span class="assessment_name">Name</span>
+        <span class="assessment_link">Link</span>
+        <div id="table" class="history__box"></div> -->
     </div>
+    <div id="tableDiv">
+        <table class="table">
+            <tr>
+                <th class="th-time">Timestamp</th>
+                <th class="th-board">Board</th>
+                <th class="th-class">Class</th>
+                <th class="th-language">Language</th>
+                <th class="th-subject">Subject</th>
+                <th class="th-topic">Topic Name</th>
+                <th class="th-btn">Button</th>
+            </tr>
+            <tr id="tbody">
+
+            </tr>
+        </table>
+    </div>
+
+    <div id="set_questions"></div>
 
     <div id="myModal" class="modal">
         <!-- Modal content -->
@@ -44,255 +65,67 @@
             </div>
 
             <div class="form-div">
-                <form action="#modal__2" class="form-container">
+                <form id="initData" class="form-container">
                     <span class="form-text">Please Fill the details below</span>
                     <div class="select-div">
-                        <!-- <label class="Class" for="class">Class</label> -->
-                        <select name="class" id="class">
-                            <option value="class">Class</option>
-                            <option value="class-1">Class-1</option>
-                            <option value="class-2">Class-2</option>
-                            <option value="class-3">Class-3</option>
-                            <option value="class-4">Class-4</option>
+                        <select name="board" id="board" required>
+                            <option selected disabled value="">Select Board</option>
                         </select>
 
-                        <select name="subject" id="common">
-                            <option id="common-opt" value="subject">Subject</option>
-                            <option id="common-opt" value="Hindi">Hindi</option>
-                            <option id="common-opt" value="English">English</option>
-                            <option id="common-opt" value="Maths">Maths</option>
-                            <option id="common-opt" value="Science">Science</option>
+                        <select name="language" id="language" class="common" required>
+                            <option selected disabled value="">Select Language</option>
                         </select>
 
-                        <select name="topic" id="common">
-                            <option value="topic">Topic</option>
-                            <option value="Hindi">Hindi</option>
-                            <option value="English">English</option>
-                            <option value="Maths">Maths</option>
-                            <option value="Science">Science</option>
+                        <select name="classId" id="class" class="common" required>
+                            <option selected disabled value="">Select Class</option>
                         </select>
 
-                        <select name="language" id="common">
-                            <option value="language">Language</option>
-                            <option value="Hindi">Hindi</option>
-                            <option value="English">English</option>
+                        <select name="subject" id="subject" class="common" required>
+                            <option selected disabled value="">Select Subject</option>
+                        </select>
+
+                        <select name="topic" id="topic" class="common" required>
+                            <option selected disabled value="">Select Topic</option>
                         </select>
                     </div>
-                    <button id="btn-1" class="btn">Next</button>
+                    <button type="submit" id="Next_btn" class="btn">Next</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <div id="Modal__2" class="modal-2">
+    <div id="bulkModal" class="bulkModal">
         <!-- Modal content -->
-        <div class="modal-content-2">
-            <div class="close-div-2">
-                <span class="back-2">&#8249;</span>
-                <span class="close-2">&times;</span>
+        <div class="bulk-modal-content">
+            <div class="bulk-modal-close-div">
+                <span class="bulk-modal-close">&times;</span>
             </div>
 
-            <div class="form-div-2">
-                <span class="modal_2_text">Questions</span>
-                <div class="custom-div">
-                    <div id="custom-q-div">
-                        <input type="text" id="common-1" placeholder="Type Your Question Here" name="question">
-                        <label for="photo-1"><img id="Q_btn" src="/assets/images/Group 11112.svg" alt=""></label>
-                        <input class="optImage" type="file" id="photo-1" style="display: none;" />
+            <div class="bulk-modal-form-div">
+                <form id="initDataBulk" class="bulk-modal-form-container">
+                    <span class="bulk-modal-form-text">Please Fill the details below</span>
+                    <div class="bulk-modal-select-div">
+                        <select name="board" id="bulkModalBoard" required>
+                            <option selected disabled value="">Select Board</option>
+                        </select>
+                        <select name="language" id="bulkModalLanguage" class="bulk-modal-common" required>
+                            <option selected disabled value="">Select Language</option>
+                        </select>
+
+                        <select name="classId" id="bulkModalClass" class="bulk-modal-common" required>
+                            <option selected disabled value="">Select Class</option>
+                        </select>
+
+                        <select name="subject" id="bulkModalSubject" class="bulk-modal-common" required>
+                            <option selected disabled value="">Select Subject</option>
+                        </select>
                     </div>
-                    <div id="custom-q-div">
-                        <input type="text" id="common-2" placeholder="Type Option A Here" name="option_a">
-                        <label for="photo-2"><img id="opt_btn" src="/assets/images/Group 11112.svg" alt=""></label>
-                        <input class="optImage" type="file" id="photo-2" style="display: none" />
-                    </div>
-                    <div id="custom-q-div">
-                        <input type="text" id="common-2" placeholder="Type Option B Here" name="option_b">
-                        <label for="photo-3"><img id="opt_btn" src="/assets/images/Group 11112.svg" alt=""></label>
-                        <input class="optImage" type="file" id="photo-3" style="display: none" />
-                    </div>
-                    <div id="custom-q-div">
-                        <input type="text" id="common-2" placeholder="Type Option C Here" name="option_c">
-                        <label for="photo-4"><img id="opt_btn" src="/assets/images/Group 11112.svg" alt=""></label>
-                        <input class="optImage" type="file" id="photo-4" style="display: none" />
-                    </div>
-                    <div id="custom-q-div">
-                        <input type="text" id="common-2" placeholder="Type Option D Here" name="option_d">
-                        <label for="photo-5"><img id="opt_btn" src="/assets/images/Group 11112.svg" alt=""></label>
-                        <input class="optImage" type="file" id="photo-5" style="display: none" />
-                    </div>
-                    <div id="custom-input-div">
-                        <button id="uploadImage" class="btn-2">Submit</button>
-                    </div>
-                </div>
+                    <button type="submit" id="bulkModalNextBtn" class="bulk-modal-btn">Next</button>
+                </form>
             </div>
         </div>
     </div>
-    <script src="/assets/scripts/assessment.js"></script>
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
-        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-storage.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDNFbXQo3Fd7PYfWBwGJd6XdihZ3w-yEvk",
-            authDomain: "node-project-c4942.firebaseapp.com",
-            databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com",
-            projectId: "node-project-c4942",
-            storageBucket: "node-project-c4942.appspot.com",
-            messagingSenderId: "581470710657",
-            appId: "1:581470710657:web:a4792037ef1d415c375680",
-            measurementId: "G-HQZDXNGMJ3"
-        };
-
-        const firebaseApp = initializeApp(firebaseConfig);
-        const storage = getStorage(firebaseApp);
-
-        var file;
-        function getfile() {
-            var pic = document.getElementsByClassName("optImage");
-
-            //var lengthOfPic = pic.files.length;
-
-            // selected file is that file which user chosen by html form 
-            for (let i = 0; i < pic.length; i++) {
-                if(pic[i].files[0]){
-                    file = pic[i].files[0];
-                    var fileName = file.name;
-                    // console.log('before ' + i);
-                    myfunction(fileName);
-                    // console.log('after ' + i);
-                }
-            }
-
-            // make save button disabled for few seconds that has id='submit_link' 
-            // document.getElementById('submit_link').setAttribute('disabled', 'true');
-            // call below written function 
-        }
-
-        function myfunction(fileName) {
-            // select unique name for everytime when image uploaded 
-            // Date.now() is function that give current timestamp 
-            const name = new Date() + "-" + fileName;
-
-            // make ref to your firebase storage and select images folder 
-            var storageRef = ref(storage, `Images/${name}`);
-
-            const metadata = {
-                contentType: file.type,
-            };
-
-            // put file to firebase 
-            const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-
-            // all working for progress bar that in html 
-            // to indicate image uploading... report 
-            uploadTask.on('state_changed', (snapshot) => {
-                //Observe state change events such as progress, pause, and resume
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(fileName + ' - Upload is ' + progress + '% done');
-                switch (snapshot.state) {
-                    case 'paused':
-                        console.log('Upload is paused');
-                        break;
-                    case 'running':
-                        console.log('Upload is running');
-                        break;
-                }
-            }, function (error) {
-                console.log(error);
-            }, () => {
-                // Handle successful uploads on complete
-                // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    console.log('File available at', downloadURL);
-                })
-                .then(() => {
-                    window.alert("File Uploaded Successfully!!");
-                })
-            }
-            );
-        };
-
-        document.getElementById("uploadImage").onclick = getfile
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // function uploadImage() {
-        //     const file = document.getElementById("photo").files[0];
-
-        //     // for(let i = 0; i < files.length; i++) {
-        //     //     // if(files[i].files[0])
-        //     //         console.log('>>> ', files[i].files[0]);
-        //     // }
-        //     const name = new Date() + "-" + file.name;
-        //     const storageRef = ref(storage, `Images/${name}`);
-        //     const metadata = {
-        //         contentType: file.type,
-        //     };
-        //     const uploadTask = uploadBytesResumable(storageRef, file, metadata);
-        //     console.log(uploadTask);
-
-        //     uploadTask.on('state_changed', (snapshot) => {
-        //         // Observe state change events such as progress, pause, and resume
-        //         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        //         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        //         console.log('Upload is ' + progress + '% done');
-        //         switch (snapshot.state) {
-        //             case 'paused':
-        //                 console.log('Upload is paused');
-        //                 break;
-        //             case 'running':
-        //                 console.log('Upload is running');
-        //                 break;
-        //         }
-        //     },
-        //     (error) => {
-        //         // Handle unsuccessful uploads
-        //     },
-        //     () => {
-        //         // Handle successful uploads on complete
-        //         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        //         window.alert("File Uploaded Successfully!!");
-        //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        //             console.log('File available at', downloadURL);
-        //         });
-        //     }
-        //     );
-        // }
-        //document.getElementById("uploadImage").onclick = uploadImage
-    </script>
+    <script type="module" src="/assets/scripts/assessment.js"></script>
 </body>
 
 </html>

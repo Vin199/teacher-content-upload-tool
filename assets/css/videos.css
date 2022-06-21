@@ -26,7 +26,7 @@ body{
 .span__text {
     width: 222px;
     height: 27px;
-    margin-left: 609px;
+    margin-left: 655px;
     margin-top: 168px;
     font-family: sans-serif;
     font-style: normal;
@@ -50,7 +50,7 @@ hr {
     flex-flow: row wrap;
 }
 
-#single__upload {
+#video__single__upload {
     width: 270px;
     height: 56px;
     cursor: pointer;
@@ -64,7 +64,7 @@ hr {
     justify-content: flex-start;
 }
 
-#single__upload:hover {
+#video__single__upload:hover {
     border-color: #0077FF;
 }
 
@@ -78,7 +78,7 @@ hr {
 
 .single__assessment__text {
     height: 22px;
-    margin-left: 11px;
+    margin-left: 20px;
     margin-top: 17px;
     font-family: sans-serif;
     font-style: normal;
@@ -89,7 +89,7 @@ hr {
     color: #64748B;
 }
 
-#bulk__upload {
+#video_bulk_upload {
     width: 270px;
     height: 56px;
     cursor: pointer;
@@ -103,7 +103,7 @@ hr {
     justify-content: flex-start;
 }
 
-#bulk__upload:hover {
+#video_bulk_upload:hover{
     border-color: #0077FF;
 }
 
@@ -117,7 +117,7 @@ hr {
 
 .bulk__assessment__text {
     height: 22px;
-    margin-left: 11px;
+    margin-left: 20px;
     margin-top: 17px;
     font-family: sans-serif;
     font-style: normal;
@@ -141,7 +141,7 @@ hr {
     flex-flow: row wrap;
 }
 
-.bottom__text {
+.instruction__text, .history__text {
     width: 75px;
     height: 27px;
     margin-left: 144px;
@@ -155,77 +155,28 @@ hr {
     justify-content: flex-start;
 }
 
-.history__box {
+.instruction__box{
     width: 1152px;
-    height: 70px;
-    padding: 0px 0px 0px 20px;
+    height: 154px;
     margin-left: 144px;
-    margin-bottom: 242px;
+    margin-top: 18px;
     background: #F8F8F8;
     border-radius: 10px;
 }
 
-.tableRow{
-    margin-top: 20px;
-}
-
-#tableDiv{
-    display: flex;
-    justify-content: center;
-}
-
-#tbody{
+.history__box{
+    width: 1152px;
+    height: 101px;
     margin-left: 144px;
-    display: flex;
-    flex-flow:column;
-    align-items: center;
+    margin-top: 18px;
+    background: #F8F8F8;
+    border-radius: 10px;
+    margin-bottom: 70px;
 }
-
-.assessment_time_stamp{
-    width: 86px;
-    height: 19px;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    text-align: center;
-    color: #475569;
-    margin-top: 79px;
-}
-
-.assessment_name, .assessment_link{
-    width: 86px;
-    height: 19px;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    text-align: center;
-    color: #475569;
-    margin-top: 79px;
-    margin-left: 260px;
-}
-
-.assessment_link {
-    width: 86px;
-    height: 19px;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    text-align: center;
-    color: #475569;
-    margin-top: 79px;
-    margin-left: 295px;
-}
-
 
 
 /* The Modal (background) */
-.modal {
+.video_modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -240,7 +191,7 @@ hr {
 }
   
 /* Modal Content */
-.modal-content {
+.video_modal_content {
     background-color: #fefefe;
     left: 50%;
     top: 50%;
@@ -248,20 +199,20 @@ hr {
     transform: translate(-50%, -50%);
     padding: 20px;
     border: 1px solid #888;
-    width: 530px;
+    width: 564px;
     border-radius: 20px;
 }
   
 /* The Close Button */
-.close {
+.video_close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
   
-.close:hover,
-.close:focus {
+.video_close:hover,
+.video_close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
@@ -269,20 +220,20 @@ hr {
 
 
 
-.close-div {
+.video_close_div {
 	display: flex;
     flex-flow: column wrap;
     align-content: flex-end;
 }
 
 
-.form-text {
+.video_form_text {
 	display: flex;
     justify-content: center;
     align-items: center;
 	width: 262px;
     height: 24px;
-    margin-left: 130px;
+    margin-left: 141px;
     font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -292,21 +243,21 @@ hr {
     color: #64748B;
 }
 
-.form-div {
+.video_form_div {
 	display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.form-container {
-	width: 530px;   
+.video_form_container {
+	width: 564px;   
     left: 438px;
     top: 225px;
     background: #FFFFFF;
 }
 
-.select-div {
+.video_select_div {
 	display: flex;
     align-items: center;
     flex-flow: column wrap;
@@ -329,7 +280,7 @@ hr {
     color: #94A3B8;
 }
 
-.common {
+.video_common {
     margin-top: 40px;
     width: 368px;
     height: 56px;
@@ -345,13 +296,12 @@ hr {
     color: #94A3B8;
 }
 
-.btn {
+.video_btn {
+    margin-top: 40px;
+    margin-bottom: 30px;
+    margin-left: 98px;
     width: 368px;
     height: 56px;
-    cursor: pointer;
-    margin-top: 40px;
-    margin-left: 82px;
-    margin-bottom: 30px;
     font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -364,13 +314,13 @@ hr {
     border: 2px solid #0077FF;
 }
 
-.btn:hover{
+.video_btn:hover{
     border-color: #64748B;
 }
 
 
 /* The Bulk Modal (Background)*/
-.bulkModal {
+.video-bulk-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -385,7 +335,7 @@ hr {
 }
   
 /* Modal Content */
-.bulk-modal-content {
+.video-bulk-modal-content {
     background-color: #fefefe;
     left: 50%;
     top: 50%;
@@ -398,15 +348,15 @@ hr {
 }
   
 /* The Close Button */
-.bulk-modal-close {
+.video-bulk-modal-close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
   
-.bulk-modal-close:hover,
-.bulk-modal-close:focus {
+.video-bulk-modal-close:hover,
+.video-bulk-modal-close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
@@ -414,14 +364,14 @@ hr {
 
 
 
-.bulk-modal-close-div {
+.video-bulk-modal-close-div {
 	display: flex;
     flex-flow: column wrap;
     align-content: flex-end;
 }
 
 
-.bulk-modal-form-text {
+.video-bulk-modal-form-text {
 	display: flex;
     justify-content: center;
     align-items: center;
@@ -437,165 +387,63 @@ hr {
     color: #64748B;
 }
 
-.bulk-modal-form-div {
+.video-bulk-modal-form-div {
 	display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.bulk-modal-form-container {
+.video-bulk-modal-form-container {
 	width: 500px;   
     left: 438px;
     top: 225px;
     background: #FFFFFF;
 }
 
-.bulk-modal-select-div {
+.video-bulk-modal-select-div {
 	display: flex;
     align-items: center;
     flex-flow: column wrap;
     margin-top: 30px;
 }
 
-#bulkModalBoard {
+#videoBulkModalBoard {
     margin-top: 10px;
     width: 368px;
     height: 56px;
     border: 1px solid #CBD5E1;
-    box-sizing: border-box;
     border-radius: 8px;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 400;
     font-size: 18px;
-    line-height: 22px;
     text-align: center;
     color: #94A3B8;
 }
 
-.bulk-modal-common {
+.video-bulk-modal-common {
     margin-top: 40px;
     width: 368px;
     height: 56px;
     border: 1px solid #CBD5E1;
-    box-sizing: border-box;
     border-radius: 8px;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 400;
     font-size: 18px;
-    line-height: 22px;
     text-align: center;
     color: #94A3B8;
 }
 
-.bulk-modal-btn {
-    margin-top: 40px;
-    margin-left: 66px;
-    margin-bottom: 40px;
+.video-bulk-modal-btn {
     width: 368px;
     height: 56px;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 400;
+    cursor: pointer;
+    margin-top: 40px;
+    margin-left: 66px;
+    margin-bottom: 20px;
     font-size: 18px;
-    line-height: 22px;
-    text-align: center;
     color: white;
     background: #0077FF;
     border-radius: 8px;
     border: 2px solid #0077FF;
 }
 
-.bulk-modal-btn:hover{
+.video-bulk-modal-btn:hover{
     border-color: #64748B;
-}
-
-/* CSS For Dynamic questions display */
-
-
-.question_area {
-    width: 1050px;
-    height: 107px;
-    background: #FAFAFA;
-    border-radius: 20px;
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    overflow-y: auto;
-    margin-top: 2rem;
-}
-
-.option_area{
-    width: 1050px;
-    height: 300px;
-    background: #FAFAFA;
-    border-radius: 20px;
-    margin-top: 15px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: column;
-    overflow-y: auto;
-}
-
-.question_num {
-    border-radius: 100%;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    color: #334155;
-    margin-left: 40px;
-}
-
-.question {
-    border-style: none;
-    width: 640px;
-    height: 40px;
-    margin-left: 30px;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-    color: #475569;
-    background-color: #FAFAFA;
-}
-
-.option {
-    border-style: none;
-    width: 640px;
-    height: 40px;
-    margin-left: 30px;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-    color: #475569;
-    background-color: #FAFAFA;
-}
-
-.quesImage {
-    margin-left: 32px;
-}
-
-.optImage {
-    margin-left: 32px;
-}
-
-img[src=""] {
-    display: none;
-}
-
-input[value=""]{
-    display: none;
-}
-
-.opt_a, .opt_b, .opt_c,  .opt_d{
-    margin-bottom: 20px;
 }
