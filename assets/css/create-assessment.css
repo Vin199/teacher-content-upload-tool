@@ -68,6 +68,42 @@ body{
     color: #334155;
 }
 
+#assessment_form{
+    margin-top: 40px;
+}
+
+.question_forms{
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.delete-btn-div{
+    display: flex;
+    align-items: center;
+}
+
+.deleteBtn{
+    top: 0;
+    right: -90px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    position: absolute;
+    cursor: pointer;
+    font-family: sans-serif;
+    background-color: white;
+    color: #212121;
+    border: none;
+}
+
+.deleteSign{
+    margin-right: 5px;
+}
+
 .question_area {
     width: 1050px;
     height: 107px;
@@ -78,7 +114,6 @@ body{
     align-items: center;
     flex-wrap: wrap;
     overflow-y: auto;
-    margin-top: 2rem;
 }
 
 .option_area{

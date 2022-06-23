@@ -31,7 +31,7 @@ const assessmentData = JSON.parse(
 
 const teacher_info = JSON.parse(window.localStorage.getItem("teacher_info"));
 
-const sendQuestionData = async (parentObj) => {
+const sendQuestionData = (parentObj) => {
   createAssessmentModal.style.display = "none";
 
   return new Promise((resolve, reject) => {
@@ -59,28 +59,28 @@ const sendQuestionData = async (parentObj) => {
   });
 };
 
-const sendHistoryData = async (historyParentObj) => {
-  const history_value = {
-    metadata: assessmentData,
-    historyData: historyParentObj,
-    teacher_data: teacher_info,
-  };
+// const sendHistoryData = async (historyParentObj) => {
+//   const history_value = {
+//     metadata: assessmentData,
+//     historyData: historyParentObj,
+//     teacher_data: teacher_info,
+//   };
 
-  const historyOption = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(history_value),
-  };
+//   const historyOption = {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(history_value),
+//   };
 
-  try {
-    fetch("/set-history", historyOption);
-  } catch (error) {
-    alert(error.message);
-    reject();
-  }
-};
+//   try {
+//     fetch("/set-history", historyOption);
+//   } catch (error) {
+//     alert(error.message);
+//     reject();
+//   }
+// };
 
 const createAssessmentModal = document.getElementById("submitModal");
 const createAssessmentClose = document.getElementsByClassName(
@@ -102,7 +102,7 @@ document
     const questions = document.getElementsByClassName("question_forms");
     let qsnCounter = (await getCount()) + 1;
     Array.from(questions).forEach((element) => {
-      setObj(element, questions.length, qsnCounter);
+      setObj(element, qsnCounter);
       qsnCounter++;
     });
 
@@ -292,7 +292,7 @@ createAssessmentClose.addEventListener("click", () => {
 function updateDatabase() {
   finalSubmitBtn.addEventListener("click", () => {
     sendQuestionData(parentObj);
-    sendHistoryData(historyObj);
+    //sendHistoryData(historyObj);
   });
 }
 
@@ -397,17 +397,28 @@ opt_D_File.onchange = function (e) {
 
 let i = 1;
 document.getElementById("nextQues").onclick = function () {
-  debugger;
-  const x = parentObj;
-
   i += 1;
+
   const generatedDiv = document.getElementById("question_form_1");
   const clone = generatedDiv.cloneNode(true);
   clone
     .getElementsByTagName("div")[0]
     .getElementsByTagName("span")[0].innerHTML = `Q.${i}`;
   clone.id = `question_form_${i}`;
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.innerHTML = "<span>Delete</span>";
+  deleteBtn.setAttribute("class", "deleteBtn");
+  const deleteSign = document.createElement("img");
+  deleteSign.setAttribute("class", "deleteSign");
+  deleteSign.setAttribute("src", "/assets/images/Group.svg");
+  deleteBtn.appendChild(deleteSign);
+  clone.appendChild(deleteBtn);
   document.getElementById("assessment_form").appendChild(clone);
+
+  $(document).on("click", ".deleteBtn", function () {
+    $(this).parent().remove();
+  });
 
   const question_form = document.getElementsByClassName("question_forms");
   const count = question_form.length;
@@ -633,30 +644,9 @@ async function getCount() {
   };
 
   const response = await fetch("/getCount", opt);
-  const user = await response.json();
+  const countData = await response.json();
 
-  return user.qsn_Id;
-
-  // fetch("/getCount", opt)
-  //   .then((res) => {
-  //     return res.json();
-  //   })
-  //   .then((data) => {
-  //     //console.log(data);
-  //     let counter = data.counter;
-  //     if (data.count == "1") {
-  //       counterCopy = data.count;
-  //       parentObj.details.counter = length;
-  //     } else {
-  //       counter++;
-  //       parentObj[counter] = obj1;
-  //       parentObj.details.counter = counter;
-  //     }
-  //     //console.log(parentObj);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  return countData.qsn_Id;
 }
 
 const setObj = async (last_assessment_div, qsnCounter) => {
@@ -776,27 +766,19 @@ const setObj = async (last_assessment_div, qsnCounter) => {
     obj1.D.value = text4;
   }
 
-  // async () => {
-  //   let count;
-  //   try {
-  //     count = await getCount();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   console.log(count);
-  // };
-
-  //console.log(counterCopy++);
-  //parentObj[counterCopy++] = obj1;
-
   const uniqueId = "id_" + new Date().getTime();
-  // let questionId = 0;
-  // const counter = await getCount()
 
-  parentObj[counterVal] = obj1;
+  let quesId;
+  if (counterVal < 10) {
+    quesId = assessmentData.topic + "_00" + counterVal;
+  } else {
+    quesId = assessmentData.topic + "_0" + counterVal;
+  }
+
+  parentObj[quesId] = obj1;
   parentObj.details["qsn_Id"] = qsnCounter;
   // parentObj.details.counter = questionId;
-  console.log(parentObj);
+  //console.log(parentObj);
 
   const ques_image = document.getElementsByClassName("question_forms");
   const form_count = ques_image.length;

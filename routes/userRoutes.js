@@ -10,7 +10,6 @@ router.get("/", Middleware, controller.login);
 router.get("/dashboard", controller.dashboard);
 router.get("/users", controller.getUsers);
 router.get("/getHistory", controller.getHistory);
-router.post("/getQuestions", controller.getAssessments);
 router.get("/assessment", controller.assessment);
 router.get("/videos", controller.videos);
 router.get("/books", controller.books);
@@ -36,6 +35,8 @@ router.post("/set-video-assessment", controller.setVideosAssessment);
 router.post("/set-notes-assessment", controller.setNotesAssessment);
 router.post("/teachers", controller.updateUser);
 router.post("/getCount", controller.getCount);
-router.post("/set-history", controller.setHistory);
+//router.post("/set-history", controller.setHistory);
+router.post("/getQuestions", controller.getAssessments);
+router.post("/getTopics", controller.getTopics);
 
 export default router;

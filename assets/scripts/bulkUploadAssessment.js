@@ -32,12 +32,19 @@ finalSubmitBtn.style.display = "none";
 const re_upload_btn = document.getElementById("reUploadBtn");
 re_upload_btn.style.display = "none";
 
-const success_msg = document.getElementById("successMsg");
+//const success_msg = document.getElementById("successMsg");
 
 const bulkModalMsgBox = document.getElementById("getExcelSheetModal");
 const bulkMsgCloseBtn = document.getElementsByClassName("excel-modal-close")[0];
 
 const loadModal = JSON.parse(window.localStorage.getItem("isTrue"));
+
+const bulkMetadata = JSON.parse(window.localStorage.getItem("bulkMetaData"));
+const teacher_info = JSON.parse(window.localStorage.getItem("teacher_info"));
+
+const assessmentData = JSON.parse(
+  window.localStorage.getItem("assessmentMetaData")
+);
 
 window.onload = function () {
   if (loadModal.isTrue === null) {
@@ -55,6 +62,30 @@ window.onload = function () {
   }
 };
 
+let parentObj = {
+  details: {
+    qsn_Id: 0,
+  },
+};
+
+let selectedFile;
+
+document.getElementById("ejs").style.display = "none";
+
+document.getElementById("fileId").addEventListener("change", (e) => {
+  selectedFile = e.target.files[0];
+  document.getElementById("bulkContent").style.display = "none";
+  document.getElementById("ejs").style.display = "block";
+});
+
+document.getElementById("submit").style.display = "none";
+
+function displayNextBtn() {
+  document.getElementById("submit").style.display = "block";
+}
+
+window.displayNextBtn = displayNextBtn;
+
 let wb = XLSX.utils.book_new();
 wb.Props = {
   Title: "Assessment Sheet",
@@ -62,24 +93,26 @@ wb.Props = {
   Author: "Vinay Maurya",
   CreatedDate: new Date().getDate(),
 };
-wb.SheetNames.push("Relations and Functions");
-wb.SheetNames.push("Algebra");
-wb.SheetNames.push("Calculus");
-wb.SheetNames.push("Probability");
 
-let ws_data_1 = [["question", "option_a", "option_b", "option_c", "option_d"]];
-let ws_1 = XLSX.utils.aoa_to_sheet(ws_data_1);
+const option = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(bulkMetadata),
+};
 
-let ws_2 = XLSX.utils.aoa_to_sheet(ws_data_1);
+const response = await fetch("/getTopics", option);
+const data = await response.json();
 
-let ws_3 = XLSX.utils.aoa_to_sheet(ws_data_1);
-
-let ws_4 = XLSX.utils.aoa_to_sheet(ws_data_1);
-
-wb.Sheets["Relations and Functions"] = ws_1;
-wb.Sheets["Algebra"] = ws_2;
-wb.Sheets["Calculus"] = ws_3;
-wb.Sheets["Probability"] = ws_4;
+Object.values(data).forEach((ele) => {
+  wb.SheetNames.push(ele);
+  let ws_heading = [
+    ["question", "option_a", "option_b", "option_c", "option_d"],
+  ];
+  let ws = XLSX.utils.aoa_to_sheet(ws_heading);
+  wb.Sheets[ele] = ws;
+});
 
 let wbout = XLSX.write(wb, { bookType: "xlsx", type: "binary" });
 function s2ab(s) {
@@ -105,26 +138,6 @@ document.getElementById("btn_2").onclick = function () {
   );
 };
 
-let parentObj = {};
-
-let selectedFile;
-
-document.getElementById("ejs").style.display = "none";
-
-document.getElementById("fileId").addEventListener("change", (e) => {
-  selectedFile = e.target.files[0];
-  document.getElementById("bulkContent").style.display = "none";
-  document.getElementById("ejs").style.display = "block";
-});
-
-document.getElementById("submit").style.display = "none";
-
-function displayNextBtn() {
-  document.getElementById("submit").style.display = "block";
-}
-
-window.displayNextBtn = displayNextBtn;
-
 function readData() {
   if (selectedFile) {
     let fileReader = new FileReader();
@@ -136,36 +149,58 @@ function readData() {
 
       let sheet_name_list = workBook.SheetNames;
 
-      // let assessmentObj = XLSX.utils.sheet_to_json(
-      //   workBook.Sheets[sheet_name_list[0]]
-      // );
+      setOptions(sheet_name_list, workBook);
+    };
+    fileReader.readAsBinaryString(selectedFile);
+  }
+}
 
-      // for (let i = 0; i < sheet_name_list.length; i++) {
-      //   let assessmentObj = XLSX.utils.sheet_to_json(
-      //     workBook.Sheets[sheet_name_list[i]]
-      //   );
-      //   console.log(Object.keys(assessmentObj).length);
-      // }
+let optionsObj = {};
 
-      let allQuestions = [];
-      workBook.SheetNames.forEach((sheet) => {
-        let rowObject = XLSX.utils.sheet_to_row_object_array(
-          workBook.Sheets[sheet]
-        );
-        allQuestions.push(rowObject);
-      });
+const setOptions = async (sheet_name_list, workBook) => {
+  const option = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(bulkMetadata),
+  };
 
-      document.getElementById("topics").addEventListener("change", (e) => {
-        const topicIndex = sheet_name_list.indexOf(e.target.value);
-        const questionObj = allQuestions[topicIndex];
-        console.log(questionObj);
-        let count = 0;
-        document.getElementById("set_questions").innerHTML = "";
-        for (const key in questionObj) {
-          if (Object.hasOwnProperty.call(questionObj, key)) {
-            const element = questionObj[key];
-            count++;
-            let html = `<div class="question_forms" id="question_form_${count}">
+  const response = await fetch("/getTopics", option);
+  const result = await response.json();
+
+  let qsnCounter = await getCount();
+
+  Object.keys(result).forEach((elem) => {
+    $("#topics").append(`<option value="${elem}">${result[elem]}</option>`);
+  });
+
+  let allQuestions = [];
+  workBook.SheetNames.forEach((sheet) => {
+    let rowObject = XLSX.utils.sheet_to_row_object_array(
+      workBook.Sheets[sheet]
+    );
+    allQuestions.push(rowObject);
+  });
+
+  document.getElementById("topics").addEventListener("change", (e) => {
+    const options = e.target.querySelectorAll("option");
+    let selectedoption = null;
+    options.forEach((element) => {
+      if (element.value == e.target.value) {
+        selectedoption = element.innerHTML;
+      }
+    });
+    const topicIndex = sheet_name_list.indexOf(selectedoption);
+    if (topicIndex == -1) return alert("sheet name not found");
+    const questionObj = allQuestions[topicIndex];
+    let count = 0;
+    document.getElementById("set_questions").innerHTML = "";
+    for (const key in questionObj) {
+      if (Object.hasOwnProperty.call(questionObj, key)) {
+        const element = questionObj[key];
+        count++;
+        let html = `<div class="question_forms" id="question_form_${count}">
                 <div class="question_area">
                   <span class="question_num">Q.${count}</span>
                   <input type="text" name="question" class="question" placeholder="Type Your Question Here" value="${element.question}">
@@ -195,16 +230,13 @@ function readData() {
                 </div>
               </div> `;
 
-            document.getElementById("set_questions").innerHTML += html;
-          }
-        }
-        let Ques = document.getElementsByClassName("question_forms");
-        checkAuth(Ques);
-      });
-    };
-    fileReader.readAsBinaryString(selectedFile);
-  }
-}
+        document.getElementById("set_questions").innerHTML += html;
+      }
+    }
+    let Ques = document.getElementsByClassName("question_forms");
+    checkAuth(Ques, e.target.value, qsnCounter);
+  });
+};
 
 let counter = 0;
 let filesCount = 0;
@@ -214,12 +246,10 @@ const sendQuestionData = (parentObj) => {
   createAssessmentModal.style.display = "none";
 
   return new Promise((resolve, reject) => {
-    const assessmentData = JSON.parse(
-      window.localStorage.getItem("assessmentMetaData")
-    );
     const assessmentValue = {
       metadata: assessmentData,
       questionData: parentObj,
+      teacher_data: teacher_info,
     };
     const options = {
       method: "POST",
@@ -269,11 +299,11 @@ document.getElementById("submit").addEventListener("click", () => {
       }
     }
   } else {
-    const forText = document.getElementById("textSpan");
+    //const forText = document.getElementById("textSpan");
     finalSubmitBtn.style.display = "block";
     re_upload_btn.style.display = "none";
     updateDatabase();
-    forText.innerHTML = "Click Submit To Upload Assessments.";
+    displayProgress.innerHTML = "Click Submit To Upload Assessments.";
   }
 });
 
@@ -336,13 +366,13 @@ function uploadImage(file, uid, imageKey) {
       );
 
       element.style.backgroundColor = "red";
-      success_msg.style.display = "none";
+      displayProgress.style.display = "none";
 
       const message =
         "There is an error therefore file has not been uploaded. If you want to re-upload the image then click the 'Re-Upload Button' or if you want to proceed ahead then click the 'Submit Button'.";
 
-      const showErr = document.getElementById("err");
-      showErr.innerHTML = message;
+      //const showErr = document.getElementById("err");
+      displayProgress.innerHTML = message;
 
       re_upload_btn.style.display = "block";
       finalSubmitBtn.style.display = "block";
@@ -393,17 +423,17 @@ function uploadImage(file, uid, imageKey) {
                 re_upload_btn.style.display = "none";
               }
               //re_upload_btn.style.display = "none";
-              displayProgress.style.display = "none";
+              //displayProgress.style.display = "none";
               if (filesCount == 1) {
-                success_msg.innerHTML = "File uploaded successfully.";
-                success_msg.style.display = "block";
+                displayProgress.innerHTML = "File uploaded successfully.";
+                //success_msg.style.display = "block";
               } else {
-                success_msg.innerHTML = "All files uploaded successfully.";
-                success_msg.style.display = "block";
+                displayProgress.innerHTML = "All files uploaded successfully.";
+                //success_msg.style.display = "block";
               }
               updateDatabase();
             }
-            success_msg.style.display = "none";
+            //success_msg.style.display = "none";
           });
         })
         .then(() => {
@@ -431,9 +461,9 @@ function openDialog() {
   document.getElementById("fileId").onchange = readData;
 }
 
-function checkAuth(Ques) {
-  //console.log(Ques);
+function checkAuth(Ques, optionValue, qsnCounter) {
   for (let j = 0; j < Ques.length; j++) {
+    qsnCounter++;
     const typeArr = ["image/png", "image/jpeg"];
     const obj1 = {
       q: "",
@@ -650,7 +680,16 @@ function checkAuth(Ques) {
         }
       }
     };
-    parentObj[Math.floor(Math.random() * 1000 + 1)] = obj1;
+
+    let quesId;
+    if (qsnCounter < 10) {
+      quesId = optionValue + "_00" + qsnCounter;
+    } else {
+      quesId = optionValue + "_0" + qsnCounter;
+    }
+
+    parentObj[quesId] = obj1;
+    parentObj.details["qsn_Id"] = qsnCounter;
   }
 
   for (let i = 0; i < Ques.length; i++) {
@@ -711,4 +750,24 @@ function checkAuth(Ques) {
       opt[9].setAttribute("disabled", false);
     }
   }
+}
+
+async function getCount() {
+  const assessmentValue = {
+    metadata: assessmentData,
+    teacher_data: teacher_info,
+  };
+
+  const opt = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(assessmentValue),
+  };
+
+  const response = await fetch("/getCount", opt);
+  const countData = await response.json();
+
+  return countData.qsn_Id;
 }

@@ -68,9 +68,9 @@ const send = () => {
     });
 };
 
-function getD(localData) {
-  console.log(localData);
-}
+// function getD(localData) {
+//   console.log(localData);
+// }
 
 function getOptionsForSingleAssessment() {
   const option = {
@@ -387,7 +387,7 @@ fetch("/getHistory", option)
         Object.values(data)[i].class_id
       }/${Object.values(data)[i].subject_id}/assessments/${
         Object.values(data)[i].topic_id
-      }/questionId">View</a></button>
+      }/questions">View</a></button>
         </td>
        </tr>`);
     }
