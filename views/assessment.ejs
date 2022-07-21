@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessments</title>
+    <link rel="stylesheet" href="/assets/css/assessment.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <%- include("head.ejs") %>
+        <div class="top__container">
+            <a class="active" href="dashboard"> <img src="/assets/images/Group 11095.svg" alt="arrow-back"></a>
+            <span class="span__text">Upload Assessments</span>
+        </div>
+        <hr>
+        <div class="middle__container">
+            <div id="single__upload">
+                <img class="single__assessment__logo" src="/assets/images/single_assessment_logo.svg"
+                    alt="single_assessment_logo">
+                <span class="single__assessment__text">Create Assessment</span>
+            </div>
+            <div id="bulk__upload">
+                <img class="bulk__assessment__logo" src="/assets/images/bulk_assessment_logo.svg"
+                    alt="bulk_assessment_logo">
+                <span class="bulk__assessment__text">Bulk Upload</span>
+            </div>
+            <hr class="middle__hr">
+        </div>
+        <div class="bottom__container">
+            <span class="bottom__text">History</span>
+        </div>
+        <div id="tableDiv">
+            <div class="tableHead">
+                <div class="columnHeading">Board</div>
+                <div class="columnHeading">Language</div>
+                <div class="columnHeading">Class</div>
+                <div class="columnHeading">Subject</div>
+                <div class="columnHeading">Topic</div>
+                <div class="columnHeading">Timestamp</div>
+                <div class="columnHeading">Preview</div>
+            </div>
+            <div class="tableBody">
+
+            </div>
+        </div>
+
+        <div id="set_questions"></div>
+
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="close-div">
+                    <span class="close">&times;</span>
+                </div>
+
+                <div class="form-div">
+                    <form id="initData" class="form-container">
+                        <span class="form-text">Please Fill the details below</span>
+                        <div class="select-div">
+                            <select name="board" id="board" required>
+                                <option selected disabled value="">Select Board</option>
+                            </select>
+
+                            <select name="language" id="language" class="common" required>
+                                <option selected disabled value="">Select Language</option>
+                            </select>
+
+                            <select name="classId" id="class" class="common" required>
+                                <option selected disabled value="">Select Class</option>
+                            </select>
+
+                            <select name="subject" id="subject" class="common" required>
+                                <option selected disabled value="">Select Subject</option>
+                            </select>
+
+                            <select name="topic" id="topic" class="common" required>
+                                <option selected disabled value="">Select Topic</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="Next_btn" class="btn">Next</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="bulkModal" class="bulkModal">
+            <!-- Modal content -->
+            <div class="bulk-modal-content">
+                <div class="bulk-modal-close-div">
+                    <span class="bulk-modal-close">&times;</span>
+                </div>
+
+                <div class="bulk-modal-form-div">
+                    <form id="initDataBulk" class="bulk-modal-form-container">
+                        <span class="bulk-modal-form-text">Please Fill the details below</span>
+                        <div class="bulk-modal-select-div">
+                            <select name="board" id="bulkModalBoard" required>
+                                <option selected disabled value="">Select Board</option>
+                            </select>
+                            <select name="language" id="bulkModalLanguage" class="bulk-modal-common" required>
+                                <option selected disabled value="">Select Language</option>
+                            </select>
+
+                            <select name="classId" id="bulkModalClass" class="bulk-modal-common" required>
+                                <option selected disabled value="">Select Class</option>
+                            </select>
+
+                            <select name="subject" id="bulkModalSubject" class="bulk-modal-common" required>
+                                <option selected disabled value="">Select Subject</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="bulkModalNextBtn" class="bulk-modal-btn">Next</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <%- include("foot.ejs") %>
+            <script type="module" src="/assets/scripts/assessment.js"></script>
+</body>
+
+</html>
