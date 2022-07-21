@@ -25,8 +25,6 @@ let counter = 0;
 let filesCount = 0;
 let isError = false;
 
-// let historyParentObj = {};
-
 const assessmentData = JSON.parse(
   window.localStorage.getItem("assessmentMetaData")
 );
@@ -60,29 +58,6 @@ const sendQuestionData = (parentObj) => {
     }
   });
 };
-
-// const sendHistoryData = async (historyParentObj) => {
-//   const history_value = {
-//     metadata: assessmentData,
-//     historyData: historyParentObj,
-//     teacher_data: teacher_info,
-//   };
-
-//   const historyOption = {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(history_value),
-//   };
-
-//   try {
-//     fetch("/set-history", historyOption);
-//   } catch (error) {
-//     alert(error.message);
-//     reject();
-//   }
-// };
 
 const createAssessmentModal = document.getElementById("submitModal");
 const createAssessmentClose = document.getElementsByClassName(
@@ -316,7 +291,6 @@ createAssessmentClose.addEventListener("click", () => {
 function updateDatabase() {
   finalSubmitBtn.addEventListener("click", () => {
     sendQuestionData(parentObj);
-    //sendHistoryData(historyObj);
   });
 }
 
@@ -324,15 +298,15 @@ const typeArr = ["image/png", "image/jpeg"];
 
 const validateQues = document.getElementsByName("question")[0];
 const quesFile = document.getElementById("quesImgFile");
-const removeImgBtn = document.getElementById("removeImg");
-removeImgBtn.style.display = "none";
+// const removeImgBtn = document.getElementById("removeImg");
+// removeImgBtn.style.display = "none";
 quesFile.onchange = function () {
   try {
     const qFile = this.files[0];
     if (qFile.size) {
       validateQues.style.border = "none";
       quesFile.style.border = "none";
-      removeImgBtn.style.display = "block";
+      // removeImgBtn.style.display = "block";
     }
     if (qFile.size > 1048576) {
       alert("File is too big, Please select an image of smaller size!");
@@ -346,10 +320,10 @@ quesFile.onchange = function () {
         this.value = "";
       }
     }
-    removeImgBtn.addEventListener("click", () => {
-      this.value = "";
-      removeImgBtn.style.display = "none";
-    });
+    // removeImgBtn.addEventListener("click", () => {
+    //   this.value = "";
+    //   removeImgBtn.style.display = "none";
+    // });
   } catch (error) {
     console.log(error);
   }
@@ -740,8 +714,6 @@ const parentObj = {
   },
 };
 
-let historyObj = {};
-
 async function getCount() {
   const assessmentValue = {
     metadata: assessmentData,
@@ -764,19 +736,6 @@ async function getCount() {
 
 const setObj = async (last_assessment_div, qsnCounter) => {
   let counterVal = qsnCounter;
-
-  historyParentObj = {
-    board_id: assessmentData.board,
-    class_id: assessmentData.classId,
-    class_name: assessmentData.classId,
-    language_id: assessmentData.language,
-    subject_id: assessmentData.subject,
-    subject_name: assessmentData.subject,
-    topic_id: assessmentData.topic,
-    board_name: "Central Board of Secondary Education",
-    language_name: "English",
-    topic_name: "Integration",
-  };
 
   //console.log(last_assessment_div);
   const obj1 = {
@@ -974,16 +933,14 @@ optD.addEventListener("keyup", (e) => {
   }
 });
 
-let fileName;
+// document.getElementById("optAFile").addEventListener("change", (e) => {
+//   let selectedFile = e.target.files[0];
+//   fileName = selectedFile.name;
+//   document.getElementById("imageAName").innerHTML = fileName;
+// });
 
-document.getElementById("optAFile").addEventListener("change", (e) => {
-  let selectedFile = e.target.files[0];
-  fileName = selectedFile.name;
-  document.getElementById("imageAName").innerHTML = fileName;
-});
+// document.getElementById("buttonId").addEventListener("click", openDialog);
 
-document.getElementById("buttonId").addEventListener("click", openDialog);
-
-function openDialog() {
-  document.getElementById("optAFile").click();
-}
+// function openDialog() {
+//   document.getElementById("optAFile").click();
+// }

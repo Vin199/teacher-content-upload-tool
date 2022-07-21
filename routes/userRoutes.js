@@ -52,7 +52,6 @@ router.post("/teachers", auth, controller.updateUser);
 router.post("/getCount", auth, controller.getCount);
 router.post("/getVideoCount", auth, controller.getVideoCount);
 router.post("/getBookCount", auth, controller.getBookCount);
-//router.post("/set-history", controller.setHistory);
 router.post("/getQuestions", auth, controller.getAssessments);
 router.post("/getTopics", auth, controller.getTopics);
 

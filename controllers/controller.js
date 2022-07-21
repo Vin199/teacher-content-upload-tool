@@ -143,11 +143,9 @@ class Controller {
     const { board, classId, language, subject, topic } = req.body.metadata;
     const teacher_uid = req.body.teacher_data.uid;
     const upload_path = `teacher_upload/upload/${teacher_uid}/${board}/${language}/${classId}/${subject}/assessments/${topic}/questions`;
-    //const history_path = `teacher_upload/history/${teacher_uid}/assessment/${board}/${classId}/${language}/${subject}/assessments/${topic}/"questionId"`;
 
     try {
       await model.update(upload_path, req.body.questionData);
-      //await model.update(history_path, req.body.questionData);
       res.send();
     } catch (error) {
       res.status(500).send({ error });
@@ -219,16 +217,6 @@ class Controller {
     const topicsObj = await model.getter(path);
     res.send(topicsObj);
   };
-
-  // setHistory = async (req, res) => {
-  //   const { board, classId, language, subject, topic } = req.body.metadata;
-  //   const teacher_uid = req.body.teacher_data.uid;
-  //   const upload_path = `teacher_upload/history/${teacher_uid}/assessments/${+new Date()}/`;
-  //   await model.update(upload_path, { kjb: "sdf" });
-  //   res.send();
-  //   // if (history_value) res.status(200).send(history_value);
-  //   // else res.status(404).send(null);
-  // };
 
   checkUserStatus = async (req, res) => {
     let status = 0;
