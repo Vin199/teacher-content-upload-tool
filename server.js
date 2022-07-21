@@ -12,9 +12,6 @@ initializeFirebaseApp();
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
-
-console.log(">>> ", import.meta.url);
-
 const __dirname = dirname(__filename);
 
 app.set("view engine", "ejs");
@@ -29,6 +26,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+
 app.use("", router);
 
 app.set("port", process.env.PORT || 3000);

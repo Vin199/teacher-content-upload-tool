@@ -1,6 +1,5 @@
-import AppSectionModel from "../model/user.js";
+import model from "../model/user.js";
 import request from "request";
-const model = new AppSectionModel();
 
 class Controller {
   constructor() {}

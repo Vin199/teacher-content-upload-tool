@@ -1,7 +1,7 @@
 import { getDatabaseReference, getAdmin } from "../util/db.js";
 
-class AppSectionModel {
-  getter = (path) => {
+export default {
+  getter: (path) => {
     return new Promise((resolve, reject) => {
       getDatabaseReference()
         .child(path)
@@ -13,9 +13,9 @@ class AppSectionModel {
           reject(error);
         });
     });
-  };
+  },
 
-  setter = (path, data) => {
+  setter: (path, data) => {
     return new Promise((resolve, reject) => {
       getDatabaseReference()
         .child(path)
@@ -27,9 +27,9 @@ class AppSectionModel {
           reject(error);
         });
     });
-  };
+  },
 
-  update = (path, data) => {
+  update: (path, data) => {
     return new Promise((resolve, reject) => {
       const usersRef = getDatabaseReference().child(path);
       usersRef
@@ -41,17 +41,17 @@ class AppSectionModel {
           reject(error);
         });
     });
-  };
+  },
 
-  setHistory = (path, data) => {
+  setHistory: (path, data) => {
     return new Promise((resolve, reject) => {
       console.log(path);
       resolve();
       // getDatabaseReference().child(path).update();
     });
-  };
+  },
 
-  getUserWithEmail = (email) => {
+  getUserWithEmail: (email) => {
     return new Promise((resolve, reject) => {
       getAdmin()
         .getUserByEmail(email)
@@ -63,9 +63,9 @@ class AppSectionModel {
           reject(error);
         });
     });
-  };
+  },
 
-  getUserWithPhoneNumber = (phoneNumber) => {
+  getUserWithPhoneNumber: (phoneNumber) => {
     return new Promise((resolve, reject) => {
       getAdmin()
         .getUserByPhoneNumber(phoneNumber)
@@ -78,9 +78,9 @@ class AppSectionModel {
           reject(error);
         });
     });
-  };
+  },
 
-  getUserWithUid = (uid) => {
+  getUserWithUid: (uid) => {
     return new Promise((resolve, reject) => {
       getAdmin()
         .getUser(uid)
@@ -93,9 +93,9 @@ class AppSectionModel {
           reject(error);
         });
     });
-  };
+  },
 
-  updatePassword = async (uid, password) => {
+  updatePassword: async (uid, password) => {
     return new Promise((resolve, reject) => {
       getAdmin()
         .updateUser(uid, { password })
@@ -106,9 +106,9 @@ class AppSectionModel {
           reject(error);
         });
     });
-  };
+  },
 
-  getResetPasswordLink = async (email, actionCodeSettings) => {
+  getResetPasswordLink: async (email, actionCodeSettings) => {
     return new Promise((resolve, reject) => {
       getAdmin()
         .generatePasswordResetLink(email, actionCodeSettings)
@@ -123,7 +123,5 @@ class AppSectionModel {
           reject(error);
         });
     });
-  };
-}
-
-export default AppSectionModel;
+  },
+};
