@@ -1,5 +1,5 @@
 import request from "request";
-import model from "../model/user";
+import model from "../Model/user.js";
 
 export default {
   login: async (req, res) => {
