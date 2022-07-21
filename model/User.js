@@ -1,8 +1,6 @@
 import { getDatabaseReference, getAdmin } from "../util/db.js";
 
 class AppSectionModel {
-  constructor() {}
-
   getter = (path) => {
     return new Promise((resolve, reject) => {
       getDatabaseReference()
