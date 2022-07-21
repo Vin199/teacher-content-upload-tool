@@ -19,87 +19,87 @@
 </head>
 
 <body>
-    <div class="bulk-top-container">
-        <img class="bulk-iPrep-img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo" />
-        <hr class="bulk-hrule-1">
-        <div class="bulk-div-2">
-            <a class="bulk-active" href="assessment">
-                <img src="/assets/images/arrow_back.svg" alt="arrow-back" /></a>
-            <span class="bulk-assessment-text">Bulk Upload</span>
+    <%- include("head.ejs") %>
+        <div class="bulk_top_container">
+            <a class="active" href="assessment"> <img src="/assets/images/Group 11095.svg" alt="arrow-back"></a>
+            <span class="bulk_span_text">Bulk Upload</span>
         </div>
-        <div class="bulk-hr"></div>
-    </div>
-    <div id="bulkContent">
-        <div class="bulk-body">
-            <span class="instruction-text-heading">Instructions</span>
-            <div class="instructions-div">
-                <div class="instruction-area">
-                    <span class="instruction-text-1">1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut
-                        labore et
-                        dolore magna aliqua.</span>
-                    <span class="instruction-text-2">2.Inorder to upload the assessments in bulk, please download the
-                        template
+        <hr>
+
+        <div id="bulkContent">
+            <div class="bulk-body">
+                <span class="instruction-text-heading">Instructions</span>
+                <div class="instructions-div">
+                    <div class="instruction-area">
+                        <span class="instruction-text-1">1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                            do
+                            eiusmod tempor incididunt ut
+                            labore et
+                            dolore magna aliqua.</span>
+                        <span class="instruction-text-1">2.Inorder to upload the assessments in bulk, please download
+                            the
+                            template
+                            first by clicking on the Download Template button.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bulk-bottom-container">
+                <div id="btn_2" class="download-template-2">
+                    <span class="download-text">Download Template</span>
+                    <img class="dwnld-img-2" src="/assets/images/Vector (2).svg" alt="download-logo">
+                </div>
+                <div class="upload-assessment">
+                    <input id='fileId' type='file' accept=".xls,.xlsx" hidden />
+                    <input id="buttonId" class="upload-text" type="button" value="Upload Assesment">
+                    <img src="/assets/images/Vector (1).svg" alt="upload-logo">
+                </div>
+            </div>
+        </div>
+
+        <div id="getExcelSheetModal" class="getExcelSheetModal">
+            <!-- Modal content -->
+            <div class="excelModalDiv">
+                <div class="excel-modal-close-div">
+                    <span class="excel-modal-close">&times;</span>
+                </div>
+                <div class="excel-file-msg-div">
+                    <span class="excel-msg-text">Inorder to upload the assessments in bulk, please download the template
                         first by clicking on the Download Template button.</span>
                 </div>
-            </div>
-        </div>
-        <div class="bulk-bottom-container">
-            <div id="btn_2" class="download-template-2">
-                <span class="download-text-2">Download Template</span>
-                <img class="dwnld-img-2" src="/assets/images/download.png" alt="download-logo">
-            </div>
-            <div class="upload-assessment">
-                <input id='fileId' type='file' accept=".xls,.xlsx" hidden />
-                <input id="buttonId" class="upload-text" type="button" value="Upload Assesment">
-                <img src="/assets/images/upload (1).png" alt="upload-logo">
-            </div>
-        </div>
-    </div>
-
-    <div id="getExcelSheetModal" class="getExcelSheetModal">
-        <!-- Modal content -->
-        <div class="excelModalDiv">
-            <div class="excel-modal-close-div">
-                <span class="excel-modal-close">&times;</span>
-            </div>
-            <div class="excel-file-msg-div">
-                <span class="excel-msg-text">Inorder to upload the assessments in bulk, please download the template
-                    first by clicking on the Download Template button.</span>
-            </div>
-            <div class="download-template-div">
-                <div id="btn" class="download-template">
-                    <span class="download-text">Download Template</span>
-                    <img class="dwnld-img" src="/assets/images/download.png" alt="download-logo">
+                <div class="download-template-div">
+                    <div id="btn" class="download-template">
+                        <span class="download-text">Download Template</span>
+                        <img class="dwnld-img" src="/assets/images/Vector (2).svg" alt="download-logo">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="ejs">
-        <%- include('./preview_assessment_bulk_upload.ejs') %>
-    </div>
+        <div id="ejs">
+            <%- include('./preview_assessment_bulk_upload.ejs') %>
+        </div>
 
-    <!--The Modal-->
-    <div id="submitModal" class="submitModal">
-        <!-- Modal content -->
-        <div class="create-assessment-modal-content">
-            <div class="create-assessment-close-div">
-                <span class="create-assessment-close">&times;</span>
-            </div>
-            <div class="create-assessment-modal-body">
-                <span id="ImgProgress"></span>
-                <!-- <span id="textSpan"></span>
+        <!--The Modal-->
+        <div id="submitModal" class="submitModal">
+            <!-- Modal content -->
+            <div class="create-assessment-modal-content">
+                <div class="create-assessment-close-div">
+                    <span class="create-assessment-close">&times;</span>
+                </div>
+                <div class="create-assessment-modal-body">
+                    <span id="ImgProgress"></span>
+                    <!-- <span id="textSpan"></span>
                 <span id="successMsg"></span>
                 <span id="err"></span> -->
-            </div>
-            <div class="create-assessment-bottom-div">
-                <button id="reUploadBtn" class="reUpload">Re-Upload</button>
-                <button id="finalSubmit" class="finalSubmit">Submit</button>
-                <!--  onclick="onSubmit()" -->
+                </div>
+                <div class="create-assessment-bottom-div">
+                    <button id="reUploadBtn" class="reUpload">Re-Upload</button>
+                    <button id="finalSubmit" class="finalSubmit">Submit</button>
+                    <!--  onclick="onSubmit()" -->
+                </div>
             </div>
         </div>
-    </div>
-    <script type="module" src="../assets/scripts/bulkUploadAssessment.js"></script>
+        <%- include("foot.ejs") %>
+            <script type="module" src="../assets/scripts/bulkUploadAssessment.js"></script>
 </body>
 
 </html>

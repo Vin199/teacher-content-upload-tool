@@ -12,101 +12,103 @@
 </head>
 
 <body>
-    <div class="notes__top__container">
-        <img class="iPrep__img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo">
-        <a class="notes_back" href="dashboard"> <img src="/assets/images/arrow_back.svg" alt="arrow-back"></a>
-        <span class="notes__upload__text">Upload Notes/Books</span>
+    <%- include("head.ejs") %>
+        <div class="notes__top__container">
+            <a class="notes_back" href="dashboard"> <img src="/assets/images/Group 11095.svg" alt="arrow-back"></a>
+            <span class="notes__upload__text">Upload Notes/Books</span>
+        </div>
         <hr>
-    </div>
-    <div class="notes__middle__container">
-        <div id="notes_single_upload">
-            <img class="single__assessment__logo" src="/assets/images/single_assessment_logo.svg"
-                alt="single_assessment_logo">
-            <span class="single__assessment__text">Notes/Books Links</span>
-        </div>
-        <div id="notes_bulk_upload">
-            <img class="bulk_notes_assessment_logo" src="/assets/images/bulk_assessment_logo.svg"
-                alt="bulk_assessment_logo">
-            <span class="bulk_notes_assessment_text">Bulk Upload</span>
-        </div>
-        <hr class="middle_notes_hr">
-    </div>
-    <div class="notes_bottom_container">
-        <span class="notes_instruction_text">Instructions</span>
-        <div class="notes_instruction_box"></div>
-        <span class="notes_history_text">History</span>
-        <div class="notes_history_box"></div>
-    </div>
-    <div id="notes_modal" class="notes_modal">
-        <!-- Modal content -->
-        <div class="notes_modal_content">
-            <div class="notes_close_div">
-                <span class="notes_close">&times;</span>
+        <div class="notes__middle__container">
+            <div id="notes_single_upload">
+                <img class="single__assessment__logo" src="/assets/images/single_assessment_logo.svg"
+                    alt="single_assessment_logo">
+                <span class="single__assessment__text">Notes/Books Links</span>
             </div>
-
-            <div class="notes_form_div">
-                <form id="notes_form_data" class="notes_form_container">
-                    <span class="notes_form_text">Please Fill the details below</span>
-                    <div class="notes_select_div">
-                        <select name="board" id="board" required>
-                            <option selected disabled value="">Select Board</option>
-                        </select>
-
-                        <select name="language" id="language" class="notes_common" required>
-                            <option selected disabled value="">Select Language</option>
-                        </select>
-
-                        <select name="classId" id="class" class="notes_common" required>
-                            <option selected disabled value="">Select Class</option>
-                        </select>
-
-                        <select name="subject" id="subject" class="notes_common" required>
-                            <option selected disabled value="">Select Subject</option>
-                        </select>
-
-                        <select name="topic" id="topic" class="notes_common" required>
-                            <option selected disabled value="">Select Topic</option>
-                        </select>
-                    </div>
-                    <button type="submit" id="notes_next_btn" class="notes_btn">Next</button>
-                </form>
+            <div id="notes_bulk_upload">
+                <img class="bulk_notes_assessment_logo" src="/assets/images/bulk_assessment_logo.svg"
+                    alt="bulk_assessment_logo">
+                <span class="bulk_notes_assessment_text">Bulk Upload</span>
             </div>
+            <hr class="middle_notes_hr">
         </div>
-    </div>
+        <div class="notes_bottom_container">
+            <span class="notes_instruction_text">Instructions</span>
+            <div class="notes_instruction_box"></div>
+            <span class="notes_history_text">History</span>
+            <div class="notes_history_box"></div>
+        </div>
+        <div id="notes_modal" class="notes_modal">
+            <!-- Modal content -->
+            <div class="notes_modal_content">
+                <div class="notes_close_div">
+                    <span class="notes_close">&times;</span>
+                </div>
 
-    <div id="notesBulkModal" class="notes-bulk-modal">
-        <!-- Modal content -->
-        <div class="notes-bulk-modal-content">
-            <div class="notes-bulk-modal-close-div">
-                <span class="notes-bulk-modal-close">&times;</span>
-            </div>
+                <div class="notes_form_div">
+                    <form id="notes_form_data" class="notes_form_container">
+                        <span class="notes_form_text">Please Fill the details below</span>
+                        <div class="notes_select_div">
+                            <select name="board" id="board" required>
+                                <option selected disabled value="">Select Board</option>
+                            </select>
 
-            <div class="notes-bulk-modal-form-div">
-                <form id="notesBulkData" class="notes-bulk-modal-form-container">
-                    <span class="notes-bulk-modal-form-text">Please Fill the details below</span>
-                    <div class="notes-bulk-modal-select-div">
-                        <select name="board" id="notesBulkModalBoard" required>
-                            <option selected disabled value="">Select Board</option>
-                        </select>
+                            <select name="language" id="language" class="notes_common" required>
+                                <option selected disabled value="">Select Language</option>
+                            </select>
 
-                        <select name="language" id="notesBulkModalLanguage" class="notes-bulk-modal-common" required>
-                            <option selected disabled value="">Select Board</option>
-                        </select>
+                            <select name="classId" id="class" class="notes_common" required>
+                                <option selected disabled value="">Select Class</option>
+                            </select>
 
-                        <select name="classId" id="notesBulkModalClass" class="notes-bulk-modal-common" required>
-                            <option selected disabled value="">Select Board</option>
-                        </select>
+                            <select name="subject" id="subject" class="notes_common" required>
+                                <option selected disabled value="">Select Subject</option>
+                            </select>
 
-                        <select name="subject" id="notesBulkModalSubject" class="notes-bulk-modal-common" required>
-                            <option selected disabled value="">Select Board</option>
-                        </select>
-                    </div>
-                    <button type="submit" id="notesBulkModalNextBtn" class="notes-bulk-modal-btn">Next</button>
-                </form>
+                            <select name="topic" id="topic" class="notes_common" required>
+                                <option selected disabled value="">Select Topic</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="notes_next_btn" class="notes_btn">Next</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="/assets/scripts/books.js"></script>
+
+        <div id="notesBulkModal" class="notes-bulk-modal">
+            <!-- Modal content -->
+            <div class="notes-bulk-modal-content">
+                <div class="notes-bulk-modal-close-div">
+                    <span class="notes-bulk-modal-close">&times;</span>
+                </div>
+
+                <div class="notes-bulk-modal-form-div">
+                    <form id="notesBulkData" class="notes-bulk-modal-form-container">
+                        <span class="notes-bulk-modal-form-text">Please Fill the details below</span>
+                        <div class="notes-bulk-modal-select-div">
+                            <select name="board" id="notesBulkModalBoard" required>
+                                <option selected disabled value="">Select Board</option>
+                            </select>
+
+                            <select name="language" id="notesBulkModalLanguage" class="notes-bulk-modal-common"
+                                required>
+                                <option selected disabled value="">Select Language</option>
+                            </select>
+
+                            <select name="classId" id="notesBulkModalClass" class="notes-bulk-modal-common" required>
+                                <option selected disabled value="">Select Class</option>
+                            </select>
+
+                            <select name="subject" id="notesBulkModalSubject" class="notes-bulk-modal-common" required>
+                                <option selected disabled value="">Select Subject</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="notesBulkModalNextBtn" class="notes-bulk-modal-btn">Next</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <%- include("foot.ejs") %>
+            <script src="/assets/scripts/books.js"></script>
 </body>
 
 </html>

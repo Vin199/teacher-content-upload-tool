@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="stylesheet" href="/assets/css/showHistory.css">
+</head>
+
+<body>
+    <%- include("head.ejs") %>
+        <div class="top__container">
+            <a class="active" href="assessment"> <img src="/assets/images/Group 11095.svg" alt="arrow-back"></a>
+            <span class="span__text">History</span>
+        </div>
+        <hr>
+        <span class="historyQues">Questions</span>
+        <div id="set_questions"></div>
+        <%- include("foot.ejs") %>
+            <script type="module" src="/assets/scripts/showHistory.js"></script>
+</body>
+
+</html>

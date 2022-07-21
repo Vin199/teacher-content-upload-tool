@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Failed</title>
+    <link rel="stylesheet" href="/assets/css/authentication-failed.css">
+</head>
+
+<body>
+    <div class="authBody">
+        <img class="auth-img" src="/assets/images/5221999 1.svg" alt="503">
+        <span class="auth-msg">The server is not ready to handle the request</span>
+        <button id="backToHomeBtn" onclick="redirectToHome()">Let's Go Back to Home</button>
+    </div>
+    <%- include("home-redirect.ejs") %>
+</body>
+
+</html>

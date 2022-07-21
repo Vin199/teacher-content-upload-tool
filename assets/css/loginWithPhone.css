@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Inter;
+}
+
+#back_button{
+    top: 8rem;
+    left: 9.5rem;
+    display: flex;
+    cursor: pointer;
+    position: absolute;
+}
+
+#otpScreen{
+    display: flex;
+    justify-content: center;
+}
+
+#otpBody{
+    display: flex;
+    margin-top: 250px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.otpDiv{
+    display: flex;
+    flex-direction: column;
+    margin-right: 89px;
+}
+
+.otpText{
+    font-size: 22px;
+    font-weight: 400;
+    color: #1E293B;
+    line-height: 27px;
+    font-style: normal;
+    margin-bottom: 13px;
+}
+
+#phoneNum{
+    font-size: 16px;
+    font-weight: 400;
+    color: #475569;
+    line-height: 19px;
+    font-style: normal;
+    margin-bottom: 21px;
+}
+
+#otp {
+    width: 368px;
+    height: 60px;
+    font-size: medium;
+    text-align: center;
+    border: 1px solid #DEDEDE;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+#resendText{
+    font-size: 13px;
+    font-weight: 400;
+    color: #0077FF;
+    line-height: 12px;
+    font-style: normal;
+    margin-bottom: 40px;
+}
+
+#resend{
+    font-size: 13px;
+    cursor: pointer;
+    font-weight: 400;
+    color: #0077FF;
+    line-height: 12px;
+    font-style: normal;
+    margin-bottom: 20px;
+}
+
+#resend:hover {
+    text-decoration: underline;
+}
+
+#wrongOtpMsg{
+    color: red;
+    font-size: 14px;
+    margin-bottom: 9px;
+}
+
+.continue {
+    width: 368px;
+    height: 60px;
+    color: #FFFFFF;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background: #0077FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgDiv{
+    position: relative;
+}
+
+.continue img {
+    width: 18px;
+    position: absolute;
+    top: -7.5px;
+    left: 5px;
+    filter: invert(1);
+}
+
+.inputContainer{
+    position: relative;
+}
+
+.inputContainer input{
+    letter-spacing: 8px;
+}
+
+.inputContainer .underlineContainer{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 20px;
+    left: -10px;
+    right: 0;
+    margin: 0 auto;
+}
+
+.underlineContainer .partUnderLine{
+    width: 10px;
+    height: 1px;
+    background-color: #1E293B;
+    margin: 0 4px;
+}

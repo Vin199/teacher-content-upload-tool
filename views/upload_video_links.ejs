@@ -7,39 +7,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Upload Video Links</title>
     <link rel="stylesheet" href="/assets/css/uploadVideo.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="assessment-top-container">
-        <img class="iPrep-img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo" />
-        <hr class="hrule-1">
-        <div class="div-2">
-            <a class="active" href="videos">
-                <img src="/assets/images/arrow_back.svg" alt="arrow-back" /></a>
-            <span class="create-assessment-text">Upload Video Links</span>
+    <%- include("head.ejs") %>
+        <div class="top__container">
+            <a class="active" href="videos"> <img src="/assets/images/Group 11095.svg" alt="arrow-back"></a>
+            <span class="create_assessment_text">Upload Video Links</span>
         </div>
         <div class="hr"></div>
-    </div>
-    <div class="vid-set-ques">
-        <!-- <span class="question_text">Video Links</span> -->
-        <div id="video_form">
-            <div class="vid-ques-forms" id="question_form_1">
-                <div class="vid-ques-area">
-                    <span class="vid-question-num">1.</span>
-                    <input type="text" name="videoName" class="video-name" placeholder="Video Name">
-                    <input type="text" class="vid-link" name="videoLink" placeholder="Video Link">
+        <div class="vid-set-ques">
+            <!-- <span class="question_text">Video Links</span> -->
+            <div id="video_form">
+                <div class="delete-btn-div">
+                    <div class="vid-ques-forms" id="question_form_1">
+                        <div class="vid-ques-area">
+                            <span class="vid-question-num">1.</span>
+                            <input type="text" name="videoName" class="video-name" placeholder="Video Name">
+                            <input type="text" class="vid-link" name="videoLink" placeholder="Video Link">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="vid-btn-div">
-        <button id="nextQues" onclick="add_more_video_field()" class="next-link">
-            +
-        </button>
-        <span class="next-btn-text">Add More Questions</span>
-        <input type="submit" id="videoSubmit">
-    </div>
-    <script src="/assets/scripts/upload_video_links.js"></script>
+        <div class="vid-btn-div">
+            <span id="nextQues" class="next-link" onclick="add_more_video_field()"><img
+                    src="/assets/images/Group 11121 (1).svg" alt="addMore"></span>
+            <input type="submit" id="videoSubmit">
+        </div>
+        <div id="submitModal" class="submitModal">
+            <!-- Modal content -->
+            <div class="create-assessment-modal-content">
+                <div class="create-assessment-close-div">
+                    <span class="create-assessment-close">&times;</span>
+                </div>
+                <div class="create-assessment-modal-body">
+                    <span id="ImgProgress">Click Submit To Upload Assessments.</span>
+                </div>
+                <div class="create-assessment-bottom-div">
+                    <button id="finalSubmit" class="finalSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+        <%- include("foot.ejs") %>
+            <script src="/assets/scripts/upload_video_links.js"></script>
 </body>
 
 </html>

@@ -12,11 +12,13 @@
 // export default db;
 
 import { initializeApp, cert } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
 import { getDatabase } from "firebase-admin/database";
 import { getStorage } from "firebase-admin/storage";
 
 let databaseRef = undefined;
 let storageBucket = undefined;
+let admin = undefined;
 
 const {
   FIREBASE_PROJECT_ID,
@@ -55,14 +57,24 @@ const initializeFirebaseApp = () => {
   const firebaseApp = initializeApp(ADMIN_CONFIG);
   databaseRef = getDatabase(firebaseApp).ref();
   storageBucket = getStorage().bucket();
+  admin = getAuth();
 };
 
 const getDatabaseReference = () => {
   return databaseRef;
 };
 
+const getAdmin = () => {
+  return admin;
+};
+
 const getStorageBucket = () => {
   return storageBucket;
 };
 
-export { initializeFirebaseApp, getDatabaseReference, getStorageBucket };
+export {
+  initializeFirebaseApp,
+  getDatabaseReference,
+  getStorageBucket,
+  getAdmin,
+};

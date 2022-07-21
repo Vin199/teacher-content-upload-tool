@@ -2,53 +2,54 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="/assets/css/login.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <!-- The surrounding HTML is left untouched by FirebaseUI.
          Your app may use that space for branding, controls and other customizations.-->
-
-    <div class="login__container">
+    <div class="imgDiv">
         <img class="login__img" src="/assets/images/login_screen_logo.svg" alt="iPrep Logo">
+    </div>
+    <div id="login__container" class="login__container">
         <span class="login_text">Log in</span>
-        <span class="span_text">Please Choose a Method Below To Login To Your Account</span>
-        <button type="submit" id="loginScreen"> <img src="/assets/images/logos_google-gmail.svg" alt="Gmail Logo">
-            Gmail</button>
-        <span class="or">or</span>
-        <input type="text" id="number" placeholder="Enter Your Phone Number">
-        <div id="continue" class="cont-3">
-            <span>Continue</span>
-            <img src="/assets/images/chevron-forward-outline.svg" alt="">
-        </div>
+        <span class="span_text">Please choose a method below to login to your account</span>
 
-        <!-- The Modal -->
-        <div id="Modal__3" class="modal-3">
-            <!-- Modal content -->
-            <div class="modal-content-3">
-                <div class="close-div-3">
-                    <span class="close-3">&times;</span>
-                </div>
-                <div class="form-div-3">
-                    <span class="otp_text">Enter OTP</span>
-                    <span class="verify">Verification OTP sent to 0000000000</span>
-                    <input id="otp" type="text">
-                    <span class="resend">Resend OTP in <span id="otpTimer">00:30</span> Seconds</span>
-                </div>
-                <div id="cont_div">
-                    <button id="modal_btn" class="btn-3" type="submit">Login</button>
-                </div>
+        <input type="email" id="email" placeholder="Enter Your Email Address">
+        <span class="wrongUser"></span>
+        <span class="or">Or</span>
+        <div class="phoneInputContainer">
+            <div class="codeContainer">
+                <select name="country" id="country">
+                    <option selected value="+91">+91</option>
+                </select>
+            </div>
+            <input type="text" id="phone" placeholder="Enter Your Phone Number">
+        </div>
+        <span class="wrongPhone"></span>
+        <span class="emptyFieldMsg">Please enter either your email address or your mobile number to login</span>
+        <div id="submit" class="cont-3">
+            Continue
+            <div class="imgDiv">
+                <img src="/assets/images/chevron-forward-outline.svg" alt="">
             </div>
         </div>
-
+    </div>
+    <div id="snackbar">
+        <div class="yellow"></div>
+        <div class="blue"></div>
+        <div class="green"></div>
+        <div class="sentMailText">We have sent a link to the above email account. Please check your inbox.</div>
     </div>
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-analytics.js";
-        import { getAuth, getAdditionalUserInfo, RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js";
+        import { getAuth, getAdditionalUserInfo, RecaptchaVerifier, signInWithPhoneNumber, signInWithEmailAndPassword, signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-auth.js";
 
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -66,166 +67,199 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
 
+        const emailValue = document.getElementById("email");
+        const phoneNumberField = document.getElementById('phone');
+        const getCodeButton = document.getElementById('submit');
+        const wrongUser = document.querySelector(".wrongUser");
+        const wrongPhone = document.querySelector(".wrongPhone");
+        wrongUser.style.display = "none";
+        wrongPhone.style.display = "none";
 
-        const phoneNumberField = document.getElementById('number');
-        const codeField = document.getElementById('otp');
-        const getCodeButton = document.getElementById('continue');
-        const signInWithPhoneButton = document.getElementById('modal_btn');
-
+        document.getElementsByClassName("emptyFieldMsg")[0].style.display = "none"
 
         const auth = getAuth(app);
 
-        window.recaptchaVerifier = new RecaptchaVerifier('modal_btn', {
-            'size': 'invisible',
-            'callback': (response) => {
-                // reCAPTCHA solved, allow signInWithPhoneNumber.
-                onSignInSubmit();
+        document.getElementById("email").addEventListener("keyup", (e) => {
+            if (e.target.value != "") {
+                document.getElementById("phone").setAttribute("disabled", true);
+                document.getElementById("email").classList.add("active")
+                if (document.getElementById("phone").hasAttribute("class")) {
+                    document.getElementById("phone").removeAttribute("class")
+                }
             }
-        }, auth);
+            else {
+                document.getElementById("phone").removeAttribute("disabled");
+                document.getElementById("email").removeAttribute("class")
+            }
+        })
 
-        const sendVerificationCode = () => {
-            const phoneNumber = phoneNumberField.value;
-            const appVerifier = window.recaptchaVerifier;
+        document.getElementById("phone").addEventListener("keyup", (e) => {
+            if (e.target.value != "") {
+                document.getElementById("email").setAttribute("disabled", true);
+                document.getElementById("phone").classList.add("active")
+                if (document.getElementById("email").hasAttribute("class")) {
+                    document.getElementById("email").removeAttribute("class")
+                }
+            }
+            else {
+                document.getElementById("email").removeAttribute("disabled");
+                document.getElementById("phone").removeAttribute("class")
+            }
+        })
 
-            // Sends the 6 digit code to the user's phone
-            signInWithPhoneNumber(auth, `+91${phoneNumber}`, appVerifier)
-                .then(confirmationResult => {
+        getCodeButton.addEventListener('click', async (e) => {
 
-                    let time = 30
-                    const otpInterval = setInterval(() => {
-                        const t = --time
+            if (emailValue.hasAttribute("class") || phoneNumberField.hasAttribute("class")) {
+                const targetInput = document.getElementsByClassName("active");
+                const provider = targetInput[0].getAttribute("id");
+                const countryCode = document.getElementById("country").value;
+                const phnNum = countryCode + phoneNumberField.value;
+                let inputValue;
 
-                        if (t == 0) {
-                            clearInterval(otpInterval)
-                        }
-
-                        document.getElementById('otpTimer').innerHTML = '00:' + (t < 10 ? '0' + t : t)
-                    }, 1000)
-
-                    //const sentCodeId = confirmationResult.verificationId;
-                    window.confirmationResult = confirmationResult;
-                    // Sign in if the verification code is set correctly
-                    signInWithPhoneButton.addEventListener('click', () => signInWithPhone());
-                })
-                .catch((error) => {
-                    // Error; SMS not sent
-                    // ...
-                    window.alert("SMS Not Sent");
-                    console.log(error);
-                });
-        }
-
-        const signInWithPhone = () => {
-            const code = codeField.value;
-            confirmationResult.confirm(code).then((result) => {
-                // User signed in successfully.
-                const user = result.user;
-                //window.alert("User signed in successfully!!");
-
-                console.log(user);
-                // location.href = "/dashboard";
-                // ...
-            }).catch((error) => {
-                // User couldn't sign in (bad verification code?)
-                // ...
-                console.log(error);
-                window.alert("User couldn't sign in (bad verification code?)");
-            });
-        }
-
-        getCodeButton.addEventListener('click', sendVerificationCode);
-
-
-        /* ----------------------- Google Authentication ------------------------*/
-
-        const provider = new GoogleAuthProvider();
-        // document.getElementById("LogoutScreen").addEventListener('click', googleLogOut);
-
-        function googleLogin() {
-            // console.log("Login Button Clicked!!");
-            signInWithPopup(auth, provider).then(result => {
-                // console.log('>>> ', result.user);
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                //const additionalUserInfo = getAdditionalUserInfo(credential);
-
-                // let isNewUser = result.additionalUserInfo.isNewUser;
-                //console.log(credential, additionalUserInfo);
-                // if (isNewUser) {
-                //     //delete the created user
-                //     console.log("isNewUser");
-                //     result.user.delete();
-                // } else {
-                //     // your sign in flow
-                //     const user = {
-                //         'email': result.user.email,
-                //         'uid': result.user.uid,
-                //         'emailVerified': result.user.emailVerified,
-                //         'displayName': result.user.displayName,
-                //         'createdAt': result.user.metadata.createdAt,
-                //         'lastLoginAt': result.user.metadata.lastLoginAt
-                //     }
-                //     //abc(user)
-                //     console.log(user);
-
-                //     location.href = '/dashboard'
-                // }
-                const user = {
-                    'email': result.user.email,
-                    'uid': result.user.uid,
-                    'emailVerified': result.user.emailVerified,
-                    'displayName': result.user.displayName,
-                    'createdAt': result.user.metadata.createdAt,
-                    'lastLoginAt': result.user.metadata.lastLoginAt
+                if (provider == "email") {
+                    inputValue = document.getElementById(provider).value;
+                }
+                else {
+                    inputValue = phnNum;
                 }
 
-                // window.localStorage.setItem("teacher_info", JSON.stringify(user));
-                localStorage.setItem('user', JSON.stringify(user))
-                //abc(user)
-                //console.log(user);
+                const providerInputValue = {
+                    providerVal: provider,
+                    inputVal: inputValue,
+                }
 
-                location.href = '/dashboard'
-            })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    const email = error.email;
-                    const credential = GoogleAuthProvider.credentialFromError(error);
-                })
-        }
+                if (!inputValue) {
+                    return;
+                }
 
-        const abc = (user) => {
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(user)
+                const option = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(providerInputValue),
+                };
+
+                fetch("/checkUserStatus", option)
+                    .then((response) => {
+                        return response.json()
+                    })
+                    .then((response) => {
+                        if (response.user) {  // user exists
+                            if (response.status != 0) {
+                                const userDataMail = {
+                                    uid: response.user.uid,
+                                    email: inputValue,
+                                }
+                                localStorage.setItem('userInfo', JSON.stringify(userDataMail))
+                            }
+                            else {
+                                const userDataPhone = {
+                                    uid: response.user.uid,
+                                    phoneNum: response.user.phoneNumber,
+                                }
+                                localStorage.setItem('userPhoneInfo', JSON.stringify(userDataPhone))
+                            }
+                            if (response.provider == 'email') {
+                                const userDataInfo = {
+                                    uid: response.user.uid,
+                                    userEmail: inputValue,
+                                    linkUrl: "http://localhost:3000/emailLogin",
+                                    platformTitle: "CMS",
+                                    customerContactEmail: "mauryavinay96@gmail.com",
+                                }
+                                if (response.status == 1) {	// user has already set up a password
+                                    location.href = "/emailLogin";
+                                } else { // user hasn't set up a password yet
+                                    //location.href = "/setPassword";
+                                    const userOpt = {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify(userDataInfo),
+                                    };
+
+                                    fetch("/resetPassword", userOpt)
+                                        .then((res) => {
+                                            return res.json();
+                                        })
+                                        .then((result) => {
+                                            console.log(result);
+                                        })
+                                        .catch((err) => {
+                                            console.log(err);
+                                        })
+
+                                    // Get the snackbar DIV
+                                    let x = document.getElementById("snackbar");
+                                    // Add the "show" class to DIV
+                                    x.className = "show";
+                                }
+
+                            } else {    // provider = phone number
+                                // send verification code
+                                sessionStorage.setItem("isRedirected", true)
+                                location.href = "/loginWithPhone"
+                            }
+                        }
+                        else {    // user doesn't exist
+                            if (response.status == 0 && response.provider == "phone") {
+                                wrongPhone.innerHTML = "This phone number does not exist"
+                                wrongPhone.style.display = "block"
+                            }
+                            else {
+                                document.getElementById("email").style.borderColor = "red";
+                                wrongUser.innerHTML = "This email address does not exist"
+                                wrongUser.style.display = "block"
+                            }
+                            //alert("User Doesn't Exist!!");
+                        }
+                    }).catch((error) => {
+                        if (document.getElementById("email").value != "") {
+                            wrongEmail.style.display = 'block';
+                            document.getElementById("email").style.borderColor = "red"
+                        }
+                        console.log(error)
+                    })
+                return false
             }
+            else {
+                document.getElementsByClassName("emptyFieldMsg")[0].style.display = "block";
+                document.getElementById("email").style.borderColor = "red";
+                document.getElementsByClassName("phoneInputContainer")[0].style.borderColor = "red";
+            }
+        })
 
-            fetch('/teachers', options);
-        }
+        phoneNumberField.addEventListener("input", () => {
+            document.getElementById("email").style = "none";
+            document.getElementsByClassName("phoneInputContainer")[0].style = "none";
+            document.getElementsByClassName("emptyFieldMsg")[0].style.display = "none";
+            wrongUser.style = "none"
+            wrongPhone.style.display = "none"
+        })
 
-        document.getElementById("loginScreen").addEventListener('click', googleLogin);
+        emailValue.addEventListener("input", () => {
+            document.getElementById("email").style = "none";
+            document.getElementsByClassName("phoneInputContainer")[0].style = "none";
+            document.getElementsByClassName("emptyFieldMsg")[0].style.display = "none"
+        })
 
-        // function googleLogOut() {
-        //     signOut(auth).then(() => {
-        //         console.log('Signed Out');
-        //         // location.href = 'login'
-        //     }).catch((error) => {
-        //         console.error('Sign Out Error', error);
-        //     });
-        // }
+        const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
-        // function UserDetail(user) {
-        //     document.getElementById("userDetails").innerHTML = `
-        //     <img src="${user.photoURL}" style= "width:10%">
-        //     <p>Name: ${user.displayName}</p>
-        //     <p>Email Id: ${user.email}</p>
-        //     `
-        // }
+        $("#email").on("keyup", function () {
+            let mailValue = $("#email").val();
+            if (!emailRegex.test(mailValue) && mailValue.length != 0) {
+                $("#email").css("border", "2px solid red");
+                wrongUser.innerHTML = "not valid email id"
+                $(".wrongUser").css("display", "block");
+                emailValue.focus();
+            } else {
+                $("#email").css("border", "2px solid #E2E8F0");
+                $(".wrongUser").css("display", "none");
+            }
+        });
     </script>
-    <script type="module" src="/assets/scripts/login.js"></script>
 </body>
 
 </html>

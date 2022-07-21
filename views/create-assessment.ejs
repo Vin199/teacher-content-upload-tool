@@ -12,80 +12,101 @@
 </head>
 
 <body>
-  <div class="assessment_top_container">
-    <img class="iPrep__img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo" />
-    <hr class="hrule_1">
-    <div class="div_2">
-      <a class="active" href="assessment">
-        <img src="/assets/images/arrow_back.svg" alt="arrow-back" /></a>
-      <span class="create_assessment_text">Create Assessments</span>
+  <%- include("head.ejs") %>
+    <div class="top__container">
+      <div class="backDiv">
+        <a class="active" href="assessment"> <img src="/assets/images/Group 11095.svg" alt="arrow-back"></a>
+      </div>
+      <span class="create_assessment_text">Create Assessment</span>
     </div>
     <div class="hr"></div>
-  </div>
-  <div class="set_questions">
-    <span class="question_text">Questions</span>
-    <div id="assessment_form">
-      <div class="delete-btn-div">
-        <div class="question_forms" id="question_form_1">
-          <div class="question_area">
-            <span class="question_num">Q.1</span>
-            <input type="text" name="question" class="question" placeholder="Type Your Question Here">
-            <input id="quesImgFile" type="file" class="quesImage" name="questionImage">
-          </div>
-          <div class="option_area">
-            <div class="opt_a">
-              <span class="question_num">A.</span>
-              <input type="text" name="opt_A" class="option" placeholder="Type Option A Here (Right Answer)">
-              <input id="optAFile" type="file" class="optImage" name="option_A_Image">
+    <div class="set_questions">
+      <span class="question_text">Questions</span>
+      <div class="instructionDiv">
+        <div class="instructionTitle">
+          <span class="instructionText">Instructions</span>
+        </div>
+        <div class="instructionMsgDiv">
+          <span class="instructionMsgText">For each question you can upload an image and you can type the question in
+            the given area. For Options
+            you can either type the answer or you can upload an image. </span>
+        </div>
+      </div>
+      <div id="assessment_form">
+        <div class="delete-btn-div">
+          <div class="question_forms" id="question_form_1">
+            <div class="question_area">
+              <span class="question_num">Q.1</span>
+              <input type="text" name="question" class="question" placeholder="Type Your Question Here">
+              <input id="quesImgFile" type="file" class="quesImage" name="questionImage">
+              <button id="removeImg">Remove Image</button>
             </div>
-            <div class=" opt_b">
-              <span class="question_num">B.</span>
-              <input type="text" name="opt_B" class="option" placeholder="Type Option B Here">
-              <input id="optBFile" type="file" class="optImage" name="option_B_Image">
-            </div>
-            <div class="opt_c">
-              <span class="question_num">C.</span>
-              <input type="text" name="opt_C" class="option" placeholder="Type Option C Here">
-              <input id="optCFile" type="file" class="optImage" name="option_C_Image">
-            </div>
-            <div class="opt_d">
-              <span class="question_num">D.</span>
-              <input type="text" name="opt_D" class="option" placeholder="Type Option D Here">
-              <input id="optDFile" type="file" class="optImage" name="option_D_Image">
+            <div class="option_area">
+              <div class="opt_a">
+                <span class="question_num">A.</span>
+                <input type="text" name="opt_A" class="option" placeholder="Type Option A Here (Right Answer)">
+                <!-- <input id="optAFile" type="file" class="optImage" name="option_A_Image"> -->
+                <div class="upload-image">
+                  <img src="/assets/images/Group.svg" alt="upload-logo"
+                    style="width: 20px; margin-right: 5px; margin-left: 4px">
+                  <input id='optAFile' type='file' class="optImage" name="option_A_Image" hidden />
+                  <input id="buttonId" class="upload-text" type="button" value="Upload Image"
+                    style="border: none; cursor: pointer;">
+                </div>
+                <span id="imageAName" style="margin-left: 5px; font-size: 14px"></span>
+              </div>
+              <div class=" opt_b">
+                <span class="question_num">B.</span>
+                <input type="text" name="opt_B" class="option" placeholder="Type Option B Here">
+                <!-- <input id="optBFile" type="file" class="optImage" name="option_B_Image" hidden> -->
+                <div class="upload-image">
+                  <img src="/assets/images/Group.svg" alt="upload-logo"
+                    style="width: 20px; margin-right: 5px; margin-left: 4px">
+                  <input id="optBFile" type="file" class="optImage" name="option_B_Image" hidden>
+                  <input id="buttonId" class="upload-text" type="button" value="Upload Image"
+                    style="border: none; cursor: pointer;">
+                </div>
+              </div>
+              <div class="opt_c">
+                <span class="question_num">C.</span>
+                <input type="text" name="opt_C" class="option" placeholder="Type Option C Here">
+                <input id="optCFile" type="file" class="optImage" name="option_C_Image">
+              </div>
+              <div class="opt_d">
+                <span class="question_num">D.</span>
+                <input type="text" name="opt_D" class="option" placeholder="Type Option D Here">
+                <input id="optDFile" type="file" class="optImage" name="option_D_Image">
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="btn_div">
-      <button id="nextQues" class="next_ques">
-        +
-      </button>
-      <span class="btn_div_text">Add More Questions</span>
-      <input type="button" id="uploadAssessment" value="Submit">
-    </div>
+      <div class="btn_div">
+        <span id="nextQues" class="next_ques"><img src="/assets/images/Group 11121 (1).svg" alt="addMore"></span>
+        <span class="nextQuesText">Add more questions</span>
+        <input type="button" id="uploadAssessment" value="Submit">
+      </div>
 
-    <!--The Modal-->
-    <div id="submitModal" class="submitModal">
-      <!-- Modal content -->
-      <div class="create-assessment-modal-content">
-        <div class="create-assessment-close-div">
-          <span class="create-assessment-close">&times;</span>
-        </div>
-        <div class="create-assessment-modal-body">
-          <span id="ImgProgress"></span>
-          <!-- <span id="textSpan"></span> -->
-          <!-- <span id="successMsg"></span> -->
-          <!-- <span id="err"></span> -->
-        </div>
-        <div class="create-assessment-bottom-div">
-          <button id="reUploadBtn" class="reUpload">Re-Upload</button>
-          <button id="finalSubmit" class="finalSubmit">Submit</button>
-          <!--  onclick="onSubmit()" -->
+      <!--The Modal-->
+      <div id="submitModal" class="submitModal">
+        <!-- Modal content -->
+        <div class="create-assessment-modal-content">
+          <div class="create-assessment-close-div">
+            <span class="create-assessment-close">&times;</span>
+          </div>
+          <div class="create-assessment-modal-body">
+            <span id="ImgProgress"></span>
+          </div>
+          <div class="create-assessment-bottom-div">
+            <button id="reUploadBtn" class="reUpload">Re-Upload</button>
+            <button id="finalSubmit" class="finalSubmit">Submit</button>
+          </div>
         </div>
       </div>
-    </div>
-    <script type="module" src="/assets/scripts/backupscript.js"></script>
+      <%- include("foot.ejs") %>
+        <script type="module" src="/assets/scripts/createAssessment.js"></script>
 </body>
 
 </html>
+
+<input id="optBFile" type="file" class="optImage" name="option_B_Image" hidden>

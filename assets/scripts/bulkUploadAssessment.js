@@ -12,10 +12,10 @@ const firebaseConfig = {
   authDomain: "node-project-c4942.firebaseapp.com",
   databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com",
   projectId: "node-project-c4942",
-  storageBucket: "node-project-c4942.appspot.com", //"node-project-c4942.appspot.com"
+  storageBucket: "node-project-c4942.appspot.com",
   messagingSenderId: "581470710657",
   appId: "1:581470710657:web:a4792037ef1d415c375680",
-  measurementId: "G-HQZDXNGMJ3",
+  measurementId: "G-HQZDXNGMJ3"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -40,237 +40,50 @@ const bulkMsgCloseBtn = document.getElementsByClassName("excel-modal-close")[0];
 const loadModal = JSON.parse(window.localStorage.getItem("isTrue"));
 
 const bulkMetadata = JSON.parse(window.localStorage.getItem("bulkMetaData"));
-const teacher_info = JSON.parse(window.localStorage.getItem("teacher_info"));
+const teacher_info = JSON.parse(window.localStorage.getItem("userInfo"));
 
 const assessmentData = JSON.parse(
   window.localStorage.getItem("assessmentMetaData")
 );
 
-window.onload = function () {
-  if (loadModal.isTrue === null) {
-    bulkModalMsgBox.style.display = "block";
+let questions = document.getElementsByClassName("question_forms");
 
-    bulkMsgCloseBtn.addEventListener("click", () => {
-      closeBulkModalMsg();
-    });
+document.getElementById("submit").addEventListener("click", async () => {
+  let qsnCounter = (await getCount()) + 1;
+  let isErrorPresent = false;
 
-    function closeBulkModalMsg() {
-      bulkModalMsgBox.style.display = "none";
-    }
-
-    window.localStorage.setItem("isTrue", false);
-  }
-};
-
-let parentObj = {
-  details: {
-    qsn_Id: 0,
-  },
-};
-
-let selectedFile;
-
-document.getElementById("ejs").style.display = "none";
-
-document.getElementById("fileId").addEventListener("change", (e) => {
-  selectedFile = e.target.files[0];
-  document.getElementById("bulkContent").style.display = "none";
-  document.getElementById("ejs").style.display = "block";
-});
-
-document.getElementById("submit").style.display = "none";
-
-function displayNextBtn() {
-  document.getElementById("submit").style.display = "block";
-}
-
-window.displayNextBtn = displayNextBtn;
-
-let wb = XLSX.utils.book_new();
-wb.Props = {
-  Title: "Assessment Sheet",
-  Subject: "Test",
-  Author: "Vinay Maurya",
-  CreatedDate: new Date().getDate(),
-};
-
-const option = {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(bulkMetadata),
-};
-
-const response = await fetch("/getTopics", option);
-const data = await response.json();
-
-Object.values(data).forEach((ele) => {
-  wb.SheetNames.push(ele);
-  let ws_heading = [
-    ["question", "option_a", "option_b", "option_c", "option_d"],
-  ];
-  let ws = XLSX.utils.aoa_to_sheet(ws_heading);
-  wb.Sheets[ele] = ws;
-});
-
-let wbout = XLSX.write(wb, { bookType: "xlsx", type: "binary" });
-function s2ab(s) {
-  let buff = new ArrayBuffer(s.length);
-  let view = new Uint8Array(buff);
-  for (let i = 0; i < s.length; i++) {
-    view[i] = s.charCodeAt(i) & 0xff;
-  }
-  return buff;
-}
-$("#btn").click(function () {
-  saveAs(
-    new Blob([s2ab(wbout)], { type: "application/octet-stream" }),
-    "Assessment.xlsx"
-  );
-  bulkModalMsgBox.style.display = "none";
-});
-
-document.getElementById("btn_2").onclick = function () {
-  saveAs(
-    new Blob([s2ab(wbout)], { type: "application/octet-stream" }),
-    "Assessment.xlsx"
-  );
-};
-
-function readData() {
-  if (selectedFile) {
-    let fileReader = new FileReader();
-    fileReader.onload = function (e) {
-      let data = e.target.result;
-      let workBook = XLSX.read(data, {
-        type: "binary",
-      });
-
-      let sheet_name_list = workBook.SheetNames;
-
-      setOptions(sheet_name_list, workBook);
-    };
-    fileReader.readAsBinaryString(selectedFile);
-  }
-}
-
-let optionsObj = {};
-
-const setOptions = async (sheet_name_list, workBook) => {
-  const option = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(bulkMetadata),
-  };
-
-  const response = await fetch("/getTopics", option);
-  const result = await response.json();
-
-  let qsnCounter = await getCount();
-
-  Object.keys(result).forEach((elem) => {
-    $("#topics").append(`<option value="${elem}">${result[elem]}</option>`);
-  });
-
-  let allQuestions = [];
-  workBook.SheetNames.forEach((sheet) => {
-    let rowObject = XLSX.utils.sheet_to_row_object_array(
-      workBook.Sheets[sheet]
-    );
-    allQuestions.push(rowObject);
-  });
-
-  document.getElementById("topics").addEventListener("change", (e) => {
-    const options = e.target.querySelectorAll("option");
-    let selectedoption = null;
-    options.forEach((element) => {
-      if (element.value == e.target.value) {
-        selectedoption = element.innerHTML;
+  Array.from(questions).forEach((element) => {
+    const assessmentOpt = element.getElementsByClassName("option");
+    const assessmentOptImg = element.getElementsByClassName("optImage");
+    Array.from(assessmentOpt).forEach((item, index) => {
+      if (!(item.value || assessmentOptImg[index].files[0])) {
+        item.style.border = "1.5px solid #ff0000";
+        assessmentOptImg[index].style.border = "1.5px solid #ff0000";
+        isErrorPresent = true;
       }
     });
-    const topicIndex = sheet_name_list.indexOf(selectedoption);
-    if (topicIndex == -1) return alert("sheet name not found");
-    const questionObj = allQuestions[topicIndex];
-    let count = 0;
-    document.getElementById("set_questions").innerHTML = "";
-    for (const key in questionObj) {
-      if (Object.hasOwnProperty.call(questionObj, key)) {
-        const element = questionObj[key];
-        count++;
-        let html = `<div class="question_forms" id="question_form_${count}">
-                <div class="question_area">
-                  <span class="question_num">Q.${count}</span>
-                  <input type="text" name="question" class="question" placeholder="Type Your Question Here" value="${element.question}">
-                  <input id="quesImgFile_${count}" type="file" class="quesImage" name="questionImage">
-                </div>
-                <div class="option_area">
-                  <div class="opt_a">
-                    <span class="question_num">A.</span>
-                    <input type="text" name="opt_A" class="option" placeholder="Type Option A Here (Right Answer)" value="${element.option_a}">
-                    <input id="optAFile_${count}" type="file" class="optImage" name="option_A_Image">
-                  </div>
-                  <div class=" opt_b">
-                    <span class="question_num">B.</span>
-                    <input type="text" name="opt_B" class="option" placeholder="Type Option B Here" value="${element.option_b}">
-                    <input id="optBFile_${count}" type="file" class="optImage" name="option_B_Image">
-                  </div>
-                  <div class="opt_c">
-                    <span class="question_num">C.</span>
-                    <input type="text" name="opt_C" class="option" placeholder="Type Option C Here" value="${element.option_c}">
-                    <input id="optCFile_${count}" type="file" class="optImage" name="option_C_Image">
-                  </div>
-                  <div class="opt_d">
-                    <span class="question_num">D.</span>
-                    <input type="text" name="opt_D" class="option" placeholder="Type Option D Here" value="${element.option_d}">
-                    <input id="optDFile_${count}" type="file" class="optImage" name="option_D_Image">
-                  </div>
-                </div>
-              </div> `;
+    setObj(element, qsnCounter);
+    qsnCounter++;
+  });
 
-        document.getElementById("set_questions").innerHTML += html;
+  Array.from(questions).forEach((element) => {
+    const assessmentQues = element.getElementsByClassName("question");
+    const assessmentQuesImg = element.getElementsByClassName("quesImage");
+    Array.from(assessmentQues).forEach((ele, index) => {
+      if (!(ele.value || assessmentQuesImg[index].files[0])) {
+        ele.style.border = "1.5px solid #ff0000";
+        assessmentQuesImg[index].style.border = "1.5px solid #ff0000";
+        isErrorPresent = true;
       }
-    }
-    let Ques = document.getElementsByClassName("question_forms");
-    checkAuth(Ques, e.target.value, qsnCounter);
+    });
   });
-};
 
-let counter = 0;
-let filesCount = 0;
-let isError = false;
+  //console.log(parentObj);
 
-const sendQuestionData = (parentObj) => {
-  createAssessmentModal.style.display = "none";
+  isErrorPresent
+    ? (createAssessmentModal.style.display = "none")
+    : (createAssessmentModal.style.display = "block");
 
-  return new Promise((resolve, reject) => {
-    const assessmentValue = {
-      metadata: assessmentData,
-      questionData: parentObj,
-      teacher_data: teacher_info,
-    };
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(assessmentValue),
-    };
-    try {
-      fetch("/set-assessment", options);
-      resolve();
-    } catch (error) {
-      alert(error.message);
-      reject();
-    }
-  });
-};
-
-document.getElementById("submit").addEventListener("click", () => {
-  // When the user clicks the submit button, open the modal
-  createAssessmentModal.style.display = "block";
   let imageObj = {};
   Object.keys(parentObj).forEach((uid) => {
     let childObject = parentObj[uid];
@@ -444,6 +257,239 @@ function uploadImage(file, uid, imageKey) {
   );
 }
 
+window.onload = function () {
+  if (loadModal.isTrue === null) {
+    bulkModalMsgBox.style.display = "block";
+
+    bulkMsgCloseBtn.addEventListener("click", () => {
+      closeBulkModalMsg();
+    });
+
+    function closeBulkModalMsg() {
+      bulkModalMsgBox.style.display = "none";
+    }
+
+    window.localStorage.setItem("isTrue", false);
+  }
+};
+
+let parentObj = {
+  details: {
+    qsn_Id: 0,
+  },
+};
+
+let selectedFile;
+
+document.getElementById("ejs").style.display = "none";
+
+document.getElementById("fileId").addEventListener("change", (e) => {
+  selectedFile = e.target.files[0];
+  document.getElementById("bulkContent").style.display = "none";
+  document.getElementById("ejs").style.display = "block";
+});
+
+document.getElementById("submit").style.display = "none";
+
+function displayNextBtn() {
+  document.getElementById("submit").style.display = "block";
+}
+
+window.displayNextBtn = displayNextBtn;
+
+let wb = XLSX.utils.book_new();
+wb.Props = {
+  Title: "Assessment Sheet",
+  Subject: "Test",
+  Author: "Vinay Maurya",
+  CreatedDate: new Date().getDate(),
+};
+
+const option = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(bulkMetadata),
+};
+
+const response = await fetch("/getTopics", option);
+const data = await response.json();
+
+Object.values(data).forEach((ele) => {
+  wb.SheetNames.push(ele);
+  let ws_heading = [
+    ["question", "option_a", "option_b", "option_c", "option_d"],
+  ];
+  let ws = XLSX.utils.aoa_to_sheet(ws_heading);
+  wb.Sheets[ele] = ws;
+});
+
+let wbout = XLSX.write(wb, { bookType: "xlsx", type: "binary" });
+function s2ab(s) {
+  let buff = new ArrayBuffer(s.length);
+  let view = new Uint8Array(buff);
+  for (let i = 0; i < s.length; i++) {
+    view[i] = s.charCodeAt(i) & 0xff;
+  }
+  return buff;
+}
+$("#btn").click(function () {
+  saveAs(
+    new Blob([s2ab(wbout)], { type: "application/octet-stream" }),
+    "Assessment.xlsx"
+  );
+  bulkModalMsgBox.style.display = "none";
+});
+
+document.getElementById("btn_2").onclick = function () {
+  saveAs(
+    new Blob([s2ab(wbout)], { type: "application/octet-stream" }),
+    "Assessment.xlsx"
+  );
+};
+
+function readData() {
+  if (selectedFile) {
+    let fileReader = new FileReader();
+    fileReader.onload = function (e) {
+      let data = e.target.result;
+      let workBook = XLSX.read(data, {
+        type: "binary",
+      });
+
+      let sheet_name_list = workBook.SheetNames;
+
+      setOptions(sheet_name_list, workBook);
+    };
+    fileReader.readAsBinaryString(selectedFile);
+  }
+}
+
+let optionsObj = {};
+let optionValue;
+
+const setOptions = async (sheet_name_list, workBook) => {
+  const option = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(bulkMetadata),
+  };
+
+  const response = await fetch("/getTopics", option);
+  const result = await response.json();
+
+  // let qsnCounter = await getCount();
+
+  Object.keys(result).forEach((elem) => {
+    $("#topics").append(`<option value="${elem}">${result[elem]}</option>`);
+  });
+
+  let allQuestions = [];
+  workBook.SheetNames.forEach((sheet) => {
+    let rowObject = XLSX.utils.sheet_to_row_object_array(
+      workBook.Sheets[sheet]
+    );
+    allQuestions.push(rowObject);
+  });
+
+  document.getElementById("topics").addEventListener("change", (e) => {
+    const options = e.target.querySelectorAll("option");
+    let selectedoption = null;
+    options.forEach((element) => {
+      if (element.value == e.target.value) {
+        selectedoption = element.innerHTML;
+      }
+    });
+    const topicIndex = sheet_name_list.indexOf(selectedoption);
+    if (topicIndex == -1) return alert("sheet name not found");
+    const questionObj = allQuestions[topicIndex];
+    let count = 0;
+    document.getElementById("set_questions").innerHTML = "";
+    for (const key in questionObj) {
+      if (Object.hasOwnProperty.call(questionObj, key)) {
+        const element = questionObj[key];
+        count++;
+        let html = `<div class="question_forms" id="question_form_${count}">
+                <div class="question_area">
+                  <span class="question_num">Q.${count}</span>
+                  <input type="text" name="question" class="question" placeholder="Type Your Question Here" value="${
+                    element.question == undefined ? "" : element.question
+                  }">
+                  <input id="quesImgFile_${count}" type="file" class="quesImage" name="questionImage"> 
+                </div>
+                <div class="option_area">
+                  <div class="opt_a">
+                    <span class="question_num">A.</span>
+                    <input type="text" name="opt_A" class="option" placeholder="Type Option A Here (Right Answer)" value="${
+                      element.option_a == undefined ? "" : element.option_a
+                    }">
+                    <input id="optAFile_${count}" type="file" class="optImage" name="option_A_Image">
+                  </div>
+                  <div class=" opt_b">
+                    <span class="question_num">B.</span>
+                    <input type="text" name="opt_B" class="option" placeholder="Type Option B Here" value="${
+                      element.option_b == undefined ? "" : element.option_b
+                    }">
+                    <input id="optBFile_${count}" type="file" class="optImage" name="option_B_Image">
+                  </div>
+                  <div class="opt_c">
+                    <span class="question_num">C.</span>
+                    <input type="text" name="opt_C" class="option" placeholder="Type Option C Here" value="${
+                      element.option_c == undefined ? "" : element.option_c
+                    }">
+                    <input id="optCFile_${count}" type="file" class="optImage" name="option_C_Image">
+                  </div>
+                  <div class="opt_d">
+                    <span class="question_num">D.</span>
+                    <input type="text" name="opt_D" class="option" placeholder="Type Option D Here" value="${
+                      element.option_d == undefined ? "" : element.option_d
+                    }">
+                    <input id="optDFile_${count}" type="file" class="optImage" name="option_D_Image">
+                  </div>
+                </div>
+              </div> `;
+
+        document.getElementById("set_questions").innerHTML += html;
+      }
+    }
+    optionValue = e.target.value;
+    checkAuth(questions);
+  });
+};
+
+let counter = 0;
+let filesCount = 0;
+let isError = false;
+
+const sendQuestionData = (parentObj) => {
+  createAssessmentModal.style.display = "none";
+
+  return new Promise((resolve, reject) => {
+    const assessmentValue = {
+      metadata: assessmentData,
+      questionData: parentObj,
+      teacher_data: teacher_info,
+    };
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(assessmentValue),
+    };
+    try {
+      fetch("/set-assessment", options);
+      resolve();
+    } catch (error) {
+      alert(error.message);
+      reject();
+    }
+  });
+};
+
 createAssessmentClose.addEventListener("click", () => {
   createAssessmentModal.style.display = "none";
 });
@@ -461,50 +507,23 @@ function openDialog() {
   document.getElementById("fileId").onchange = readData;
 }
 
-function checkAuth(Ques, optionValue, qsnCounter) {
+function checkAuth(Ques) {
   for (let j = 0; j < Ques.length; j++) {
-    qsnCounter++;
     const typeArr = ["image/png", "image/jpeg"];
-    const obj1 = {
-      q: "",
-      questionImage: "",
-      A: {
-        type: "",
-        value: "",
-      },
-      B: {
-        type: "",
-        value: "",
-      },
-      C: {
-        type: "",
-        value: "",
-      },
-      D: {
-        type: "",
-        value: "",
-      },
-    };
-    obj1.q = Ques[j]
-      .getElementsByTagName("div")[0]
-      .getElementsByTagName("input")[0].value;
-
-    const qImage = Ques[j]
-      .getElementsByTagName("div")[0]
-      .getElementsByTagName("input")[1].files[0];
-    if (qImage) {
-      obj1.questionImage = qImage;
-    }
 
     let qFile = Ques[j]
       .getElementsByTagName("div")[0]
       .getElementsByTagName("input")[1];
+
+    let qText = Ques[j]
+      .getElementsByTagName("div")[0]
+      .getElementsByTagName("input")[0];
+
     qFile.onchange = function (e) {
       if (e.target.files[0].size) {
-        Ques[j]
-          .getElementsByTagName("div")[0]
-          .getElementsByTagName("input")[0]
-          .setAttribute("disabled", true);
+        qText.setAttribute("disabled", true);
+        qFile.style.border = "none";
+        qText.style.border = "none";
       }
       const q_file = qFile.files[0];
       if (q_file.size > 1048576) {
@@ -521,234 +540,188 @@ function checkAuth(Ques, optionValue, qsnCounter) {
       }
     };
 
-    const type1 = Ques[j]
-      .getElementsByTagName("div")[1]
-      .getElementsByTagName("div")[0]
-      .getElementsByTagName("input")[1].value;
-    const text1 = Ques[j]
-      .getElementsByTagName("div")[2]
-      .getElementsByTagName("input")[0].value;
-    if (type1) {
-      obj1.A.type = "image";
-      obj1.A.value = Ques[j]
-        .getElementsByTagName("div")[2]
-        .getElementsByTagName("input")[1].files[0];
-    } else if (text1) {
-      obj1.A.type = "text";
-      obj1.A.value = text1;
-    }
-
     const aFile = Ques[j]
       .getElementsByTagName("div")[2]
       .getElementsByTagName("input")[1];
 
+    const aText = Ques[j]
+      .getElementsByTagName("div")[2]
+      .getElementsByTagName("input")[0];
+
     aFile.onchange = function (e) {
-      if (e.target.files[0].size) {
-        document.getElementsByName("opt_A")[0].setAttribute("disabled", true);
-      }
-      const A_File = this.files[0];
-      if (A_File.size > 1048576) {
-        alert("File is too big, Please select an image of smaller size!");
-        this.value = "";
-      } else {
-        const includes_A = typeArr.includes(A_File.type);
-        if (A_File.type == "" || !includes_A) {
-          alert(
-            "Not a valid file format, please select an image of type jpeg or png."
-          );
-          this.value = "";
+      try {
+        if (e.target.files[0].size) {
+          document.getElementsByName("opt_A")[0].setAttribute("disabled", true);
+          aFile.style.border = "none";
+          aText.style.border = "none";
         }
+        const A_File = this.files[0];
+        if (A_File.size > 1048576) {
+          alert("File is too big, Please select an image of smaller size!");
+          this.value = "";
+        } else {
+          const includes_A = typeArr.includes(A_File.type);
+          if (A_File.type == "" || !includes_A) {
+            alert(
+              "Not a valid file format, please select an image of type jpeg or png."
+            );
+            this.value = "";
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        aText.removeAttribute("disabled");
       }
     };
-
-    const type2 = Ques[j]
-      .getElementsByTagName("div")[1]
-      .getElementsByTagName("div")[1]
-      .getElementsByTagName("input")[1].value;
-    const text2 = Ques[j]
-      .getElementsByTagName("div")[3]
-      .getElementsByTagName("input")[0].value;
-    if (type2) {
-      obj1.B.type = "image";
-      obj1.B.value = Ques[j]
-        .getElementsByTagName("div")[3]
-        .getElementsByTagName("input")[1].files[0];
-    } else if (text2) {
-      obj1.B.type = "text";
-      obj1.B.value = text2;
-    }
 
     const bFile = Ques[j]
       .getElementsByTagName("div")[3]
       .getElementsByTagName("input")[1];
 
+    const bText = Ques[j]
+      .getElementsByTagName("div")[3]
+      .getElementsByTagName("input")[0];
+
     bFile.onchange = function (e) {
-      if (e.target.files[0].size) {
-        document.getElementsByName("opt_B")[0].setAttribute("disabled", true);
-      }
-      const B_File = this.files[0];
-      if (B_File.size > 1048576) {
-        alert("File is too big, Please select an image of smaller size!");
-        this.value = "";
-      } else {
-        const includes_B = typeArr.includes(B_File.type);
-        if (B_File.type == "" || !includes_B) {
-          alert(
-            "Not a valid file format, please select an image of type jpeg or png."
-          );
-          this.value = "";
+      try {
+        if (e.target.files[0].size) {
+          document.getElementsByName("opt_B")[0].setAttribute("disabled", true);
+          bFile.style.border = "none";
+          bText.style.border = "none";
         }
+        const B_File = this.files[0];
+        if (B_File.size > 1048576) {
+          alert("File is too big, Please select an image of smaller size!");
+          this.value = "";
+        } else {
+          const includes_B = typeArr.includes(B_File.type);
+          if (B_File.type == "" || !includes_B) {
+            alert(
+              "Not a valid file format, please select an image of type jpeg or png."
+            );
+            this.value = "";
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        bText.removeAttribute("disabled");
       }
     };
-
-    const type3 = Ques[j]
-      .getElementsByTagName("div")[1]
-      .getElementsByTagName("div")[2]
-      .getElementsByTagName("input")[1].value;
-    const text3 = Ques[j]
-      .getElementsByTagName("div")[4]
-      .getElementsByTagName("input")[0].value;
-    if (type3) {
-      obj1.C.type = "image";
-      obj1.C.value = Ques[j]
-        .getElementsByTagName("div")[4]
-        .getElementsByTagName("input")[1].files[0];
-    } else if (text3) {
-      obj1.C.type = "text";
-      obj1.C.value = text3;
-    }
 
     const cFile = Ques[j]
       .getElementsByTagName("div")[4]
       .getElementsByTagName("input")[1];
 
+    const cText = Ques[j]
+      .getElementsByTagName("div")[4]
+      .getElementsByTagName("input")[0];
+
     cFile.onchange = function (e) {
-      if (e.target.files[0].size) {
-        document.getElementsByName("opt_C")[0].setAttribute("disabled", true);
-      }
-      const C_File = this.files[0];
-      if (C_File.size > 1048576) {
-        alert("File is too big, Please select an image of smaller size!");
-        this.value = "";
-      } else {
-        const includes_C = typeArr.includes(C_File.type);
-        if (C_File.type == "" || !includes_C) {
-          alert(
-            "Not a valid file format, please select an image of type jpeg or png."
-          );
-          this.value = "";
+      try {
+        if (e.target.files[0].size) {
+          document.getElementsByName("opt_C")[0].setAttribute("disabled", true);
+          cFile.style.border = "none";
+          cText.style.border = "none";
         }
+        const C_File = this.files[0];
+        if (C_File.size > 1048576) {
+          alert("File is too big, Please select an image of smaller size!");
+          this.value = "";
+        } else {
+          const includes_C = typeArr.includes(C_File.type);
+          if (C_File.type == "" || !includes_C) {
+            alert(
+              "Not a valid file format, please select an image of type jpeg or png."
+            );
+            this.value = "";
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        cText.removeAttribute("disabled");
       }
     };
-
-    const type4 = Ques[j]
-      .getElementsByTagName("div")[1]
-      .getElementsByTagName("div")[3]
-      .getElementsByTagName("input")[1].value;
-    const text4 = Ques[j]
-      .getElementsByTagName("div")[5]
-      .getElementsByTagName("input")[0].value;
-    if (type4) {
-      obj1.D.type = "image";
-      obj1.D.value = Ques[j]
-        .getElementsByTagName("div")[5]
-        .getElementsByTagName("input")[1].files[0];
-    } else if (text4) {
-      obj1.D.type = "text";
-      obj1.D.value = text4;
-    }
 
     const dFile = Ques[j]
       .getElementsByTagName("div")[5]
       .getElementsByTagName("input")[1];
 
+    const dText = Ques[j]
+      .getElementsByTagName("div")[5]
+      .getElementsByTagName("input")[0];
+
     dFile.onchange = function (e) {
-      if (e.target.files[0].size) {
-        document.getElementsByName("opt_D")[0].setAttribute("disabled", true);
-      }
-      const D_File = this.files[0];
-      if (D_File.size > 1048576) {
-        alert("File is too big, Please select an image of smaller size!");
-        this.value = "";
-      } else {
-        const includes_D = typeArr.includes(D_File.type);
-        if (D_File.type == "" || !includes_D) {
-          alert(
-            "Not a valid file format, please select an image of type jpeg or png."
-          );
-          this.value = "";
+      try {
+        if (e.target.files[0].size) {
+          document.getElementsByName("opt_D")[0].setAttribute("disabled", true);
+          dFile.style.border = "none";
+          dText.style.border = "none";
         }
+        const D_File = this.files[0];
+        if (D_File.size > 1048576) {
+          alert("File is too big, Please select an image of smaller size!");
+          this.value = "";
+        } else {
+          const includes_D = typeArr.includes(D_File.type);
+          if (D_File.type == "" || !includes_D) {
+            alert(
+              "Not a valid file format, please select an image of type jpeg or png."
+            );
+            this.value = "";
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        dText.removeAttribute("disabled");
       }
     };
 
-    let quesId;
-    if (qsnCounter < 10) {
-      quesId = optionValue + "_00" + qsnCounter;
-    } else {
-      quesId = optionValue + "_0" + qsnCounter;
-    }
-
-    parentObj[quesId] = obj1;
-    parentObj.details["qsn_Id"] = qsnCounter;
-  }
-
-  for (let i = 0; i < Ques.length; i++) {
-    const opt = Ques[i].getElementsByTagName("input");
-    opt[2].addEventListener("keyup", (e) => {
-      if (e.target.value == "") {
-        opt[3].removeAttribute("disabled");
-      } else {
-        opt[3].setAttribute("disabled", false);
+    qText.addEventListener("keyup", (e) => {
+      if (e.target.value != "") {
+        qFile.style.border = "none";
+        qText.style.border = "none";
       }
     });
 
-    if (opt[2].value.length == 0) {
-      opt[3].removeAttribute("disabled");
-    } else {
-      opt[3].setAttribute("disabled", false);
-    }
-
-    opt[4].addEventListener("keyup", (e) => {
+    aText.addEventListener("keyup", (e) => {
       if (e.target.value == "") {
-        opt[5].removeAttribute("disabled");
+        aFile.removeAttribute("disabled");
       } else {
-        opt[5].setAttribute("disabled", false);
+        aFile.setAttribute("disabled", false);
+        aFile.style.border = "none";
+        aText.style.border = "none";
       }
     });
 
-    if (opt[4].value.length == 0) {
-      opt[5].removeAttribute("disabled");
-    } else {
-      opt[5].setAttribute("disabled", false);
-    }
-
-    opt[6].addEventListener("keyup", (e) => {
+    bText.addEventListener("keyup", (e) => {
       if (e.target.value == "") {
-        opt[7].removeAttribute("disabled");
+        bFile.removeAttribute("disabled");
       } else {
-        opt[7].setAttribute("disabled", false);
+        bFile.setAttribute("disabled", false);
+        bFile.style.border = "none";
+        bText.style.border = "none";
       }
     });
 
-    if (opt[6].value.length == 0) {
-      opt[7].removeAttribute("disabled");
-    } else {
-      opt[7].setAttribute("disabled", false);
-    }
-
-    opt[8].addEventListener("keyup", (e) => {
+    cText.addEventListener("keyup", (e) => {
       if (e.target.value == "") {
-        opt[9].removeAttribute("disabled");
+        cFile.removeAttribute("disabled");
       } else {
-        opt[9].setAttribute("disabled", false);
+        cFile.setAttribute("disabled", false);
+        cFile.style.border = "none";
+        cText.style.border = "none";
       }
     });
 
-    if (opt[8].value.length == 0) {
-      opt[9].removeAttribute("disabled");
-    } else {
-      opt[9].setAttribute("disabled", false);
-    }
+    dText.addEventListener("keyup", (e) => {
+      if (e.target.value == "") {
+        dFile.removeAttribute("disabled");
+      } else {
+        dFile.setAttribute("disabled", false);
+        dFile.style.border = "none";
+        dText.style.border = "none";
+      }
+    });
   }
 }
 
@@ -770,4 +743,118 @@ async function getCount() {
   const countData = await response.json();
 
   return countData.qsn_Id;
+}
+
+function setObj(last_assessment_div, qsnCounter) {
+  let counterVal = qsnCounter;
+
+  const obj1 = {
+    q: "",
+    questionImage: "",
+    A: {
+      type: "",
+      value: "",
+    },
+    B: {
+      type: "",
+      value: "",
+    },
+    C: {
+      type: "",
+      value: "",
+    },
+    D: {
+      type: "",
+      value: "",
+    },
+  };
+
+  obj1.q = last_assessment_div
+    .getElementsByTagName("div")[0]
+    .getElementsByTagName("input")[0].value;
+
+  const qImage = last_assessment_div
+    .getElementsByTagName("div")[0]
+    .getElementsByTagName("input")[1].files[0];
+  if (qImage) {
+    obj1.questionImage = qImage;
+  }
+
+  const type1 = last_assessment_div
+    .getElementsByTagName("div")[1]
+    .getElementsByTagName("div")[0]
+    .getElementsByTagName("input")[1].value;
+  const text1 = last_assessment_div
+    .getElementsByTagName("div")[2]
+    .getElementsByTagName("input")[0].value;
+  if (type1) {
+    obj1.A.type = "image";
+    obj1.A.value = last_assessment_div
+      .getElementsByTagName("div")[2]
+      .getElementsByTagName("input")[1].files[0];
+  } else if (text1) {
+    obj1.A.type = "text";
+    obj1.A.value = text1;
+  }
+
+  const type2 = last_assessment_div
+    .getElementsByTagName("div")[1]
+    .getElementsByTagName("div")[1]
+    .getElementsByTagName("input")[1].value;
+  const text2 = last_assessment_div
+    .getElementsByTagName("div")[3]
+    .getElementsByTagName("input")[0].value;
+  if (type2) {
+    obj1.B.type = "image";
+    obj1.B.value = last_assessment_div
+      .getElementsByTagName("div")[3]
+      .getElementsByTagName("input")[1].files[0];
+  } else if (text2) {
+    obj1.B.type = "text";
+    obj1.B.value = text2;
+  }
+
+  const type3 = last_assessment_div
+    .getElementsByTagName("div")[1]
+    .getElementsByTagName("div")[2]
+    .getElementsByTagName("input")[1].value;
+  const text3 = last_assessment_div
+    .getElementsByTagName("div")[4]
+    .getElementsByTagName("input")[0].value;
+  if (type3) {
+    obj1.C.type = "image";
+    obj1.C.value = last_assessment_div
+      .getElementsByTagName("div")[4]
+      .getElementsByTagName("input")[1].files[0];
+  } else if (text3) {
+    obj1.C.type = "text";
+    obj1.C.value = text3;
+  }
+
+  const type4 = last_assessment_div
+    .getElementsByTagName("div")[1]
+    .getElementsByTagName("div")[3]
+    .getElementsByTagName("input")[1].value;
+  const text4 = last_assessment_div
+    .getElementsByTagName("div")[5]
+    .getElementsByTagName("input")[0].value;
+  if (type4) {
+    obj1.D.type = "image";
+    obj1.D.value = last_assessment_div
+      .getElementsByTagName("div")[5]
+      .getElementsByTagName("input")[1].files[0];
+  } else if (text4) {
+    obj1.D.type = "text";
+    obj1.D.value = text4;
+  }
+
+  let quesId;
+  if (counterVal < 10) {
+    quesId = optionValue + "_00" + counterVal;
+  } else {
+    quesId = optionValue + "_0" + counterVal;
+  }
+
+  parentObj[quesId] = obj1;
+  parentObj.details["qsn_Id"] = counterVal;
 }

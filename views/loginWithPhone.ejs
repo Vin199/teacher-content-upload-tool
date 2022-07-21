@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Login</title>
+    <link rel="stylesheet" href="/assets/css/loginWithPhone.css" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <a id="back_button" class="active"> <img src="/assets/images/Group 11095.svg" alt="arrow-back"></a>
+    <div id="otpScreen">
+        <div id="otpBody">
+            <div class="otpDiv">
+                <span class="otpText">Enter OTP</span>
+                <span id="phoneNum"></span>
+            </div>
+            <div class="inputContainer">
+                <input type="text" id="otp" maxlength="6">
+                <div class="underlineContainer">
+                    <div class="partUnderLine"></div>
+                    <div class="partUnderLine"></div>
+                    <div class="partUnderLine"></div>
+                    <div class="partUnderLine"></div>
+                    <div class="partUnderLine"></div>
+                    <div class="partUnderLine"></div>
+                </div>
+            </div>
+            <span id="wrongOtpMsg"></span>
+            <span id="resendText"></span>
+            <span id="resend">Resend OTP</span>
+            <div id="recaptcha"></div>
+            <div id="continue" class="continue">
+                Continue
+                <div class="imgDiv">
+                    <img src="/assets/images/chevron-forward-outline.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="/assets/scripts/loginWithPhone.js"></script>
+</body>
+
+</html>

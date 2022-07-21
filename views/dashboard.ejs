@@ -10,26 +10,27 @@
 </head>
 
 <body>
-    <div class="dashboard__container">
-        <img class="dashboard__img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo">
-        <span id="dashboard__text">Please Select Your Activity</span>
+    <%- include("head.ejs") %>
+        <div class="dashboard__container">
+            <span id="dashboard__text">Please Select Your Activity</span>
 
-        <div id="text__assessment">
-            <img id="text__img" src="/assets/images/Group 11092.svg" alt="">
-            <span id="text__span"> Upload Assessments </span>
-        </div>
+            <div id="text__assessment">
+                <img id="text__img" src="/assets/images/Group 11092.svg" alt="">
+                <span id="text__span"> Upload Assessments </span>
+            </div>
 
-        <div id="video__assessment">
-            <img id="play__button" src="/assets/images/play_button.svg" alt="">
-            <span id="video__span"> Video Upload (Link) </span>
-        </div>
+            <div id="video__assessment">
+                <img id="play__button" src="/assets/images/play_button.svg" alt="">
+                <span id="video__span"> Video Upload (Link) </span>
+            </div>
 
-        <div id="books__assessment">
-            <img id="vector" src="/assets/images/Vector.svg" alt="">
-            <span id="books__span"> Upload Books/Notes </span>
+            <div id="books__assessment">
+                <img id="vector" src="/assets/images/Vector.svg" alt="">
+                <span id="books__span"> Upload Books/Notes </span>
+            </div>
         </div>
-    </div>
-    <script src="/assets/scripts/dashboard.js"></script>
+        <%- include("foot.ejs") %>
+            <script type="module" src="/assets/scripts/dashboard.js"></script>
 </body>
 
 </html>

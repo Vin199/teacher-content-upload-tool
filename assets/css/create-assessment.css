@@ -1,43 +1,78 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap');
+
+*{
     margin: 0;
     padding: 0;
 }
-.assessment_top_container{
-    justify-content: center;
-    align-items: center;
+
+body {
+    font-family: Inter;
 }
 
-.iPrep__img {
-    margin-left: 610px;
-}
-
-.div_2 {
+.heading{
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 60px;
+    overflow: hidden;
+    position: relative;
+    padding: 0 3rem;
 }
 
-.active {
-    width: 35px;
-    height: 35px;
-    margin-left: 144px;
-    margin-top: 39px;
+.dashboard__img {
+    height: 80px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    align-self: center;
+    justify-self: center;
 }
 
-.create_assessment_text {
-    width: 222px;
+#logout{
+    width: 75px;
     height: 27px;
-    font-family: sans-serif;
-    font-size: 22px;
-    line-height: 27px;
-    text-align: center;
-    color: #64748B;
-    margin-left: 430px;
-    margin-top: 39px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 4px;
+    color: #0077FF;
+    background-color: #FFFFFF;
+    border: 1px solid #0077FF;
 }
 
 .hrule_1{
     width: 100vw;
+    margin: 0;
     border: 0.5px solid rgba(0, 0, 0, 0.05);
+}
+
+.top__container {
+    display: flex;
+    align-items: center;
+    height: 108px;
+    margin-left: 9rem;
+}
+
+.backDiv{
+    width: 37%;
+}
+
+/* .active {
+    margin-left: 153px;
+    margin-top: 39px;
+} */
+
+.create_assessment_text {
+    font-size: 22px;
+    font-weight: 500;
+    color: #64748B;
+    /* margin-top: 43px;
+    margin-left: 434px; */
+    line-height: 27px;
 }
 
 .hr {
@@ -45,7 +80,7 @@ body{
     flex: 1;
     height: 0px;
     overflow: hidden;
-    margin: 2.5rem 9rem 0 9rem;
+    margin: 0rem 9rem 0 9rem;
 }
 
 .set_questions {
@@ -59,7 +94,6 @@ body{
 .question_text {
     width: 96px;
     height: 24px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -68,8 +102,45 @@ body{
     color: #334155;
 }
 
+.instructionDiv{
+    width: 956px;
+    height: 107px;
+    left: 242px;
+    top: 258px;
+    display: flex;
+    margin-top: 16px;
+    margin-bottom: 33px;
+    flex-direction: column;
+    background: #FAFAFA;
+    border-radius: 20px;
+}
+
+.instructionTitle{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #64748B;
+    display: flex;
+    margin-top: 13px;
+    margin-left: 38px;
+}
+
+.instructionMsgDiv{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #475569;
+    width: 887px;
+    height: 44px;
+    margin-top: 11px;
+    margin-left: 38px;
+}
+
 #assessment_form{
-    margin-top: 40px;
+    margin-top: 10px;
 }
 
 .question_forms{
@@ -94,7 +165,6 @@ body{
     border-radius: 6px;
     position: absolute;
     cursor: pointer;
-    font-family: sans-serif;
     background-color: white;
     color: #212121;
     border: none;
@@ -109,7 +179,6 @@ body{
     height: 107px;
     background: #FAFAFA;
     border-radius: 20px;
-    margin-top: 15px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -130,7 +199,6 @@ body{
 
 .question_num {
     border-radius: 100%;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -144,7 +212,6 @@ body{
     width: 640px;
     height: 40px;
     margin-left: 30px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -158,7 +225,6 @@ body{
     width: 640px;
     height: 40px;
     margin-left: 30px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -172,7 +238,6 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 20px;
 }
 
 #uploadAssessment {
@@ -181,13 +246,11 @@ body{
     background: #0077FF;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 25px;
+    margin-top: 43px;
     border-style: none;
-    font-family: sans-serif;
     font-size: 18px;
     line-height: 22px;
     color: #FFFFFF;
-    margin-bottom: 3rem;
 }
 
 #uploadAssessment:active {
@@ -202,37 +265,22 @@ body{
     margin-left: 32px;
 }
 
-.next_ques{
-    padding: 15px 25px;
-    font-size: 24px;
-    font-size: 24px;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    color: black;
-    border: 2px solid #475569;
-    border-radius: 100%;
-    background-color: #F5F5F4;
-}
-
-.next_ques:hover{
-    border-color: #0077FF;
-}
-
-.next_ques:active {
-    transform: translateY(4px);
-}
-
-.btn_div_text{
-    width: 115px;
-    height: 15px;
-    font-family: sans-serif;
+.nextQuesText{
     font-style: normal;
+    font-weight: 400;
     font-size: 12px;
     line-height: 15px;
     text-align: center;
     color: #475569;
-    margin-top: 10px;
+    margin-top: 11px;
+}
+
+.next_ques:hover{
+    cursor: pointer;
+}
+
+.next_ques:active {
+    transform: translateY(4px);
 }
 
 /* The Modal */
@@ -306,7 +354,6 @@ body{
     cursor: pointer;
     margin-top: 25px;
     border-style: none;
-    font-family: sans-serif;
     font-size: 18px;
     line-height: 22px;
     color: black;
@@ -320,7 +367,6 @@ body{
     cursor: pointer;
     margin-top: 25px;
     border-style: none;
-    font-family: sans-serif;
     font-size: 18px;
     line-height: 22px;
     color: #FFFFFF;
@@ -336,16 +382,27 @@ body{
     line-height: 150%;
     font-style: normal;
     text-align: center;
-    font-family: sans-serif;
     color: #334155;
 }
 
-#successMsg{
-    font-size: 24px;
-    font-weight: 400;
-    line-height: 150%;
-    font-style: normal;
-    text-align: center;
-    font-family: sans-serif;
-    color: #334155;
+@media (max-width:910px) {
+    .backDiv {
+        width: 30%;
+    }
+    
+}
+
+.upload-image{
+    width: 116px;
+    height: 31px;
+    background: #F4F4F5;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    display: flex;
+    cursor: pointer;
+}
+
+.opt_a{
+    display: flex;
+    align-items: center;
 }
