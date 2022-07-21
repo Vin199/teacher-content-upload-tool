@@ -1,8 +1,7 @@
 import { Router } from "express";
-import Controller from "../controllers/controller.js";
+import controller from "../controllers/controller.js";
 import auth from "../middleware/auth.js";
 import redirectAuth from "../middleware/redirectAuthenticated.js";
-const controller = new Controller();
 
 const router = Router();
 

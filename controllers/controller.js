@@ -1,144 +1,142 @@
-import model from "../model/user.js";
 import request from "request";
+import model from "../model/user.js";
 
-class Controller {
-  constructor() {}
-
-  login = async (req, res) => {
+export default {
+  login: async (req, res) => {
     res.render("login");
-  };
+  },
 
-  logout = (req, res) => {
+  logout: (req, res) => {
     //logout by resetting user session or other means
     req.session.destroy();
     res.redirect("/");
-  };
+  },
 
-  setSession = async (req, res) => {
+  setSession: async (req, res) => {
     req.session.user = await model.getUserWithUid(req.query.uid);
     req.session.home = "/dashboard";
     res.send({});
-  };
+  },
 
-  authenticationFailed = (req, res) => {
+  authenticationFailed: (req, res) => {
     res.render("authentication-failed");
-  };
+  },
 
-  dashboard = (req, res) => {
+  dashboard: (req, res) => {
     res.render("dashboard");
-  };
+  },
 
-  emailLogin = (req, res) => {
+  emailLogin: (req, res) => {
     res.render("emailLogin");
-  };
+  },
 
-  loginWithPhone = (req, res) => {
+  loginWithPhone: (req, res) => {
     res.render("loginWithPhone");
-  };
+  },
 
-  setPassword = (req, res) => {
+  setPassword: (req, res) => {
     res.render("setPassword");
-  };
+  },
 
-  assessment = (req, res) => {
+  assessment: (req, res) => {
     res.render("assessment");
-  };
+  },
 
-  showHistory = (req, res) => {
+  showHistory: (req, res) => {
     res.render("showHistory");
-  };
+  },
 
-  videos = (req, res) => {
+  videos: (req, res) => {
     res.render("videos");
-  };
+  },
 
-  uploadVideos = (req, res) => {
+  uploadVideos: (req, res) => {
     res.render("upload_video_links");
-  };
+  },
 
-  uploadNotes = (req, res) => {
+  uploadNotes: (req, res) => {
     res.render("upload_note_links");
-  };
+  },
 
-  postBulkAssessment = (req, res) => {
+  postBulkAssessment: (req, res) => {
     res.send({ msg: "Api Done" });
-  };
+  },
 
-  previewBulkUpload = (req, res) => {
+  previewBulkUpload: (req, res) => {
     res.render("preview_assessment_bulk_upload");
-  };
+  },
 
-  postAssessmentBulkDataPreview = (req, res) => {
+  postAssessmentBulkDataPreview: (req, res) => {
     res.send({ msg: "Api Done" });
-  };
+  },
 
-  videoLinkAssessment = (req, res) => {
+  videoLinkAssessment: (req, res) => {
     res.send({ msg: "Api Done" });
-  };
+  },
 
-  postBulkVideos = (req, res) => {
+  postBulkVideos: (req, res) => {
     res.send({ msg: "Api Done" });
-  };
+  },
 
-  notesLinkAssessment = (req, res) => {
+  notesLinkAssessment: (req, res) => {
     res.send({ msg: "Api Done" });
-  };
+  },
 
-  postBulkBooks = (req, res) => {
+  postBulkBooks: (req, res) => {
     res.send({ msg: "Api Done" });
-  };
+  },
 
-  books = (req, res) => {
+  books: (req, res) => {
     res.render("books");
-  };
+  },
 
-  getAssessment = (req, res) => {
+  getAssessment: (req, res) => {
     res.render("create-assessment");
-  };
+  },
 
-  bulkUploadAssessment = (req, res) => {
+  bulkUploadAssessment: (req, res) => {
     res.render("assessment-bulk-upload");
-  };
+  },
 
-  bulkUploadVideos = (req, res) => {
+  bulkUploadVideos: (req, res) => {
     res.render("videos-bulk-upload");
-  };
+  },
 
-  bulkUploadBooks = (req, res) => {
+  bulkUploadBooks: (req, res) => {
     res.render("books-bulk-upload");
-  };
+  },
 
-  getUsers = async (req, res) => {
+  getUsers: async (req, res) => {
     const path = "topics";
     const data = await model.getter(path);
     res.send(data);
-  };
+  },
 
-  getHistory = async (req, res) => {
+  getHistory: async (req, res) => {
     const path = "teacher_upload/history/teacher_uid1/assessments";
     const data = await model.getter(path);
     res.send(data);
-  };
+  },
 
-  getAssessments = async (req, res) => {
+  getAssessments: async (req, res) => {
     const { path } = req.body;
     const data = await model.getter(path);
     res.send(data);
-  };
+  },
 
-  setUsers = async (req, res) => {
+  setUsers: async (req, res) => {
     const { board, ClassID, subject } = req.body;
     await model.setter(path, req.body);
     res.send();
-  };
+  },
 
-  updateUser = async (req, res) => {
+  updateUser: async (req, res) => {
     const path = req.body.uid;
     await model.update(path, req.body);
     res.send();
-  };
+  },
 
-  setAssessment = async (req, res) => {
+  setAssessment: async (req, res) => {
     const { board, classId, language, subject, topic } = req.body.metadata;
     const teacher_uid = req.body.teacher_data.uid;
     const upload_path = `teacher_upload/upload/${teacher_uid}/${board}/${language}/${classId}/${subject}/assessments/${topic}/questions`;
@@ -149,9 +147,9 @@ class Controller {
     } catch (error) {
       res.status(500).send({ error });
     }
-  };
+  },
 
-  setVideosAssessment = async (req, res) => {
+  setVideosAssessment: async (req, res) => {
     const teacher_uid = req.body.teacher_data.uid;
     const upload_path = `teacher_upload/upload/${teacher_uid}/${req.body.videoMetaData.board}/${req.body.videoMetaData.language}/${req.body.videoMetaData.classId}/${req.body.videoMetaData.subject}/videos/${req.body.videoMetaData.topic}/questions`;
 
@@ -160,9 +158,9 @@ class Controller {
 
     //await model.update(history_path, req.body.videoData);
     res.send();
-  };
+  },
 
-  setNotesAssessment = async (req, res) => {
+  setNotesAssessment: async (req, res) => {
     //console.log(req.body);
     const teacher_uid = req.body.teacher_data.uid;
     const upload_path = `teacher_upload/upload/${teacher_uid}/${req.body.notesMetaDataInfo.board}/${req.body.notesMetaDataInfo.language}/${req.body.notesMetaDataInfo.classId}/${req.body.notesMetaDataInfo.subject}/books/${req.body.notesMetaDataInfo.topic}/questions`;
@@ -171,9 +169,9 @@ class Controller {
     await model.update(upload_path, req.body.notesData);
     //await model.update(history_path, req.body.notesData);
     res.send();
-  };
+  },
 
-  getCount = async (req, res) => {
+  getCount: async (req, res) => {
     const { board, classId, language, subject, topic } = req.body.metadata;
     const teacher_uid = req.body.teacher_data.uid;
     const upload_path = `teacher_upload/upload/${teacher_uid}/${board}/${language}/${classId}/${subject}/assessments/${topic}/questions/details`;
@@ -183,9 +181,9 @@ class Controller {
     } else {
       res.send(counterValue);
     }
-  };
+  },
 
-  getVideoCount = async (req, res) => {
+  getVideoCount: async (req, res) => {
     const { board, classId, language, subject, topic } = req.body.metadata;
     const teacher_uid = req.body.teacher_data.uid;
     const upload_path = `teacher_upload/upload/${teacher_uid}/${board}/${language}/${classId}/${subject}/videos/${topic}/questions/details`;
@@ -195,9 +193,9 @@ class Controller {
     } else {
       res.send(counterValue);
     }
-  };
+  },
 
-  getBookCount = async (req, res) => {
+  getBookCount: async (req, res) => {
     const { board, classId, language, subject, topic } = req.body.metadata;
     const teacher_uid = req.body.teacher_data.uid;
     const upload_path = `teacher_upload/upload/${teacher_uid}/${board}/${language}/${classId}/${subject}/books/${topic}/questions/details`;
@@ -207,17 +205,17 @@ class Controller {
     } else {
       res.send(counterValue);
     }
-  };
+  },
 
-  getTopics = async (req, res) => {
+  getTopics: async (req, res) => {
     //console.log(req.body);
     const { board, classId, language, subject } = req.body;
     const path = `topics/${board}/${language}/${classId}/${subject}/topics`;
     const topicsObj = await model.getter(path);
     res.send(topicsObj);
-  };
+  },
 
-  checkUserStatus = async (req, res) => {
+  checkUserStatus: async (req, res) => {
     let status = 0;
     const provider = req.body.providerVal;
     const value = req.body.inputVal;
@@ -254,9 +252,9 @@ class Controller {
       console.log(error);
       res.status(404).send(JSON.stringify({ status, provider, error })); // user doesn't exist
     }
-  };
+  },
 
-  updatePassword = async (req, res) => {
+  updatePassword: async (req, res) => {
     try {
       const user = await model.updatePassword(
         req.body.uid,
@@ -267,9 +265,9 @@ class Controller {
     } catch (error) {
       res.status(400).send({ error });
     }
-  };
+  },
 
-  resetPassword = async (req, res) => {
+  resetPassword: async (req, res) => {
     const { linkUrl, platformTitle, customerContactEmail, userEmail } =
       req.body;
 
@@ -331,9 +329,9 @@ class Controller {
     } catch (e) {
       res.status(404).send({ error: e });
     }
-  };
+  },
 
-  setHistory = async (req, res) => {
+  setHistory: async (req, res) => {
     const upload_path = `teacher_upload/history/teacher_uid1/assessments/${+new Date()}/`;
     const data = await model.update(upload_path, req.body);
     if (data) {
@@ -341,8 +339,8 @@ class Controller {
     } else {
       res.status(500).send();
     }
-  };
-}
+  },
+};
 
 const sendMail = (mailOptions) => {
   const options = {
@@ -377,5 +375,3 @@ const sendMail = (mailOptions) => {
     });
   });
 };
-
-export default Controller;
