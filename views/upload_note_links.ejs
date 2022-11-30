@@ -7,39 +7,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Upload Note Links</title>
     <link rel="stylesheet" href="/assets/css/uploadNotes.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="notes-top-container">
-        <img class="iPrep-img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo" />
-        <hr class="notes-hrule-1">
-        <div class="notes-div-2">
-            <a class="notes-back-btn" href="books">
-                <img src="/assets/images/arrow_back.svg" alt="arrow-back" /></a>
-            <span class="create-assessment-text">Upload Notes/Books Links</span>
+    <%- include("head.ejs") %>
+        <div class="top__container">
+            <a class="active" href="books"> <img src="/assets/images/Group 11095.svg" alt="arrow-back"></a>
+            <span class="create_assessment_text">Upload Notes/Books Links</span>
         </div>
-        <div class="notes-hr"></div>
-    </div>
-    <div class="notes-set-ques">
-        <!-- <span class="question_text">Video Links</span> -->
-        <div id="notes_form">
-            <div class="notes-ques-forms" id="question_form_1">
-                <div class="notes-ques-area">
-                    <span class="notes-question-num">1.</span>
-                    <input type="text" name="notesName" class="notes-name" placeholder="Notes/Books Name">
-                    <input type="text" class="notes-link" name="notesLink" placeholder="Notes/Books Link">
+        <div class="hr"></div>
+        <div class="notes-set-ques">
+            <!-- <span class="question_text">Video Links</span> -->
+            <div id="notes_form">
+                <div class="delete-btn-div">
+                    <div class="notes-ques-forms" id="question_form_1">
+                        <div class="notes-ques-area">
+                            <span class="notes-question-num">1.</span>
+                            <input type="text" name="notesName" class="notes-name" placeholder="Notes/Books Name">
+                            <input type="text" class="notes-link" name="notesLink" placeholder="Notes/Books Link">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="notes-btn-div">
-        <button id="nextQues" onclick="add_more_notes_field()" class="next-link">
-            +
-        </button>
-        <span class="notes-btn-text">Add More Notes/Books</span>
-        <input type="submit" id="noteSubmit">
-    </div>
-    <script src="/assets/scripts/upload_note_links.js"></script>
+        <div class="notes-btn-div">
+            <span id="nextQues" class="next-link" onclick="add_more_notes_field()"><img
+                    src="/assets/images/Group 11121 (1).svg" alt="addMore"></span>
+            <input type="submit" id="noteSubmit">
+        </div>
+        <div id="submitModal" class="submitModal">
+            <!-- Modal content -->
+            <div class="create-assessment-modal-content">
+                <div class="create-assessment-close-div">
+                    <span class="create-assessment-close">&times;</span>
+                </div>
+                <div class="create-assessment-modal-body">
+                    <span id="ImgProgress">Click Submit To Upload Book Links</span>
+                </div>
+                <div class="create-assessment-bottom-div">
+                    <button id="finalSubmit" class="finalSubmit">Submit</button>
+                </div>
+            </div>
+        </div>
+        <%- include("foot.ejs") %>
+            <script src="/assets/scripts/upload_note_links.js"></script>
 </body>
 
 </html>

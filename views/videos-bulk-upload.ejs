@@ -18,86 +18,81 @@
 </head>
 
 <body>
-    <div class="bulk-video-top-container">
-        <img class="bulk-video-iPrep-img" src="/assets/images/dashboard_screen_logo.svg" alt="iPrep Logo" />
-        <hr class="bulk-video-hrule-1">
-        <div class="bulk-video-div-2">
-            <a class="bulk-video-active" href="videos">
-                <img src="/assets/images/arrow_back.svg" alt="arrow-back" /></a>
-            <span class="bulk-video-text">Bulk Upload</span>
+    <%- include("head.ejs") %>
+        <div class="bulk_video_top_container">
+            <a class="active" href="videos"> <img src="/assets/images/Group 11095.svg" alt="arrow-back"></a>
+            <span class="bulk_video_span_text">Bulk Upload</span>
         </div>
-        <div class="bulk-video-hr"></div>
-    </div>
-    <div id="videoBulkContent">
-        <div class="bulk-video-body">
-            <span class="bulk-video-instruction-heading">Instructions</span>
-            <div class="bulk-video-instructions-div">
-                <div class="bulk-video-instruction-area">
-                    <span class="bulk-video-instruction-text-1">1. Lorem ipsum dolor sit amet, consectetur adipiscing
-                        elit,sed
-                        do eiusmod tempor incididunt utlabore et dolore magna aliqua.</span>
-                    <span class="bulk-video-instruction-text-2">2.Inorder to upload the videos in bulk, please download
-                        the template
+        <hr>
+        <div id="videoBulkContent">
+            <div class="bulk-video-body">
+                <span class="bulk-video-instruction-heading">Instructions</span>
+                <div class="bulk-video-instructions-div">
+                    <div class="bulk-video-instruction-area">
+                        <!-- <span class="bulk-video-instruction-text-1">1. Lorem ipsum dolor sit amet, consectetur
+                            adipiscing
+                            elit, sed
+                            do eiusmod tempor incididunt utlabore et dolore magna aliqua.</span> -->
+                        <span class="bulk-video-instruction-text-1">1.Inorder to upload the videos in bulk, please
+                            download
+                            the template
+                            first by clicking on the Download Template button.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bulk-video-bottom-container">
+                <div id="dwnldTemplateMain" class="bulk-video-download-template">
+                    <span class="bulk-video-download-text">Download Template</span>
+                    <img class="bulk-video-dwnld-img" src="/assets/images/Vector (2).svg" alt="download-logo">
+                </div>
+                <div class="bulk-video-upload-assessment">
+                    <input id='videoFileId' type='file' accept=".xls,.xlsx" hidden />
+                    <input id="videoButtonId" class="books-upload-text" type="button" value="Upload Assesment">
+                    <img src="/assets/images/Vector (1).svg" alt="upload-logo">
+                </div>
+            </div>
+        </div>
+        <div id="getBulkVideoModal" class="get-bulk-video-modal">
+            <!-- Modal content -->
+            <div class="bulk-video-modal-div">
+                <div class="bulk-video-modal-close-div">
+                    <span class="bulk-video-modal-close">&times;</span>
+                </div>
+                <div class="bulk-video-file-msg-div">
+                    <span class="bulk-video-msg-text">Inorder to upload the videos in bulk, please download the
+                        template
                         first by clicking on the Download Template button.</span>
                 </div>
-            </div>
-        </div>
-        <div class="bulk-video-bottom-container">
-            <div id="dwnldTemplateMain" class="bulk-video-download-template">
-                <span class="bulk-video-download-text">Download Template</span>
-                <img class="bulk-video-dwnld-img" src="/assets/images/download.png" alt="download-logo">
-            </div>
-            <div class="bulk-video-upload-assessment">
-                <input id='videoFileId' type='file' accept=".xls,.xlsx" hidden />
-                <input id="videoButtonId" class="books-upload-text" type="button" value="Upload Assesment">
-                <img src="/assets/images/upload (1).png" alt="upload-logo">
-            </div>
-        </div>
-    </div>
-    <div id="getBulkVideoModal" class="get-bulk-video-modal">
-        <!-- Modal content -->
-        <div class="bulk-video-modal-div">
-            <div class="bulk-video-modal-close-div">
-                <span class="bulk-video-modal-close">&times;</span>
-            </div>
-            <div class="bulk-video-file-msg-div">
-                <span class="bulk-video-msg-text">Inorder to upload the videos in bulk, please download the
-                    template
-                    first by clicking on the Download Template button.</span>
-            </div>
-            <div class="bulk-video-download-template-div">
-                <div id="dwnldTemplateModal" class="bulk-video-download-template-2">
-                    <span class="bulk-video-download-text-2">Download Template</span>
-                    <img class="bulk-video-dwnld-img-2" src="/assets/images/download.png" alt="download-logo">
+                <div class="bulk-video-download-template-div">
+                    <div id="dwnldTemplateModal" class="bulk-video-download-template-2">
+                        <span class="bulk-video-download-text">Download Template</span>
+                        <img class="bulk-video-dwnld-img-2" src="/assets/images/Vector (2).svg" alt="download-logo">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="videoEjs">
-        <%- include("./preview_video_bulk_upload.ejs") %>
-    </div>
+        <div id="videoEjs">
+            <%- include("./preview_video_bulk_upload.ejs") %>
+        </div>
 
-    <!--The Modal-->
-    <div id="submitModal" class="submitModal">
-        <!-- Modal content -->
-        <div class="create-assessment-modal-content">
-            <div class="create-assessment-close-div">
-                <span class="create-assessment-close">&times;</span>
-            </div>
-            <div class="create-assessment-modal-body">
-                <span id="ImgProgress"></span>
-                <span id="textSpan"></span>
-                <span id="successMsg"></span>
-                <span id="err"></span>
-            </div>
-            <div class="create-assessment-bottom-div">
-                <button id="reUploadBtn" class="reUpload">Re-Upload</button>
-                <button id="finalSubmit" class="finalSubmit">Submit</button>
-                <!--  onclick="onSubmit()" -->
+        <!--The Modal-->
+        <div id="submitModal" class="submitModal">
+            <!-- Modal content -->
+            <div class="create-assessment-modal-content">
+                <div class="create-assessment-close-div">
+                    <span class="create-assessment-close">&times;</span>
+                </div>
+                <div class="create-assessment-modal-body">
+                    <span id="submitMsg">Click Submit To Upload Video Links.</span>
+                </div>
+                <div class="create-assessment-bottom-div">
+                    <button id="finalSubmit" class="finalSubmit">Submit</button>
+                    <!--  onclick="onSubmit()" -->
+                </div>
             </div>
         </div>
-    </div>
-    <script type="module" src="../assets/scripts/bulkUploadVideo.js"></script>
+        <%- include("foot.ejs") %>
+            <script type="module" src="../assets/scripts/bulkUploadVideo.js"></script>
 </body>
 
 </html>

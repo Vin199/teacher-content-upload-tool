@@ -1,50 +1,83 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap');
+
+*{
     margin: 0;
     padding: 0;
 }
-.notes-top-container{
-    justify-content: center;
-    align-items: center;
+
+body {
+    font-family: Inter;
 }
 
-.iPrep-img {
-    margin-left: 610px;
-}
-
-.notes-div-2 {
+.heading{
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 60px;
+    overflow: hidden;
+    position: relative;
+    padding: 0 3rem;
 }
 
-.notes-back-btn {
-    width: 35px;
-    height: 35px;
-    margin-left: 144px;
-    margin-top: 39px;
+.dashboard__img {
+    height: 80px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    align-self: center;
+    justify-self: center;
 }
 
-.create-assessment-text {
+#logout{
+    width: 75px;
     height: 27px;
-    font-family: sans-serif;
-    font-size: 22px;
-    line-height: 27px;
-    text-align: center;
-    color: #64748B;
-    margin-left: 430px;
-    margin-top: 39px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 4px;
+    color: #0077FF;
+    background-color: #FFFFFF;
+    border: 1px solid #0077FF;
 }
 
-.notes-hrule-1{
+.hrule_1{
     width: 100vw;
+    margin: 0;
     border: 0.5px solid rgba(0, 0, 0, 0.05);
 }
 
-.notes-hr {
-    border: 1px solid #e1e1e1;
+
+.top__container {
+    position: relative;
+    height: 108px;
+}
+
+.active {
+    position: absolute;
+    left: 144px;
+    top: 40px;
+}
+
+.create_assessment_text {
+    font-size: 22px;
+    color: #64748B;
+    line-height: 27px;
+    font-weight: 500;
+    position: absolute;
+    top: 44px;
+    left: 580px;
+}
+
+.hr {
+    border: 1px solid #DEDEDE;
     flex: 1;
     height: 0px;
     overflow: hidden;
-    margin: 2.5rem 9rem 0 9rem;
+    margin: 0 9rem 0 9rem;
 }
 
 .notes-set-ques {
@@ -52,11 +85,37 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 46px;
+    margin-top: 70px;
 }
 
 .notes-ques-forms{
-    margin-top: 20px;
+    position: relative;
+}
+
+.delete-btn-div{
+    display: flex;
+    align-items: center;
+}
+
+.deleteBtn{
+    top: 0;
+    right: -90px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    position: absolute;
+    cursor: pointer;
+    background-color: white;
+    color: #212121;
+    border: none;
+}
+
+.deleteSign{
+    margin-right: 5px;
 }
 
 .notes-ques-area {
@@ -64,7 +123,7 @@ body{
     height: 146px;
     background: #FAFAFA;
     border-radius: 20px;
-    margin-top: 15px;
+    margin-top: 20px;
     align-items: center;
     flex-wrap: wrap;
     overflow-y: auto;
@@ -72,7 +131,6 @@ body{
 
 .notes-question-num {
     border-radius: 100%;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -87,7 +145,6 @@ body{
     height: 40px;
     margin-left: 30px;
     margin-top: 20px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -100,7 +157,6 @@ body{
     border-style: none;
     width: 640px;
     height: 40px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -116,33 +172,17 @@ body{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 35px;
 }
 
-.next-link{
-    padding: 15px 25px;
-    font-size: 24px;
-    font-size: 24px;
-    text-align: center;
+.next-link:hover{
     cursor: pointer;
-    outline: none;
-    color: black;
-    border: 2px solid #475569;
-    border-radius: 100%;
-    background-color: #F5F5F4;
+    border-color: #0077FF;
 }
 
-.notes-btn-text{
-    width: 115px;
-    height: 15px;
-    font-family: sans-serif;
-    font-style: normal;
-    font-size: 12px;
-    line-height: 15px;
-    text-align: center;
-    color: #475569;
-    margin-top: 10px;
-}
+.next-link:active{
+    transform: translateY(4px);
+}   
 
 #noteSubmit {
     width: 368px;
@@ -150,15 +190,102 @@ body{
     background: #0077FF;
     border-radius: 8px;
     cursor: pointer;
-    margin-top: 25px;
+    margin-top: 19px;
     border-style: none;
-    font-family: sans-serif;
     font-size: 18px;
     line-height: 22px;
     color: #FFFFFF;
-    margin-bottom: 3rem;
 }
 
 #noteSubmit:active {
     transform: translateY(4px);
+}
+
+/* The Modal */
+.submitModal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.create-assessment-modal-content {
+    background-color: #fefefe;
+    left: 50%;
+    top: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    width: 564px;
+    border-radius: 20px;
+}
+
+/* The Close Button */
+.create-assessment-close-div {
+    display: flex;
+    flex-flow: column wrap;
+    align-content: flex-end;
+}
+
+.create-assessment-close{
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.create-assessment-close:hover,
+.create-assessment-close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.create-assessment-modal-body{
+    display: flex;
+    height: 150px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.create-assessment-bottom-div{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.finalSubmit{
+    width: 183px;
+    height: 40px;
+    background: #0077FF;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 25px;
+    border-style: none;
+    font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+}
+
+.finalSubmit:active {
+    transform: translateY(4px);
+}
+
+#ImgProgress{
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 150%;
+    font-style: normal;
+    text-align: center;
+    color: #334155;
 }

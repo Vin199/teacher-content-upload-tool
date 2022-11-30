@@ -8,31 +8,30 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDNFbXQo3Fd7PYfWBwGJd6XdihZ3w-yEvk",
-  authDomain: "node-project-c4942.firebaseapp.com",
-  databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com",
-  projectId: "node-project-c4942",
-  storageBucket: "node-project-c4942.appspot.com", //"node-project-c4942.appspot.com"
-  messagingSenderId: "581470710657",
-  appId: "1:581470710657:web:a4792037ef1d415c375680",
-  measurementId: "G-HQZDXNGMJ3",
+  apiKey: "AIzaSyC5UiikQU2_-_omC-qKYcXA0X4Ta8whfuI",
+  authDomain: "iprep-7f10a.firebaseapp.com",
+  databaseURL: "https://iprep-dev.firebaseio.com/",
+  projectId: "iprep-7f10a",
+  storageBucket: "iprep-7f10a.appspot.com",
+  messagingSenderId: "165257927521",
+  appId: "1:165257927521:web:3d145f0c2b04eafd",
+  measurementId: "G-SXFQPY83P3"
 };
+
 const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);
+
 let counter = 0;
 let filesCount = 0;
 let isError = false;
-
-let historyParentObj = {};
 
 const assessmentData = JSON.parse(
   window.localStorage.getItem("assessmentMetaData")
 );
 
-const teacher_info = JSON.parse(window.localStorage.getItem("teacher_info"));
+const teacher_info = JSON.parse(window.localStorage.getItem("userInfo"));
 
-const sendQuestionData = async (parentObj) => {
-  createAssessmentModal.style.display = "none";
+const sendQuestionData = (parentObj) => {
 
   return new Promise((resolve, reject) => {
     const assessmentValue = {
@@ -52,34 +51,14 @@ const sendQuestionData = async (parentObj) => {
     try {
       fetch("/set-assessment", qsnOption);
       resolve();
+      displayProgress.innerHTML = "Assessment Uploaded Successfully.";
+      finalSubmitBtn.style.display = "none";
+      // createAssessmentModal.style.display = "none";
     } catch (error) {
       alert(error.message);
       reject();
     }
   });
-};
-
-const sendHistoryData = async (historyParentObj) => {
-  const history_value = {
-    metadata: assessmentData,
-    historyData: historyParentObj,
-    teacher_data: teacher_info,
-  };
-
-  const historyOption = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(history_value),
-  };
-
-  try {
-    fetch("/set-history", historyOption);
-  } catch (error) {
-    alert(error.message);
-    reject();
-  }
 };
 
 const createAssessmentModal = document.getElementById("submitModal");
@@ -95,22 +74,44 @@ re_upload_btn.style.display = "none";
 
 // const displayProgress = document.getElementById("successMsg");
 let last_ques_form = "";
+let questions = document.getElementsByClassName("question_forms");
 
 document
   .getElementById("uploadAssessment")
   .addEventListener("click", async () => {
-    const questions = document.getElementsByClassName("question_forms");
     let qsnCounter = (await getCount()) + 1;
+    let isError = false;
+
     Array.from(questions).forEach((element) => {
-      setObj(element, questions.length, qsnCounter);
+      const assessmentOpt = element.getElementsByClassName("option");
+      const assessmentOptImg = element.getElementsByClassName("optImage");
+      Array.from(assessmentOpt).forEach((item, index) => {
+        if (!(item.value || assessmentOptImg[index].files[0])) {
+          item.style.border = "1.5px solid #ff0000";
+          assessmentOptImg[index].style.border = "1.5px solid #ff0000";
+          isError = true;
+        }
+      });
+      setObj(element, qsnCounter);
       qsnCounter++;
     });
 
-    //console.log(parentObj);
-    // setLastAssessment();
+    Array.from(questions).forEach((element) => {
+      const assessmentQues = element.getElementsByClassName("question");
+      const assessmentQuesImg = element.getElementsByClassName("quesImage");
+      Array.from(assessmentQues).forEach((ele, index) => {
+        if (!(ele.value || assessmentQuesImg[index].files[0])) {
+          ele.style.border = "1.5px solid #ff0000";
+          assessmentQuesImg[index].style.border = "1.5px solid #ff0000";
+          isError = true;
+        }
+      });
+    });
 
-    // When the user clicks the submit button, open the modal
-    createAssessmentModal.style.display = "block";
+    isError
+      ? (createAssessmentModal.style.display = "none")
+      : (createAssessmentModal.style.display = "block");
+
     let imageObj = {};
     Object.keys(parentObj).forEach((uid) => {
       let childObject = parentObj[uid];
@@ -143,7 +144,7 @@ document
       finalSubmitBtn.style.display = "block";
       re_upload_btn.style.display = "none";
       updateDatabase();
-      displayProgress.innerHTML = "Click Submit To Upload Assessments.";
+      displayProgress.innerHTML = "Click Submit To Upload Assessment.";
     }
   });
 
@@ -287,131 +288,190 @@ function uploadImage(file, uid, imageKey) {
 
 createAssessmentClose.addEventListener("click", () => {
   createAssessmentModal.style.display = "none";
+  location.reload();
 });
 
 function updateDatabase() {
   finalSubmitBtn.addEventListener("click", () => {
     sendQuestionData(parentObj);
-    sendHistoryData(historyObj);
   });
 }
 
 const typeArr = ["image/png", "image/jpeg"];
 
+const validateQues = document.getElementsByName("question")[0];
 const quesFile = document.getElementById("quesImgFile");
+// const removeImgBtn = document.getElementById("removeImg");
+// removeImgBtn.style.display = "none";
 quesFile.onchange = function () {
-  const qFile = this.files[0];
-  if (qFile.size > 1048576) {
-    alert("File is too big, Please select an image of smaller size!");
-    this.value = "";
-  } else {
-    const includes_ques = typeArr.includes(qFile.type);
-    if (qFile.type == "" || !includes_ques) {
-      alert(
-        "Not a valid file format, please select an image of type jpeg or png."
-      );
-      this.value = "";
+  try {
+    const qFile = this.files[0];
+    if (qFile.size) {
+      validateQues.style.border = "none";
+      quesFile.style.border = "none";
+      // removeImgBtn.style.display = "block";
     }
+    if (qFile.size > 1048576) {
+      alert("File is too big, Please select an image of smaller size!");
+      this.value = "";
+    } else {
+      const includes_ques = typeArr.includes(qFile.type);
+      if (qFile.type == "" || !includes_ques) {
+        alert(
+          "Not a valid file format, please select an image of type jpeg or png."
+        );
+        this.value = "";
+      }
+    }
+    // removeImgBtn.addEventListener("click", () => {
+    //   this.value = "";
+    //   removeImgBtn.style.display = "none";
+    // });
+  } catch (error) {
+    console.log(error);
   }
 };
 
+const optA = document.getElementsByName("opt_A")[0];
 const opt_A_File = document.getElementById("optAFile");
 opt_A_File.onchange = function (e) {
-  if (e.target.files[0].size) {
-    document.getElementsByName("opt_A")[0].setAttribute("disabled", true);
-  }
-  const A_File = this.files[0];
-  if (A_File.size > 1048576) {
-    alert("File is too big, Please select an image of smaller size!");
-    this.value = "";
-  } else {
-    const includes_A = typeArr.includes(A_File.type);
-    if (A_File.type == "" || !includes_A) {
-      alert(
-        "Not a valid file format, please select an image of type jpeg or png."
-      );
-      this.value = "";
+  try {
+    if (e.target.files[0].size) {
+      optA.setAttribute("disabled", true);
+      optA.style.border = "none";
+      opt_A_File.style.border = "none";
     }
+    const A_File = this.files[0];
+    if (A_File.size > 1048576) {
+      alert("File is too big, Please select an image of smaller size!");
+      this.value = "";
+    } else {
+      const includes_A = typeArr.includes(A_File.type);
+      if (A_File.type == "" || !includes_A) {
+        alert(
+          "Not a valid file format, please select an image of type jpeg or png."
+        );
+        this.value = "";
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    optA.removeAttribute("disabled");
   }
 };
 
+const optB = document.getElementsByName("opt_B")[0];
 const opt_B_File = document.getElementById("optBFile");
 opt_B_File.onchange = function (e) {
-  if (e.target.files[0].size) {
-    document.getElementsByName("opt_B")[0].setAttribute("disabled", true);
-  }
-  const B_File = this.files[0];
-  if (B_File.size > 1048576) {
-    alert("File is too big, Please select an image of smaller size!");
-    this.value = "";
-  } else {
-    const includes_B = typeArr.includes(B_File.type);
-    if (B_File.type == "" || !includes_B) {
-      alert(
-        "Not a valid file format, please select an image of type jpeg or png."
-      );
-      this.value = "";
+  try {
+    if (e.target.files[0].size) {
+      optB.setAttribute("disabled", true);
+      optB.style.border = "none";
+      opt_B_File.style.border = "none";
     }
+    const B_File = this.files[0];
+    if (B_File.size > 1048576) {
+      alert("File is too big, Please select an image of smaller size!");
+      this.value = "";
+    } else {
+      const includes_B = typeArr.includes(B_File.type);
+      if (B_File.type == "" || !includes_B) {
+        alert(
+          "Not a valid file format, please select an image of type jpeg or png."
+        );
+        this.value = "";
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    optB.removeAttribute("disabled");
   }
 };
 
+const optC = document.getElementsByName("opt_C")[0];
 const opt_C_File = document.getElementById("optCFile");
 opt_C_File.onchange = function (e) {
-  if (e.target.files[0].size) {
-    document.getElementsByName("opt_C")[0].setAttribute("disabled", true);
-  }
-  const C_File = this.files[0];
-  if (C_File.size > 1048576) {
-    alert("File is too big, Please select an image of smaller size!");
-    this.value = "";
-  } else {
-    const includes_C = typeArr.includes(C_File.type);
-    if (C_File.type == "" || !includes_C) {
-      alert(
-        "Not a valid file format, please select an image of type jpeg or png."
-      );
-      this.value = "";
+  try {
+    if (e.target.files[0].size) {
+      optC.setAttribute("disabled", true);
+      optC.style.border = "none";
+      opt_C_File.style.border = "none";
     }
+    const C_File = this.files[0];
+    if (C_File.size > 1048576) {
+      alert("File is too big, Please select an image of smaller size!");
+      this.value = "";
+    } else {
+      const includes_C = typeArr.includes(C_File.type);
+      if (C_File.type == "" || !includes_C) {
+        alert(
+          "Not a valid file format, please select an image of type jpeg or png."
+        );
+        this.value = "";
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    optC.removeAttribute("disabled");
   }
 };
 
+const optD = document.getElementsByName("opt_D")[0];
 const opt_D_File = document.getElementById("optDFile");
 opt_D_File.onchange = function (e) {
-  if (e.target.files[0].size) {
-    document.getElementsByName("opt_D")[0].setAttribute("disabled", true);
-  }
-  const D_File = this.files[0];
-  if (D_File.size > 1048576) {
-    alert("File is too big, Please select an image of smaller size!");
-    this.value = "";
-  } else {
-    const includes_D = typeArr.includes(D_File.type);
-    if (D_File.type == "" || !includes_D) {
-      alert(
-        "Not a valid file format, please select an image of type jpeg or png."
-      );
-      this.value = "";
+  try {
+    if (e.target.files[0].size) {
+      optD.setAttribute("disabled", true);
+      optD.style.border = "none";
+      opt_D_File.style.border = "none";
     }
+    const D_File = this.files[0];
+    if (D_File.size > 1048576) {
+      alert("File is too big, Please select an image of smaller size!");
+      this.value = "";
+    } else {
+      const includes_D = typeArr.includes(D_File.type);
+      if (D_File.type == "" || !includes_D) {
+        alert(
+          "Not a valid file format, please select an image of type jpeg or png."
+        );
+        this.value = "";
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    optD.removeAttribute("disabled");
   }
 };
 
 let i = 1;
 document.getElementById("nextQues").onclick = function () {
-  debugger;
-  const x = parentObj;
-
   i += 1;
+
   const generatedDiv = document.getElementById("question_form_1");
   const clone = generatedDiv.cloneNode(true);
   clone
     .getElementsByTagName("div")[0]
     .getElementsByTagName("span")[0].innerHTML = `Q.${i}`;
   clone.id = `question_form_${i}`;
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.innerHTML = "<span>Delete</span>";
+  deleteBtn.setAttribute("class", "deleteBtn");
+  const deleteSign = document.createElement("img");
+  deleteSign.setAttribute("class", "deleteSign");
+  deleteSign.setAttribute("src", "/assets/images/Group.svg");
+  deleteBtn.appendChild(deleteSign);
+  clone.appendChild(deleteBtn);
   document.getElementById("assessment_form").appendChild(clone);
+
+  $(document).on("click", ".deleteBtn", function () {
+    $(this).parent().remove();
+  });
 
   const question_form = document.getElementsByClassName("question_forms");
   const count = question_form.length;
-  const last_assessment_div = question_form[count - 2];
+  //const last_assessment_div = question_form[count - 2];
 
   last_ques_form = question_form[count - 1];
 
@@ -420,13 +480,11 @@ document.getElementById("nextQues").onclick = function () {
   Array.from(lastAssessment[0].getElementsByTagName("input")).forEach(
     (element) => {
       element.value = "";
-      element.value = "";
     }
   );
 
   Array.from(lastAssessment[1].getElementsByTagName("input")).forEach(
     (element) => {
-      element.value = "";
       element.value = "";
       if (element.hasAttribute("disabled")) {
         element.removeAttribute("disabled");
@@ -439,12 +497,15 @@ document.getElementById("nextQues").onclick = function () {
     .getElementsByTagName("div")[0]
     .getElementsByTagName("input")[1];
 
+  const qText = last_ques_form
+    .getElementsByTagName("div")[0]
+    .getElementsByTagName("input")[0];
+
   qFile.onchange = function (e) {
     if (e.target.files[0].size) {
-      last_ques_form
-        .getElementsByTagName("div")[0]
-        .getElementsByTagName("input")[0]
-        .setAttribute("disabled", true);
+      qText.setAttribute("disabled", true);
+      qText.style.border = "none";
+      qFile.style.border = "none";
     }
     const q_file = qFile.files[0];
     if (q_file.size > 1048576) {
@@ -461,40 +522,55 @@ document.getElementById("nextQues").onclick = function () {
     }
   };
 
+  qText.onkeyup = function (e) {
+    if (e.target.value != "") {
+      qText.style.border = "none";
+      qFile.style.border = "none";
+    }
+  };
+
   /* validation code for option A of dynamically created assessment */
   const aFile = last_ques_form
     .getElementsByTagName("div")[2]
     .getElementsByTagName("input")[1];
 
+  const aText = last_ques_form
+    .getElementsByTagName("div")[2]
+    .getElementsByTagName("input")[0];
+
   aFile.onchange = function (e) {
-    if (e.target.files[0].size) {
-      last_ques_form
-        .getElementsByTagName("div")[2]
-        .getElementsByTagName("input")[0]
-        .setAttribute("disabled", true);
-    }
-    const a_file = aFile.files[0];
-    if (a_file.size > 1048576) {
-      alert("File is too big, Please select an image of smaller size!");
-      this.value = "";
-    } else {
-      const includes_a = typeArr.includes(a_file.type);
-      if (a_file.type == "" || !includes_a) {
-        alert(
-          "Not a valid file format, please select an image of type jpeg or png."
-        );
-        this.value = "";
+    try {
+      if (e.target.files[0].size) {
+        aText.setAttribute("disabled", true);
+        aText.style.border = "none";
+        aFile.style.border = "none";
       }
+      const a_file = aFile.files[0];
+      if (a_file.size > 1048576) {
+        alert("File is too big, Please select an image of smaller size!");
+        this.value = "";
+      } else {
+        const includes_a = typeArr.includes(a_file.type);
+        if (a_file.type == "" || !includes_a) {
+          alert(
+            "Not a valid file format, please select an image of type jpeg or png."
+          );
+          this.value = "";
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      aText.removeAttribute("disabled");
     }
   };
 
-  last_ques_form
-    .getElementsByTagName("div")[2]
-    .getElementsByTagName("input")[0].onkeyup = function (e) {
+  aText.onkeyup = function (e) {
     if (e.target.value == "") {
       aFile.removeAttribute("disabled");
     } else {
       aFile.setAttribute("disabled", false);
+      aText.style.border = "none";
+      aFile.style.border = "none";
     }
   };
 
@@ -502,35 +578,44 @@ document.getElementById("nextQues").onclick = function () {
   const bFile = last_ques_form
     .getElementsByTagName("div")[3]
     .getElementsByTagName("input")[1];
+
+  const bText = last_ques_form
+    .getElementsByTagName("div")[3]
+    .getElementsByTagName("input")[0];
+
   bFile.onchange = function (e) {
-    if (e.target.files[0].size) {
-      last_ques_form
-        .getElementsByTagName("div")[3]
-        .getElementsByTagName("input")[0]
-        .setAttribute("disabled", true);
-    }
-    const b_file = bFile.files[0];
-    if (b_file.size > 1048576) {
-      alert("File is too big, Please select an image of smaller size!");
-      this.value = "";
-    } else {
-      const includes_b = typeArr.includes(b_file.type);
-      if (b_file.type == "" || !includes_b) {
-        alert(
-          "Not a valid file format, please select an image of type jpeg or png."
-        );
-        this.value = "";
+    try {
+      if (e.target.files[0].size) {
+        bText.setAttribute("disabled", true);
+        bText.style.border = "none";
+        bFile.style.border = "none";
       }
+      const b_file = bFile.files[0];
+      if (b_file.size > 1048576) {
+        alert("File is too big, Please select an image of smaller size!");
+        this.value = "";
+      } else {
+        const includes_b = typeArr.includes(b_file.type);
+        if (b_file.type == "" || !includes_b) {
+          alert(
+            "Not a valid file format, please select an image of type jpeg or png."
+          );
+          this.value = "";
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      bText.removeAttribute("disabled");
     }
   };
 
-  last_ques_form
-    .getElementsByTagName("div")[3]
-    .getElementsByTagName("input")[0].onkeyup = function (e) {
+  bText.onkeyup = function (e) {
     if (e.target.value == "") {
       bFile.removeAttribute("disabled");
     } else {
       bFile.setAttribute("disabled", false);
+      bText.style.border = "none";
+      bFile.style.border = "none";
     }
   };
 
@@ -539,35 +624,43 @@ document.getElementById("nextQues").onclick = function () {
     .getElementsByTagName("div")[4]
     .getElementsByTagName("input")[1];
 
+  const cText = last_ques_form
+    .getElementsByTagName("div")[4]
+    .getElementsByTagName("input")[0];
+
   cFile.onchange = function (e) {
-    if (e.target.files[0].size) {
-      last_ques_form
-        .getElementsByTagName("div")[4]
-        .getElementsByTagName("input")[0]
-        .setAttribute("disabled", true);
-    }
-    const c_file = cFile.files[0];
-    if (c_file.size > 1048576) {
-      alert("File is too big, Please select an image of smaller size!");
-      this.value = "";
-    } else {
-      const includes_c = typeArr.includes(c_file.type);
-      if (c_file.type == "" || !includes_c) {
-        alert(
-          "Not a valid file format, please select an image of type jpeg or png."
-        );
-        this.value = "";
+    try {
+      if (e.target.files[0].size) {
+        cText.setAttribute("disabled", true);
+        cText.style.border = "none";
+        cFile.style.border = "none";
       }
+      const c_file = cFile.files[0];
+      if (c_file.size > 1048576) {
+        alert("File is too big, Please select an image of smaller size!");
+        this.value = "";
+      } else {
+        const includes_c = typeArr.includes(c_file.type);
+        if (c_file.type == "" || !includes_c) {
+          alert(
+            "Not a valid file format, please select an image of type jpeg or png."
+          );
+          this.value = "";
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      cText.removeAttribute("disabled");
     }
   };
 
-  last_ques_form
-    .getElementsByTagName("div")[4]
-    .getElementsByTagName("input")[0].onkeyup = function (e) {
+  cText.onkeyup = function (e) {
     if (e.target.value == "") {
       cFile.removeAttribute("disabled");
     } else {
       cFile.setAttribute("disabled", false);
+      cText.style.border = "none";
+      cFile.style.border = "none";
     }
   };
 
@@ -576,35 +669,43 @@ document.getElementById("nextQues").onclick = function () {
     .getElementsByTagName("div")[5]
     .getElementsByTagName("input")[1];
 
+  const dText = last_ques_form
+    .getElementsByTagName("div")[5]
+    .getElementsByTagName("input")[0];
+
   dFile.onchange = function (e) {
-    if (e.target.files[0].size) {
-      last_ques_form
-        .getElementsByTagName("div")[5]
-        .getElementsByTagName("input")[0]
-        .setAttribute("disabled", true);
-    }
-    const d_file = dFile.files[0];
-    if (d_file.size > 1048576) {
-      alert("File is too big, Please select an image of smaller size!");
-      this.value = "";
-    } else {
-      const includes_d = typeArr.includes(d_file.type);
-      if (d_file.type == "" || !includes_d) {
-        alert(
-          "Not a valid file format, please select an image of type jpeg or png."
-        );
-        this.value = "";
+    try {
+      if (e.target.files[0].size) {
+        dText.setAttribute("disabled", true);
+        dText.style.border = "none";
+        dFile.style.border = "none";
       }
+      const d_file = dFile.files[0];
+      if (d_file.size > 1048576) {
+        alert("File is too big, Please select an image of smaller size!");
+        this.value = "";
+      } else {
+        const includes_d = typeArr.includes(d_file.type);
+        if (d_file.type == "" || !includes_d) {
+          alert(
+            "Not a valid file format, please select an image of type jpeg or png."
+          );
+          this.value = "";
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      dText.removeAttribute("disabled");
     }
   };
 
-  last_ques_form
-    .getElementsByTagName("div")[5]
-    .getElementsByTagName("input")[0].onkeyup = function (e) {
+  dText.onkeyup = function (e) {
     if (e.target.value == "") {
       dFile.removeAttribute("disabled");
     } else {
       dFile.setAttribute("disabled", false);
+      dText.style.border = "none";
+      dFile.style.border = "none";
     }
   };
   //setObj(last_assessment_div);
@@ -615,8 +716,6 @@ const parentObj = {
     qsn_Id: 0,
   },
 };
-
-let historyObj = {};
 
 async function getCount() {
   const assessmentValue = {
@@ -633,47 +732,13 @@ async function getCount() {
   };
 
   const response = await fetch("/getCount", opt);
-  const user = await response.json();
+  const countData = await response.json();
 
-  return user.qsn_Id;
-
-  // fetch("/getCount", opt)
-  //   .then((res) => {
-  //     return res.json();
-  //   })
-  //   .then((data) => {
-  //     //console.log(data);
-  //     let counter = data.counter;
-  //     if (data.count == "1") {
-  //       counterCopy = data.count;
-  //       parentObj.details.counter = length;
-  //     } else {
-  //       counter++;
-  //       parentObj[counter] = obj1;
-  //       parentObj.details.counter = counter;
-  //     }
-  //     //console.log(parentObj);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
+  return countData.qsn_Id;
 }
 
 const setObj = async (last_assessment_div, qsnCounter) => {
   let counterVal = qsnCounter;
-
-  historyParentObj = {
-    board_id: assessmentData.board,
-    class_id: assessmentData.classId,
-    class_name: assessmentData.classId,
-    language_id: assessmentData.language,
-    subject_id: assessmentData.subject,
-    subject_name: assessmentData.subject,
-    topic_id: assessmentData.topic,
-    board_name: "Central Board of Secondary Education",
-    language_name: "English",
-    topic_name: "Integration",
-  };
 
   //console.log(last_assessment_div);
   const obj1 = {
@@ -776,27 +841,19 @@ const setObj = async (last_assessment_div, qsnCounter) => {
     obj1.D.value = text4;
   }
 
-  // async () => {
-  //   let count;
-  //   try {
-  //     count = await getCount();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   console.log(count);
-  // };
-
-  //console.log(counterCopy++);
-  //parentObj[counterCopy++] = obj1;
-
   const uniqueId = "id_" + new Date().getTime();
-  // let questionId = 0;
-  // const counter = await getCount()
 
-  parentObj[counterVal] = obj1;
+  let quesId;
+  if (counterVal < 10) {
+    quesId = assessmentData.topic + "_00" + counterVal;
+  } else {
+    quesId = assessmentData.topic + "_0" + counterVal;
+  }
+
+  parentObj[quesId] = obj1;
   parentObj.details["qsn_Id"] = qsnCounter;
   // parentObj.details.counter = questionId;
-  console.log(parentObj);
+  //console.log(parentObj);
 
   const ques_image = document.getElementsByClassName("question_forms");
   const form_count = ques_image.length;
@@ -828,46 +885,65 @@ const setObj = async (last_assessment_div, qsnCounter) => {
   last_opt_d.setAttribute("unique_id", uniqueId + "-" + "D");
 };
 
+validateQues.addEventListener("keyup", (e) => {
+  if (e.target.value != "") {
+    validateQues.style.border = "none";
+    quesFile.style.border = "none";
+  }
+});
+
 /* code to disable either of the input in option A of 1st question */
-document.getElementsByName("opt_A")[0].addEventListener("keyup", (e) => {
+optA.addEventListener("keyup", (e) => {
   if (e.target.value == "") {
-    document.getElementsByName("option_A_Image")[0].removeAttribute("disabled");
+    opt_A_File.removeAttribute("disabled");
   } else {
-    document
-      .getElementsByName("option_A_Image")[0]
-      .setAttribute("disabled", false);
+    opt_A_File.setAttribute("disabled", false);
+    optA.style.border = "none";
+    opt_A_File.style.border = "none";
   }
 });
 
 /* code to disable either of the input in option B of 1st question */
-document.getElementsByName("opt_B")[0].addEventListener("keyup", (e) => {
+optB.addEventListener("keyup", (e) => {
   if (e.target.value == "") {
-    document.getElementsByName("option_B_Image")[0].removeAttribute("disabled");
+    opt_B_File.removeAttribute("disabled");
   } else {
-    document
-      .getElementsByName("option_B_Image")[0]
-      .setAttribute("disabled", false);
+    opt_B_File.setAttribute("disabled", false);
+    optB.style.border = "none";
+    opt_B_File.style.border = "none";
   }
 });
 
 /* code to disable either of the input in option C of 1st question */
-document.getElementsByName("opt_C")[0].addEventListener("keyup", (e) => {
+optC.addEventListener("keyup", (e) => {
   if (e.target.value == "") {
-    document.getElementsByName("option_C_Image")[0].removeAttribute("disabled");
+    opt_C_File.removeAttribute("disabled");
   } else {
-    document
-      .getElementsByName("option_C_Image")[0]
-      .setAttribute("disabled", false);
+    opt_C_File.setAttribute("disabled", false);
+    optC.style.border = "none";
+    opt_C_File.style.border = "none";
   }
 });
 
 /* code to disable either of the input in option D of 1st question */
-document.getElementsByName("opt_D")[0].addEventListener("keyup", (e) => {
+optD.addEventListener("keyup", (e) => {
   if (e.target.value == "") {
-    document.getElementsByName("option_D_Image")[0].removeAttribute("disabled");
+    opt_D_File.removeAttribute("disabled");
   } else {
-    document
-      .getElementsByName("option_D_Image")[0]
-      .setAttribute("disabled", false);
+    opt_D_File.setAttribute("disabled", false);
+    optD.style.border = "none";
+    opt_D_File.style.border = "none";
   }
 });
+
+// document.getElementById("optAFile").addEventListener("change", (e) => {
+//   let selectedFile = e.target.files[0];
+//   fileName = selectedFile.name;
+//   document.getElementById("imageAName").innerHTML = fileName;
+// });
+
+// document.getElementById("buttonId").addEventListener("click", openDialog);
+
+// function openDialog() {
+//   document.getElementById("optAFile").click();
+// }

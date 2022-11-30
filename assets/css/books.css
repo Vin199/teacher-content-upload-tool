@@ -1,38 +1,70 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap');
+
+*{
     margin: 0;
     padding: 0;
 }
 
-.notes__top__container {
-    justify-content: center;
-    align-items: center;
+body {
+    font-family: Inter;
 }
 
-.iPrep__img {
-    margin-top: 40px;
-    margin-left: 610px;
+.heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 60px;
+    overflow: hidden;
+    position: relative;
+    padding: 0 3rem;
+}
+
+.dashboard__img {
+    height: 80px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    align-self: center;
+    justify-self: center;
+}
+
+#logout{
+    width: 75px;
+    height: 27px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 4px;
+    color: #0077FF;
+    background-color: #FFFFFF;
+    border: 1px solid #0077FF;
+}
+
+.hrule_1{
+    width: 100vw;
+    margin: 0;
+    border: 0.5px solid rgba(0, 0, 0, 0.05);
+}
+
+.notes__top__container {
+    display: flex;
 }
 
 .notes_back {
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: flex-start;
-    margin-left: 144px;
+    margin-left: 153px;
+    margin-top: 25px;
 }
 
 .notes__upload__text {
-    width: 222px;
-    height: 27px;
-    margin-left: 619px;
-    margin-top: 168px;
-    font-family: sans-serif;
-    font-style: normal;
-    font-weight: 500;
     font-size: 22px;
-    line-height: 27px;
-    text-align: center;
     color: #64748B;
+    margin-top: 30px;
+    margin-left: 434px;
+    line-height: 27px;
 }
 
 hr {
@@ -54,8 +86,7 @@ hr {
     cursor: pointer;
     margin-top: 50px;
     margin-left: 144px;
-    background: rgba(0, 119, 255, 0.05);
-    border: 2px solid #64748B;
+    border: 1px solid #64748B;
     box-sizing: border-box;
     border-radius: 8px;
     display: flex;
@@ -76,15 +107,14 @@ hr {
 
 .single__assessment__text {
     height: 22px;
-    margin-left: 20px;
+    margin-left: 11px;
     margin-top: 17px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
     text-align: center;
-    color: #64748B;
+    color: #475569;
 }
 
 #notes_bulk_upload {
@@ -93,8 +123,7 @@ hr {
     cursor: pointer;
     margin-top: 50px;
     margin-left: 24px;
-    background: rgba(0, 119, 255, 0.05);
-    border: 2px solid #64748B;
+    border: 1px solid #64748B;
     box-sizing: border-box;
     border-radius: 8px;
     display: flex;
@@ -115,15 +144,14 @@ hr {
 
 .bulk_notes_assessment_text {
     height: 22px;
-    margin-left: 20px;
+    margin-left: 11px;
     margin-top: 17px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 22px;
     text-align: center;
-    color: #64748B;
+    color: #475569;
 }
 
 .middle_notes_hr {
@@ -143,13 +171,12 @@ hr {
     width: 75px;
     height: 27px;
     margin-left: 144px;
-    margin-top: 23px;
-    font-family: sans-serif;
+    margin-top: 50px;
     font-style: normal;
     font-weight: 400;
     font-size: 22px;
     line-height: 27px;
-    color: #94A3B8;
+    color: #1E293B;
     justify-content: flex-start;
 }
 
@@ -229,7 +256,6 @@ hr {
 	width: 262px;
     height: 24px;
     margin-left: 141px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -266,7 +292,6 @@ hr {
     border: 1px solid #CBD5E1;
     box-sizing: border-box;
     border-radius: 8px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -282,7 +307,6 @@ hr {
     border: 1px solid #CBD5E1;
     box-sizing: border-box;
     border-radius: 8px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -297,7 +321,6 @@ hr {
     margin-left: 98px;
     width: 368px;
     height: 56px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -369,7 +392,6 @@ hr {
 	width: 262px;
     height: 24px;
     margin-left: 119px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;

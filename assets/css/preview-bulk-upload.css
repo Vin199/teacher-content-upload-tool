@@ -1,6 +1,12 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap');
+
+*{
     margin: 0;
     padding: 0;
+}
+
+body {
+    font-family: Inter;
 }
 
 .bulk-preview-top-container{
@@ -32,7 +38,6 @@ body{
 .bulk-preview-assessment-text {
     width: 222px;
     height: 27px;
-    font-family: sans-serif;
     font-size: 22px;
     line-height: 27px;
     text-align: center;
@@ -59,7 +64,6 @@ body{
     width: 137px;
     height: 24px;
     margin-left: 652px;
-    font-family: sans-serif;
     font-size: 20px;
     text-align: center;
     color: #64748B;
@@ -71,7 +75,6 @@ body{
     margin-left: 536px;
     border: 1px solid #64748B;
     border-radius: 6px;
-    font-family: sans-serif;
     font-size: 18px;
     color: #64748B;
 }
@@ -110,7 +113,6 @@ body{
 
 .question_num {
     border-radius: 100%;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -124,7 +126,6 @@ body{
     width: 640px;
     height: 40px;
     margin-left: 30px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -138,7 +139,6 @@ body{
     width: 640px;
     height: 40px;
     margin-left: 30px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;

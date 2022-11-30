@@ -85,9 +85,11 @@ function getData() {
       let subject = document.getElementById("subject");
       let boards = data;
 
+      console.log(data);
+
       for (let boards_ in boards) {
         board.options[board.options.length] = new Option(
-          boards[boards_].name1,
+          boards_,
           boards_
         );
       }
@@ -106,7 +108,7 @@ function getData() {
           if (lang == "name1") continue;
 
           $("#language").append(
-            `<option value=${lang}>${languages[lang]["name"]}</option>`
+            `<option value=${lang}>${lang}</option>`
           );
         }
       };
@@ -125,7 +127,7 @@ function getData() {
           if (Class == "name") continue;
 
           $("#class").append(
-            `<option value=${Class}>${classes[Class]["name"]}</option>`
+            `<option value=${Class}>${Class}</option>`
           );
         }
       };
@@ -138,13 +140,13 @@ function getData() {
         const selectedLanguage = $("#language").val();
         const selectedClass = $("#class").val();
 
-        const subjects = boards[selectedBoard][selectedLanguage][selectedClass];
+        const subjects = boards[selectedBoard][selectedLanguage][selectedClass]["subjects"];
 
         for (const subject in subjects) {
           if (subject == "name") continue;
 
           $("#subject").append(
-            `<option value=${subject}>${subjects[subject]["name"]}</option>`
+            `<option value=${subject}>${subject}</option>`
           );
         }
       };
@@ -157,14 +159,11 @@ function getData() {
         const selectedClass = $("#class").val();
         const selectedSubject = $("#subject").val();
 
-        const topics =
-          boards[selectedBoard][selectedLanguage][selectedClass][
-            selectedSubject
-          ]["topics"];
+        const topics = boards[selectedBoard][selectedLanguage][selectedClass]["subjects"][selectedSubject];
 
         for (const topic in topics) {
           $("#topic").append(
-            `<option value=${topic}>${topics[topic]}</option>`
+            `<option value=${topic}>${topic}</option>`
           );
         }
       };
@@ -268,9 +267,11 @@ function getOptionsForBulkBooks() {
       let class_ = document.getElementById("notesBulkModalClass");
       let bulkBoards = data;
 
+      console.log(data);
+
       for (let boards_ in bulkBoards) {
         board.options[board.options.length] = new Option(
-          bulkBoards[boards_].name1,
+          boards_,
           boards_
         );
       }
@@ -288,7 +289,7 @@ function getOptionsForBulkBooks() {
           if (lang == "name1") continue;
 
           $("#notesBulkModalLanguage").append(
-            `<option value=${lang}>${languages[lang]["name"]}</option>`
+            `<option value=${lang}>${lang}</option>`
           );
         }
       };
@@ -306,7 +307,7 @@ function getOptionsForBulkBooks() {
           if (Class == "name") continue;
 
           $("#notesBulkModalClass").append(
-            `<option value=${Class}>${classes[Class]["name"]}</option>`
+            `<option value=${Class}>${Class}</option>`
           );
         }
       };
@@ -318,14 +319,13 @@ function getOptionsForBulkBooks() {
         const selectedLanguage = $("#notesBulkModalLanguage").val();
         const selectedClass = $("#notesBulkModalClass").val();
 
-        const subjects =
-          bulkBoards[selectedBoard][selectedLanguage][selectedClass];
+        const subjects = bulkBoards[selectedBoard][selectedLanguage][selectedClass]["subjects"];
 
         for (const subject in subjects) {
           if (subject == "name") continue;
 
           $("#notesBulkModalSubject").append(
-            `<option value=${subject}>${subjects[subject]["name"]}</option>`
+            `<option value=${subject}>${subject}</option>`
           );
         }
       };

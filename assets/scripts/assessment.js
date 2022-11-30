@@ -8,6 +8,7 @@ const span = document.getElementsByClassName("close")[0];
 // When the user clicks the button, open the modal
 btn.onclick = function () {
   modal.style.display = "block";
+  btn.style.border = "1px solid #0077FF";
   getOptionsForSingleAssessment();
 };
 
@@ -21,6 +22,7 @@ span.addEventListener("click", () => {
 
 function closeModal() {
   modal.style.display = "none";
+  btn.style.border = "1px solid #64748B";
 }
 
 // When the user clicks anywhere outside of the modal, close it
@@ -45,7 +47,7 @@ function storeFormData(e) {
   send();
 }
 
-const send = () => {
+const send = async () => {
   let localData = JSON.parse(window.localStorage.getItem("assessmentMetaData"));
   const options = {
     method: "POST",
@@ -66,11 +68,39 @@ const send = () => {
     .catch((e) => {
       console.log(e);
     });
+
+  const historyOpt = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(historyObj),
+  };
+
+  fetch("/setHistory", historyOpt)
+    .then((res) => {
+      return res.json();
+    })
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
-function getD(localData) {
-  console.log(localData);
-}
+let historyObj = {
+  board_id: "",
+  board_name: "",
+  class_id: "",
+  class_name: "",
+  language_id: "",
+  language_name: "",
+  subject_id: "",
+  subject_name: "",
+  topic_id: "",
+  topic_name: "",
+};
 
 function getOptionsForSingleAssessment() {
   const option = {
@@ -91,9 +121,11 @@ function getOptionsForSingleAssessment() {
       let subject = document.getElementById("subject");
       let boards = data;
 
+      console.log(data);
+
       for (let boards_ in boards) {
         board.options[board.options.length] = new Option(
-          boards[boards_].name1,
+          boards_,
           boards_
         );
       }
@@ -106,13 +138,19 @@ function getOptionsForSingleAssessment() {
 
         const selectedBoard = $("#board").val();
 
+        historyObj.board_id = selectedBoard;
+        historyObj.board_name = selectedBoard;
+
         const languages = boards[selectedBoard];
 
         for (const lang in languages) {
           if (lang == "name1") continue;
 
+          historyObj.language_id = lang;
+          historyObj.language_name = languages[lang]["name"];
+
           $("#language").append(
-            `<option value=${lang}>${languages[lang]["name"]}</option>`
+            `<option value=${lang}>${lang}</option>`
           );
         }
       };
@@ -130,8 +168,11 @@ function getOptionsForSingleAssessment() {
         for (const Class in classes) {
           if (Class == "name") continue;
 
+          historyObj.class_id = Class;
+          historyObj.class_name = Class;
+
           $("#class").append(
-            `<option value=${Class}>${classes[Class]["name"]}</option>`
+            `<option value=${Class}>${Class}</option>`
           );
         }
       };
@@ -144,13 +185,16 @@ function getOptionsForSingleAssessment() {
         const selectedLanguage = $("#language").val();
         const selectedClass = $("#class").val();
 
-        const subjects = boards[selectedBoard][selectedLanguage][selectedClass];
+        const subjects = boards[selectedBoard][selectedLanguage][selectedClass]["subjects"];
 
         for (const subject in subjects) {
           if (subject == "name") continue;
 
+          historyObj.subject_id = subject;
+          historyObj.subject_name = subjects[subject]["name"];
+
           $("#subject").append(
-            `<option value=${subject}>${subjects[subject]["name"]}</option>`
+            `<option value=${subject}>${subject}</option>`
           );
         }
       };
@@ -163,14 +207,11 @@ function getOptionsForSingleAssessment() {
         const selectedClass = $("#class").val();
         const selectedSubject = $("#subject").val();
 
-        const topics =
-          boards[selectedBoard][selectedLanguage][selectedClass][
-            selectedSubject
-          ]["topics"];
+        const topics = boards[selectedBoard][selectedLanguage][selectedClass]["subjects"][selectedSubject];
 
         for (const topic in topics) {
           $("#topic").append(
-            `<option value=${topic}>${topics[topic]}</option>`
+            `<option value=${topic}>${topic}</option>`
           );
         }
       };
@@ -180,6 +221,12 @@ function getOptionsForSingleAssessment() {
     });
 }
 
+const topicValue = document.getElementById("topic");
+topicValue.addEventListener("change", () => {
+  historyObj.topic_id = topicValue.value;
+  historyObj.topic_name = topicValue.options[topicValue.selectedIndex].text;
+});
+
 const bulkBtn = document.getElementById("bulk__upload");
 const bulkModal = document.getElementById("bulkModal");
 const bulkClose = document.getElementsByClassName("bulk-modal-close")[0];
@@ -187,6 +234,7 @@ const bulkClose = document.getElementsByClassName("bulk-modal-close")[0];
 // When the user clicks the button, open the bulk upload modal
 bulkBtn.onclick = function () {
   bulkModal.style.display = "block";
+  bulkBtn.style.border = "1px solid #0077FF";
   getOptionsForBulkAssessment();
 };
 
@@ -197,6 +245,7 @@ bulkClose.addEventListener("click", () => {
 
 function closeBulkModal() {
   bulkModal.style.display = "none";
+  bulkBtn.style.border = "1px solid #64748B";
 }
 
 // When the user clicks anywhere outside of the modal, close it
@@ -227,7 +276,6 @@ function storeBulkFormData(e) {
 }
 
 const sendBulkData = () => {
-  console.log("Hello");
   const localBulkData = JSON.parse(window.localStorage.getItem("bulkMetaData"));
   const options = {
     method: "POST",
@@ -268,9 +316,11 @@ function getOptionsForBulkAssessment() {
       let class_ = document.getElementById("bulkModalClass");
       let bulkBoards = data;
 
+      console.log(data);
+
       for (let boards_ in bulkBoards) {
         board.options[board.options.length] = new Option(
-          bulkBoards[boards_].name1,
+          boards_,
           boards_
         );
       }
@@ -288,7 +338,7 @@ function getOptionsForBulkAssessment() {
           if (lang == "name1") continue;
 
           $("#bulkModalLanguage").append(
-            `<option value=${lang}>${languages[lang]["name"]}</option>`
+            `<option value=${lang}>${lang}</option>`
           );
         }
       };
@@ -306,7 +356,7 @@ function getOptionsForBulkAssessment() {
           if (Class == "name") continue;
 
           $("#bulkModalClass").append(
-            `<option value=${Class}>${classes[Class]["name"]}</option>`
+            `<option value=${Class}>${Class}</option>`
           );
         }
       };
@@ -318,14 +368,13 @@ function getOptionsForBulkAssessment() {
         const selectedLanguage = $("#bulkModalLanguage").val();
         const selectedClass = $("#bulkModalClass").val();
 
-        const subjects =
-          bulkBoards[selectedBoard][selectedLanguage][selectedClass];
+        const subjects = bulkBoards[selectedBoard][selectedLanguage][selectedClass]["subjects"];
 
         for (const subject in subjects) {
           if (subject == "name") continue;
 
           $("#bulkModalSubject").append(
-            `<option value=${subject}>${subjects[subject]["name"]}</option>`
+            `<option value=${subject}>${subject}</option>`
           );
         }
       };
@@ -342,7 +391,7 @@ const option = {
   },
 };
 
-const user = JSON.parse(window.localStorage.getItem("user"));
+const user = JSON.parse(window.localStorage.getItem("userInfo"));
 const uid = user.uid;
 
 fetch("/getHistory", option)
@@ -351,6 +400,7 @@ fetch("/getHistory", option)
   })
   .then((data) => {
     // let path = data;
+    console.log(data);
     let len = Object.keys(data).length;
     let rowIdx = 0;
     for (let i = 0; i < len; i++) {
@@ -358,41 +408,46 @@ fetch("/getHistory", option)
       let date = new Date(getDate);
       let actualDate = date.toString().slice(0, 21);
       rowIdx++;
-      $("#tbody").append(`<tr class="tableRow" id="R${rowIdx}">
-       <td id="${getDate}">${actualDate}
-        </td>
-        <td id="${Object.values(data)[i].board_id}">${
-        Object.values(data)[i].board_id
-      }
-        </td>
-        <td id="${Object.values(data)[i].class_id}">${
-        Object.values(data)[i].class_name
-      }
-        </td>
-        <td id="${Object.values(data)[i].language_id}">${
-        Object.values(data)[i].language_name
-      }
-        </td>
-        <td id="${Object.values(data)[i].subject_id}">${
-        Object.values(data)[i].subject_name
-      }
-        </td>
-        <td id="${Object.values(data)[i].topic_id}">${
-        Object.values(data)[i].topic_name
-      }
-        </td>
-        <td><button class="view" type="button"><a path="teacher_upload/upload/${uid}/${
-        Object.values(data)[i].board_id
-      }/${Object.values(data)[i].language_id}/${
-        Object.values(data)[i].class_id
-      }/${Object.values(data)[i].subject_id}/assessments/${
-        Object.values(data)[i].topic_id
-      }/questionId">View</a></button>
-        </td>
-       </tr>`);
+      const tableBody = document.querySelector(".tableBody");
+      const {
+        board_id,
+        class_name,
+        language_name,
+        subject_name,
+        topic_name,
+        language_id,
+        class_id,
+        subject_id,
+        topic_id,
+      } = Object.values(data)[i];
+      const dataHtml = `<div class="tableRow" id="R${rowIdx}">\
+        <div class="tableData">${board_id}</div>\
+        <div class="tableData">${language_id}</div>\
+        <div class="tableData">${class_name}</div>\
+        <div class="tableData">${subject_id}</div>\
+        <div class="tableData">${topic_name}</div>\
+        <div class="tableData" id="${getDate}">${Intl.DateTimeFormat(
+        ["ban", "id"], //bangladesh & Indonesia
+        {
+          month: "2-digit",
+          year: "2-digit",
+          day: "2-digit",
+          minute: "2-digit",
+          hour: "2-digit",
+          hourCycle: "h12",
+        }
+      ).format(new Date(actualDate))}</div>\
+        <div class="tableData">\
+          <button class="view" type="button" path="teacher_upload/upload/${uid}/${board_id}/${language_id}/${class_name}/${subject_id}/assessments/${topic_name}/questions">\
+          View\
+          </button>\
+        </div>\
+      </div>`;
+
+      tableBody.innerHTML += dataHtml;
     }
 
-    $(".view").on("click", (e) => {
+    $(".view").on("click", async (e) => {
       const pathObj = {
         path: $(e.target).attr("path"),
       };
@@ -405,75 +460,10 @@ fetch("/getHistory", option)
         body: JSON.stringify(pathObj),
       };
 
-      fetch("/getQuestions", opt)
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          let count = 0;
-          for (const key in data) {
-            if (Object.hasOwnProperty.call(data, key)) {
-              const element = data[key];
-              count++;
-              if (element != null) {
-                let html = `<div class="question_forms" id="question_form_${count}">
-                      <div class="question_area">
-                        <span class="question_num">Q.${count}</span>
-                        <input type="text" name="question" class="question" placeholder="Type Your Question Here" value="${
-                          element.q
-                        }" disabled>
-                        <img src="${
-                          element.questionImage
-                        }" alt="img" width="50" height="50">
-                      </div>
-                      <div class="option_area">
-                        <div class="opt_a">
-                          <span class="question_num">A.</span>
-                          <input type="text" name="opt_A" class="option" placeholder="Type Option A Here (Right Answer)" value="${
-                            element.A.type == "image" ? "" : element.A.value
-                          }" disabled>
-                          <img src="${
-                            element.A.type == "text" ? "" : element.A.value
-                          }" width="50" height="50">
-                        </div>
-                        <div class=" opt_b">
-                          <span class="question_num">B.</span>
-                          <input type="text" name="opt_B" class="option" placeholder="Type Option B Here" value="${
-                            element.B.type == "image" ? "" : element.B.value
-                          }" disabled>
-                          <img src="${
-                            element.B.type == "text" ? "" : element.B.value
-                          }" width="50" height="50">
-                        </div>
-                        <div class="opt_c">
-                          <span class="question_num">C.</span>
-                          <input type="text" name="opt_C" class="option" placeholder="Type Option C Here" value="${
-                            element.C.type == "image" ? "" : element.C.value
-                          }" disabled>
-                          <img src="${
-                            element.C.type == "text" ? "" : element.C.value
-                          }" width="50" height="50">
-                        </div>
-                        <div class="opt_d">
-                          <span class="question_num">D.</span>
-                          <input type="text" name="opt_D" class="option" placeholder="Type Option D Here" value="${
-                            element.D.type == "image" ? "" : element.D.value
-                          }" disabled>
-                          <img src="${
-                            element.D.type == "text" ? "" : element.D.value
-                          }" width="50" height="50">
-                        </div>
-                      </div>
-                    </div> `;
-
-                document.getElementById("set_questions").innerHTML += html;
-              }
-            }
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const response = await fetch("/getQuestions", opt);
+      const quesData = await response.json();
+      window.localStorage.setItem("historyData", JSON.stringify(quesData));
+      location.href = "/showHistory";
     });
   })
   .catch((err) => {

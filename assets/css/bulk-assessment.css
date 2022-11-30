@@ -1,59 +1,87 @@
-body{
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap');
+
+*{
     margin: 0;
     padding: 0;
 }
 
-.bulk-top-container{
-    justify-content: center;
+body {
+    font-family: Inter;
+}
+
+.heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     align-items: center;
+    min-height: 60px;
+    overflow: hidden;
+    position: relative;
+    padding: 0 3rem;
 }
 
-.bulk-iPrep-img {
-    margin-left: 610px;
+.dashboard__img {
+    height: 80px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    align-self: center;
+    justify-self: center;
 }
 
-.bulk-hrule-1 {
+#logout{
+    width: 75px;
+    height: 27px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 4px;
+    color: #0077FF;
+    background-color: #FFFFFF;
+    border: 1px solid #0077FF;
+}
+
+.hrule_1{
     width: 100vw;
+    margin: 0;
     border: 0.5px solid rgba(0, 0, 0, 0.05);
 }
 
-.bulk-div-2 {
+.bulk_top_container {
     display: flex;
-    flex-direction: row;
+    height: 108px;
 }
 
-.bulk-active {
-    width: 35px;
-    height: 35px;
-    margin-left: 144px;
-    margin-top: 39px;
+.active {
+    margin-left: 153px;
+    margin-top: 25px;
 }
 
-.bulk-assessment-text {
-    width: 222px;
-    height: 27px;
-    font-family: sans-serif;
+.bulk_span_text {
     font-size: 22px;
-    line-height: 27px;
-    text-align: center;
     color: #64748B;
-    margin-left: 430px;
-    margin-top: 39px;
+    font-weight: 500;
+    margin-top: 30px;
+    margin-left: 475px;
+    line-height: 27px;
 }
 
-.bulk-hr {
-    border: 1px solid #e1e1e1;
-    flex: 1;
+hr {
+    width: 1152px;
     height: 0px;
-    overflow: hidden;
-    margin: 2.5rem 9rem 2rem 9rem;
+    margin-bottom: 33px;
+    margin-left: 144px;
+    border: 1px solid #DEDEDE;
 }
 
 .instruction-text-heading {
     width: 125px;
     height: 27px;
     margin-left: 243px;
-    font-family: sans-serif;
+    font-weight: 500;
     font-size: 22px;
     line-height: 27px;
     color: #64748B;
@@ -64,7 +92,7 @@ body{
     height: 350px;
     display: flex;
     margin-left: 243px;
-    margin-top: 16px;
+    margin-top: 13px;
     background: #FAFAFA;
     border-radius: 30px;
 }
@@ -76,20 +104,11 @@ body{
 }
 
 .instruction-text-1{
-    font-size: 20px;
+    font-size: 18px;
     line-height: 22px;
     color: #64748B;
-    font-family: sans-serif;
-    font-weight: 500;
-}
-
-.instruction-text-2{
-    font-size: 20px;
-    line-height: 22px;
-    color: #64748B;
-    font-family: sans-serif;
-    font-weight: 500;
-    margin-top: 10px;
+    font-weight: 400;
+    margin-bottom: 10px;
 }
 
 .bulk-bottom-container{
@@ -113,18 +132,6 @@ body{
     border-color: #0077FF;
 }
 
-.download-text{
-    font-family: sans-serif;
-    font-size: 18px;
-    line-height: 17px;
-    color: #64748B;
-    margin-right: 10px;
-}
-
-.dwnld-img {
-    width: 30px;
-}
-
 .upload-assessment{
     width: 270px;
     height: 56px;
@@ -144,10 +151,9 @@ body{
 }
 
 .upload-text{
-    width: 180px;
-    height: 17px;
-    font-family: sans-serif;
-    font-size: 18px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 10px;
     line-height: 17px;
     color: #64748B;
     border: none;
@@ -171,11 +177,10 @@ body{
     border-color: #0077FF;
 }
 
-.download-text-2{
-    width: 170px;
-    height: 17px;
-    font-family: sans-serif;
-    font-size: 18px;
+.download-text{
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 10px;
     line-height: 17px;
     color: #64748B;
     cursor: pointer;
@@ -241,7 +246,6 @@ body{
     width: 500px;
     text-align: center;
     font-size: 25px;
-    font-family: sans-serif;
     font-size: 25px;
     line-height: 40px;
     color: #64748B;
@@ -262,9 +266,7 @@ body{
 }
 
 .select-text{
-    width: 137px;
-    height: 24px;
-    font-family: sans-serif;
+    font-weight: 400;
     font-size: 20px;
     text-align: center;
     color: #64748B;
@@ -275,7 +277,6 @@ body{
     height: 56px;
     border: 1px solid #64748B;
     border-radius: 6px;
-    font-family: sans-serif;
     font-size: 18px;
     color: #64748B;
 }
@@ -315,7 +316,6 @@ body{
 
 .question_num {
     border-radius: 100%;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -329,7 +329,6 @@ body{
     width: 640px;
     height: 40px;
     margin-left: 30px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -343,7 +342,6 @@ body{
     width: 640px;
     height: 40px;
     margin-left: 30px;
-    font-family: sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 20px;
@@ -372,7 +370,6 @@ body{
     line-height: 22px;
     color: #FFFFFF;
     margin-bottom: 3rem;
-    font-family: sans-serif;
     background: #0077FF;
     justify-content: center;
     align-items: center;
@@ -449,7 +446,6 @@ body{
     cursor: pointer;
     margin-top: 25px;
     border-style: none;
-    font-family: sans-serif;
     font-size: 18px;
     line-height: 22px;
     color: black;
@@ -463,7 +459,6 @@ body{
     cursor: pointer;
     margin-top: 25px;
     border-style: none;
-    font-family: sans-serif;
     font-size: 18px;
     line-height: 22px;
     color: #FFFFFF;
@@ -473,12 +468,11 @@ body{
     transform: translateY(4px);
 }
 
-#ImgProgress, #successMsg, #textSpan, #err{
+#ImgProgress{
     font-size: 24px;
     font-weight: 400;
     line-height: 150%;
     font-style: normal;
     text-align: center;
-    font-family: sans-serif;
     color: #334155;
 }

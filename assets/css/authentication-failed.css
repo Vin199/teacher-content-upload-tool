@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Inter;
+}
+
+.authBody{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-img{
+    width: 486px;
+    height: 486px;
+    margin-top: 106px;
+}
+
+.auth-msg{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 36px;
+    color: #334155;
+}
+
+#backToHomeBtn{
+    width: 284px;
+    height: 60px;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #FFFFFF;
+    margin-top: 58px;
+    background: #0077FF;
+    border-radius: 12px;
+    border-style: none;
+}

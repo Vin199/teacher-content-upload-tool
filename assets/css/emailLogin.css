@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Inter;
+}
+
+.imgDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 141px;
+}
+
+.login__img {
+    width: 70px;
+    height: 160px;
+    margin-bottom: 40px;
+}
+
+.login_body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login_text {
+    font-weight: 600;
+    font-size: 22px;
+    font-style: normal;
+    line-height: 27px;
+    color: #1E293B;
+    text-align: center;
+    margin-bottom: 38px;
+}
+
+.inputField{
+    display: flex;
+    flex-direction: column;
+}
+
+.emailText{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #475569;
+    margin-bottom: 9px;
+}
+
+#emailField1{
+    width: 368px;
+    height: 60px;
+    font-size: medium;
+    text-align: center;
+    border: 2px solid #E2E8F0;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 28px;
+    background-color: #FFFFFF;
+}
+
+.passwordText{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    margin-bottom: 9px;
+    color: #475569;
+}
+
+#emailPassword1{
+    width: 368px;
+    height: 60px;
+    font-size: medium;
+    text-align: center;
+    border: 2px solid #E2E8F0;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    background-color: #FFFFFF;
+}
+
+.inputContainer{
+    position: relative;
+}
+
+.inputContainer .eyeContainer{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 50px;
+    left: 310px;
+    right: 0;
+    margin: 0 auto;
+}
+
+.eyeContainer .eye{
+    width: 10px;
+    height: 1px;
+    cursor: pointer;
+}
+
+#wrongPsswrd{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 15px;
+    text-align: center;
+    color: #FF3636;
+    margin-bottom: 50px;
+}
+
+.continue {
+    width: 368px;
+    height: 60px;
+    display: flex;
+    cursor: pointer;
+    color: #FFFFFF;
+    border-radius: 8px;
+    align-items: center;
+    background: #0077FF;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+#back_button{
+    top: 8rem;
+    left: 9.5rem;
+    display: flex;
+    cursor: pointer;
+    position: absolute;
+}
