@@ -8,14 +8,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDNFbXQo3Fd7PYfWBwGJd6XdihZ3w-yEvk",
-  authDomain: "node-project-c4942.firebaseapp.com",
-  databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com",
-  projectId: "node-project-c4942",
-  storageBucket: "node-project-c4942.appspot.com",
-  messagingSenderId: "581470710657",
-  appId: "1:581470710657:web:a4792037ef1d415c375680",
-  measurementId: "G-HQZDXNGMJ3",
+  apiKey: "AIzaSyC5UiikQU2_-_omC-qKYcXA0X4Ta8whfuI",
+  authDomain: "iprep-7f10a.firebaseapp.com",
+  databaseURL: "https://iprep-dev.firebaseio.com/",
+  projectId: "iprep-7f10a",
+  storageBucket: "iprep-7f10a.appspot.com",
+  messagingSenderId: "165257927521",
+  appId: "1:165257927521:web:3d145f0c2b04eafd",
+  measurementId: "G-SXFQPY83P3"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -32,7 +32,6 @@ const assessmentData = JSON.parse(
 const teacher_info = JSON.parse(window.localStorage.getItem("userInfo"));
 
 const sendQuestionData = (parentObj) => {
-  createAssessmentModal.style.display = "none";
 
   return new Promise((resolve, reject) => {
     const assessmentValue = {
@@ -52,6 +51,9 @@ const sendQuestionData = (parentObj) => {
     try {
       fetch("/set-assessment", qsnOption);
       resolve();
+      displayProgress.innerHTML = "Assessment Uploaded Successfully.";
+      finalSubmitBtn.style.display = "none";
+      // createAssessmentModal.style.display = "none";
     } catch (error) {
       alert(error.message);
       reject();
@@ -142,7 +144,7 @@ document
       finalSubmitBtn.style.display = "block";
       re_upload_btn.style.display = "none";
       updateDatabase();
-      displayProgress.innerHTML = "Click Submit To Upload Assessments.";
+      displayProgress.innerHTML = "Click Submit To Upload Assessment.";
     }
   });
 
@@ -286,6 +288,7 @@ function uploadImage(file, uid, imageKey) {
 
 createAssessmentClose.addEventListener("click", () => {
   createAssessmentModal.style.display = "none";
+  location.reload();
 });
 
 function updateDatabase() {

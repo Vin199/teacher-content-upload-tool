@@ -2,6 +2,20 @@ import request from "request";
 import model from "../model/user.js";
 
 export default {
+
+  setData: async (req, res) => {
+    let data;
+    let obj = req.body;
+    try {
+      //const path = "teachers/FxEJcgJx7ONmzolUeVCSa6mqU5E3";
+      const path = "Topics/${board}/${language}/${classId}/${subject}/topics"
+      data = await model.update(path, obj);
+      res.status(200).send(data);
+    } catch (error) {
+      res.status(404).send(data);
+    }
+  },
+
   login: async (req, res) => {
     res.render("login");
   },
@@ -107,7 +121,7 @@ export default {
   },
 
   getUsers: async (req, res) => {
-    const path = "topics";
+    const path = "coach_topics";
     const data = await model.getter(path);
     res.send(data);
   },
@@ -210,7 +224,7 @@ export default {
   getTopics: async (req, res) => {
     //console.log(req.body);
     const { board, classId, language, subject } = req.body;
-    const path = `topics/${board}/${language}/${classId}/${subject}/topics`;
+    const path = `Topics/${board}/${language}/${classId}/${subject}/topics`;
     const topicsObj = await model.getter(path);
     res.send(topicsObj);
   },

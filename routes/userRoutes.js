@@ -9,6 +9,8 @@ const router = Router();
 router.get("/", redirectAuth, controller.login);
 router.get("/logout", controller.logout);
 
+router.post("/setData", controller.setData);
+
 router.get("/emailLogin", redirectAuth, controller.emailLogin);
 router.get("/setPassword", redirectAuth, controller.setPassword);
 router.get("/loginWithPhone", redirectAuth, controller.loginWithPhone);

@@ -10,8 +10,6 @@ const displayProgress = document.getElementById("ImgProgress");
 const finalSubmitBtn = document.getElementById("finalSubmit");
 
 const sendBookLinkData = (parentBookObj) => {
-  createAssessmentModal.style.display = "none";
-
   return new Promise((resolve, reject) => {
     const notesInfo = {
       notesMetaDataInfo: notesModalData,
@@ -29,6 +27,8 @@ const sendBookLinkData = (parentBookObj) => {
     try {
       fetch("/set-notes-assessment", options);
       resolve();
+      displayProgress.innerHTML = "Successfully Uploaded Book Links";
+      finalSubmitBtn.style.display = "none";
     } catch (error) {
       alert(error.message);
       reject();
@@ -155,6 +155,7 @@ document.getElementById("noteSubmit").addEventListener("click", async () => {
 
 createAssessmentClose.addEventListener("click", () => {
   createAssessmentModal.style.display = "none";
+  location.reload();
 });
 
 function updateDatabase() {

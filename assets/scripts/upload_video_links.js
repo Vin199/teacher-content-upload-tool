@@ -10,8 +10,6 @@ const displayProgress = document.getElementById("ImgProgress");
 const finalSubmitBtn = document.getElementById("finalSubmit");
 
 const sendVideoLinkData = (parentVideoObj) => {
-  createAssessmentModal.style.display = "none";
-
   return new Promise((resolve, reject) => {
     const videoInfo = {
       videoMetaData: videoModalData,
@@ -29,6 +27,8 @@ const sendVideoLinkData = (parentVideoObj) => {
     try {
       fetch("/set-video-assessment", options);
       resolve();
+      displayProgress.innerHTML = "Successfully Uploaded Video Links."
+      finalSubmitBtn.style.display = "none";
     } catch (error) {
       alert(error.message);
       reject();
@@ -155,6 +155,7 @@ document.getElementById("videoSubmit").addEventListener("click", async () => {
 
 createAssessmentClose.addEventListener("click", () => {
   createAssessmentModal.style.display = "none";
+  location.reload();
 });
 
 function updateDatabase() {

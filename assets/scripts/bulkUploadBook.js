@@ -43,7 +43,7 @@ window.onload = function () {
     });
 
     function closeBulkBookModalMsg() {
-      bulkBookModalMsgBox.style.display = "none";
+      bulkBookModalMsgBox.style.display = "none";      
     }
 
     window.localStorage.setItem("isTrue", false);
@@ -96,8 +96,8 @@ const data = await response.json();
 Object.values(data).forEach((ele) => {
   bookWb.SheetNames.push(ele);
   let book_ws_header = [["name", "link"]];
-  let video_ws = XLSX.utils.aoa_to_sheet(book_ws_header);
-  bookWb.Sheets[ele] = video_ws;
+  let book_ws = XLSX.utils.aoa_to_sheet(book_ws_header);
+  bookWb.Sheets[ele] = book_ws;
 });
 
 let bookWbAbout = XLSX.write(bookWb, { bookType: "xlsx", type: "binary" });
@@ -205,8 +205,6 @@ const setOptions = async (sheet_name_list, workBook) => {
 };
 
 const sendBookLinkData = (parentObj) => {
-  createAssessmentModal.style.display = "none";
-
   return new Promise((resolve, reject) => {
     const notesInfo = {
       notesMetaDataInfo: notesData,
@@ -223,6 +221,8 @@ const sendBookLinkData = (parentObj) => {
     try {
       fetch("/set-notes-assessment", options);
       resolve();
+      finalSubmitBtn.style.display = "none";
+      document.getElementById("submitMsg").innerHTML = "Successfully Uploaded Book Links."
     } catch (error) {
       alert(error.message);
       reject();
@@ -232,6 +232,7 @@ const sendBookLinkData = (parentObj) => {
 
 createAssessmentClose.addEventListener("click", () => {
   createAssessmentModal.style.display = "none";
+  location.reload();
 });
 
 function updateDatabase() {

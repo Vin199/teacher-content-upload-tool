@@ -89,10 +89,6 @@ const send = async () => {
     });
 };
 
-// function getD(localData) {
-//   console.log(localData);
-// }
-
 let historyObj = {
   board_id: "",
   board_name: "",
@@ -125,9 +121,11 @@ function getOptionsForSingleAssessment() {
       let subject = document.getElementById("subject");
       let boards = data;
 
+      console.log(data);
+
       for (let boards_ in boards) {
         board.options[board.options.length] = new Option(
-          boards[boards_].name1,
+          boards_,
           boards_
         );
       }
@@ -152,7 +150,7 @@ function getOptionsForSingleAssessment() {
           historyObj.language_name = languages[lang]["name"];
 
           $("#language").append(
-            `<option value=${lang}>${languages[lang]["name"]}</option>`
+            `<option value=${lang}>${lang}</option>`
           );
         }
       };
@@ -174,7 +172,7 @@ function getOptionsForSingleAssessment() {
           historyObj.class_name = Class;
 
           $("#class").append(
-            `<option value=${Class}>${classes[Class]["name"]}</option>`
+            `<option value=${Class}>${Class}</option>`
           );
         }
       };
@@ -187,7 +185,7 @@ function getOptionsForSingleAssessment() {
         const selectedLanguage = $("#language").val();
         const selectedClass = $("#class").val();
 
-        const subjects = boards[selectedBoard][selectedLanguage][selectedClass];
+        const subjects = boards[selectedBoard][selectedLanguage][selectedClass]["subjects"];
 
         for (const subject in subjects) {
           if (subject == "name") continue;
@@ -196,7 +194,7 @@ function getOptionsForSingleAssessment() {
           historyObj.subject_name = subjects[subject]["name"];
 
           $("#subject").append(
-            `<option value=${subject}>${subjects[subject]["name"]}</option>`
+            `<option value=${subject}>${subject}</option>`
           );
         }
       };
@@ -209,14 +207,11 @@ function getOptionsForSingleAssessment() {
         const selectedClass = $("#class").val();
         const selectedSubject = $("#subject").val();
 
-        const topics =
-          boards[selectedBoard][selectedLanguage][selectedClass][
-            selectedSubject
-          ]["topics"];
+        const topics = boards[selectedBoard][selectedLanguage][selectedClass]["subjects"][selectedSubject];
 
         for (const topic in topics) {
           $("#topic").append(
-            `<option value=${topic}>${topics[topic]}</option>`
+            `<option value=${topic}>${topic}</option>`
           );
         }
       };
@@ -321,9 +316,11 @@ function getOptionsForBulkAssessment() {
       let class_ = document.getElementById("bulkModalClass");
       let bulkBoards = data;
 
+      console.log(data);
+
       for (let boards_ in bulkBoards) {
         board.options[board.options.length] = new Option(
-          bulkBoards[boards_].name1,
+          boards_,
           boards_
         );
       }
@@ -341,7 +338,7 @@ function getOptionsForBulkAssessment() {
           if (lang == "name1") continue;
 
           $("#bulkModalLanguage").append(
-            `<option value=${lang}>${languages[lang]["name"]}</option>`
+            `<option value=${lang}>${lang}</option>`
           );
         }
       };
@@ -359,7 +356,7 @@ function getOptionsForBulkAssessment() {
           if (Class == "name") continue;
 
           $("#bulkModalClass").append(
-            `<option value=${Class}>${classes[Class]["name"]}</option>`
+            `<option value=${Class}>${Class}</option>`
           );
         }
       };
@@ -371,14 +368,13 @@ function getOptionsForBulkAssessment() {
         const selectedLanguage = $("#bulkModalLanguage").val();
         const selectedClass = $("#bulkModalClass").val();
 
-        const subjects =
-          bulkBoards[selectedBoard][selectedLanguage][selectedClass];
+        const subjects = bulkBoards[selectedBoard][selectedLanguage][selectedClass]["subjects"];
 
         for (const subject in subjects) {
           if (subject == "name") continue;
 
           $("#bulkModalSubject").append(
-            `<option value=${subject}>${subjects[subject]["name"]}</option>`
+            `<option value=${subject}>${subject}</option>`
           );
         }
       };
@@ -404,6 +400,7 @@ fetch("/getHistory", option)
   })
   .then((data) => {
     // let path = data;
+    console.log(data);
     let len = Object.keys(data).length;
     let rowIdx = 0;
     for (let i = 0; i < len; i++) {
@@ -425,9 +422,9 @@ fetch("/getHistory", option)
       } = Object.values(data)[i];
       const dataHtml = `<div class="tableRow" id="R${rowIdx}">\
         <div class="tableData">${board_id}</div>\
-        <div class="tableData">${language_name}</div>\
+        <div class="tableData">${language_id}</div>\
         <div class="tableData">${class_name}</div>\
-        <div class="tableData">${subject_name}</div>\
+        <div class="tableData">${subject_id}</div>\
         <div class="tableData">${topic_name}</div>\
         <div class="tableData" id="${getDate}">${Intl.DateTimeFormat(
         ["ban", "id"], //bangladesh & Indonesia
@@ -441,7 +438,7 @@ fetch("/getHistory", option)
         }
       ).format(new Date(actualDate))}</div>\
         <div class="tableData">\
-          <button class="view" type="button" path="teacher_upload/upload/${uid}/${board_id}/${language_id}/${class_id}/${subject_id}/assessments/${topic_id}/questions">\
+          <button class="view" type="button" path="teacher_upload/upload/${uid}/${board_id}/${language_id}/${class_name}/${subject_id}/assessments/${topic_name}/questions">\
           View\
           </button>\
         </div>\

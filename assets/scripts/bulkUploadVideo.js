@@ -205,8 +205,6 @@ const setOptions = async (sheet_name_list, workBook) => {
 };
 
 const sendVideoLinkData = (parentObj) => {
-  createAssessmentModal.style.display = "none";
-
   return new Promise((resolve, reject) => {
     const videoInfo = {
       videoMetaData: videoData,
@@ -222,6 +220,11 @@ const sendVideoLinkData = (parentObj) => {
     };
     try {
       fetch("/set-video-assessment", options);
+      document.getElementById("submitMsg").innerHTML = "Successfully Uploaded Video Links."
+      finalSubmitBtn.style.display = "none";
+      // setTimeout(()=>{
+      //   location.reload();
+      // }, 2000);
       resolve();
     } catch (error) {
       alert(error.message);
@@ -232,6 +235,7 @@ const sendVideoLinkData = (parentObj) => {
 
 createAssessmentClose.addEventListener("click", () => {
   createAssessmentModal.style.display = "none";
+  location.reload();
 });
 
 function updateDatabase() {

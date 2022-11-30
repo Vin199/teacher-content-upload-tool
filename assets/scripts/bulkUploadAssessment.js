@@ -8,14 +8,14 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-storage.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDNFbXQo3Fd7PYfWBwGJd6XdihZ3w-yEvk",
-  authDomain: "node-project-c4942.firebaseapp.com",
-  databaseURL: "https://node-project-c4942-default-rtdb.firebaseio.com",
-  projectId: "node-project-c4942",
-  storageBucket: "node-project-c4942.appspot.com",
-  messagingSenderId: "581470710657",
-  appId: "1:581470710657:web:a4792037ef1d415c375680",
-  measurementId: "G-HQZDXNGMJ3"
+  apiKey: "AIzaSyC5UiikQU2_-_omC-qKYcXA0X4Ta8whfuI",
+  authDomain: "iprep-7f10a.firebaseapp.com",
+  databaseURL: "https://iprep-dev.firebaseio.com/",
+  projectId: "iprep-7f10a",
+  storageBucket: "iprep-7f10a.appspot.com",
+  messagingSenderId: "165257927521",
+  appId: "1:165257927521:web:3d145f0c2b04eafd",
+  measurementId: "G-SXFQPY83P3"
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -116,7 +116,7 @@ document.getElementById("submit").addEventListener("click", async () => {
     finalSubmitBtn.style.display = "block";
     re_upload_btn.style.display = "none";
     updateDatabase();
-    displayProgress.innerHTML = "Click Submit To Upload Assessments.";
+    displayProgress.innerHTML = "Click Submit To Upload Assessment.";
   }
 });
 
@@ -465,8 +465,6 @@ let filesCount = 0;
 let isError = false;
 
 const sendQuestionData = (parentObj) => {
-  createAssessmentModal.style.display = "none";
-
   return new Promise((resolve, reject) => {
     const assessmentValue = {
       metadata: assessmentData,
@@ -482,6 +480,11 @@ const sendQuestionData = (parentObj) => {
     };
     try {
       fetch("/set-assessment", options);
+      displayProgress.innerHTML = "Assessment Uploaded Successfully.";
+      finalSubmitBtn.style.display = "none";
+      setTimeout(()=>{
+        location.reload();
+      }, 3000);
       resolve();
     } catch (error) {
       alert(error.message);
